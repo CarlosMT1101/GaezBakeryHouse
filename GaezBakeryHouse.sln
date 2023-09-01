@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaezBakeryHouse.Domain", "GaezBakeryHouse.Domain\GaezBakeryHouse.Domain.csproj", "{BE3DAF4C-2CBB-426B-9AEC-7D7BEF967749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaezBakeryHouse.Domain", "GaezBakeryHouse.Domain\GaezBakeryHouse.Domain.csproj", "{BE3DAF4C-2CBB-426B-9AEC-7D7BEF967749}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaezBakeryHouse.Infrastructure", "GaezBakeryHouse.Infrastructure\GaezBakeryHouse.Infrastructure.csproj", "{163AA58C-DF38-470C-9209-1A1369398173}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaezBakeryHouse.Infrastructure", "GaezBakeryHouse.Infrastructure\GaezBakeryHouse.Infrastructure.csproj", "{163AA58C-DF38-470C-9209-1A1369398173}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaezBakeryHouse.Application", "GaezBakeryHouse.Application\GaezBakeryHouse.Application.csproj", "{24F06384-B040-4626-AD4F-932BDB5B4158}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaezBakeryHouse.Application", "GaezBakeryHouse.Application\GaezBakeryHouse.Application.csproj", "{24F06384-B040-4626-AD4F-932BDB5B4158}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaezBakeryHouse.API", "GaezBakeryHouse.API\GaezBakeryHouse.API.csproj", "{26EC03A9-0656-4E98-9016-B7F77927F439}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaezBakeryHouse.App", "GaezBakeryHouse.App\GaezBakeryHouse.App.csproj", "{7A6B01EA-7BF9-4851-A4E1-9EF92DDDB3B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaezBakeryHouse.API", "GaezBakeryHouse.API\GaezBakeryHouse.API.csproj", "{26EC03A9-0656-4E98-9016-B7F77927F439}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation", "1. Presentation", "{5E81B55A-581C-40A1-B60E-C3D02C700317}"
 EndProject
@@ -45,12 +43,6 @@ Global
 		{26EC03A9-0656-4E98-9016-B7F77927F439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26EC03A9-0656-4E98-9016-B7F77927F439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26EC03A9-0656-4E98-9016-B7F77927F439}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A6B01EA-7BF9-4851-A4E1-9EF92DDDB3B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A6B01EA-7BF9-4851-A4E1-9EF92DDDB3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A6B01EA-7BF9-4851-A4E1-9EF92DDDB3B0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{7A6B01EA-7BF9-4851-A4E1-9EF92DDDB3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A6B01EA-7BF9-4851-A4E1-9EF92DDDB3B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A6B01EA-7BF9-4851-A4E1-9EF92DDDB3B0}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,7 +52,6 @@ Global
 		{163AA58C-DF38-470C-9209-1A1369398173} = {C707C1C2-5561-423B-A8EB-A404239B33F6}
 		{24F06384-B040-4626-AD4F-932BDB5B4158} = {675C0E56-6B50-49CE-85F3-8B5FE5854DA7}
 		{26EC03A9-0656-4E98-9016-B7F77927F439} = {5E81B55A-581C-40A1-B60E-C3D02C700317}
-		{7A6B01EA-7BF9-4851-A4E1-9EF92DDDB3B0} = {5E81B55A-581C-40A1-B60E-C3D02C700317}
 		{5E81B55A-581C-40A1-B60E-C3D02C700317} = {AD900EC7-FA59-4426-8369-150A44CB3613}
 		{C707C1C2-5561-423B-A8EB-A404239B33F6} = {AD900EC7-FA59-4426-8369-150A44CB3613}
 		{675C0E56-6B50-49CE-85F3-8B5FE5854DA7} = {AD900EC7-FA59-4426-8369-150A44CB3613}
