@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GaezBakeryHouse.Domain.Entities;
+﻿namespace GaezBakeryHouse.Domain.Entities;
 
 public partial class UserToken
 {
-    public string UserId { get; set; } = null!;
+    public string UserId { get; set; }
 
-    public string LoginProvider { get; set; } = null!;
+    public string LoginProvider { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
 
     public string? Value { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual User User { get; set; }
 }

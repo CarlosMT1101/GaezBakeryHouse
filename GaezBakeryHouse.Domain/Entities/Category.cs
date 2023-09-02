@@ -7,9 +7,9 @@ public partial class Category
 {
     public int Id { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
 
-    public byte[] Image { get; set; } = null!;
+    public byte[] Image { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public ICollection<Product> Products { get; set; }
 }
