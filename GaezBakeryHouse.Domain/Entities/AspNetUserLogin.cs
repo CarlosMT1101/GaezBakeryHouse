@@ -1,6 +1,9 @@
-﻿namespace GaezBakeryHouse.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public partial class UserLogin
+namespace GaezBakeryHouse.Domain.Entities;
+
+public partial class AspNetUserLogin
 {
     public string LoginProvider { get; set; }
 
@@ -10,5 +13,5 @@ public partial class UserLogin
 
     public string UserId { get; set; }
 
-    public User User { get; set; }
+    public virtual AspNetUser User { get; set; }
 }

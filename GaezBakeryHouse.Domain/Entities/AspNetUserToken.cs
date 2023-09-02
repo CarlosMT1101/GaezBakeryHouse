@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace GaezBakeryHouse.Domain.Entities;
 
-public partial class LoveProduct
+public partial class AspNetUserToken
 {
-    public int Id { get; set; }
-
     public string UserId { get; set; }
 
-    public int ProductId { get; set; }
+    public string LoginProvider { get; set; }
 
-    public virtual Product Product { get; set; }
+    public string Name { get; set; }
+
+    public string Value { get; set; }
 
     public virtual AspNetUser User { get; set; }
 }

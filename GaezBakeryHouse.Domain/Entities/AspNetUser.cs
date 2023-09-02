@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GaezBakeryHouse.Domain.Entities;
 
-public partial class User
+public partial class AspNetUser
 {
     public string Id { get; set; }
 
@@ -29,21 +29,21 @@ public partial class User
 
     public bool TwoFactorEnabled { get; set; }
 
-    public DateTimeOffset LockoutEnd { get; set; }
+    public DateTimeOffset? LockoutEnd { get; set; }
 
     public bool LockoutEnabled { get; set; }
 
     public int AccessFailedCount { get; set; }
 
-    public ICollection<LoveProduct> LoveProducts { get; set; } 
+    public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; } = new List<AspNetUserClaim>();
 
-    public ICollection<ShoppingCart> ShoppingCarts { get; set; } 
+    public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; } = new List<AspNetUserLogin>();
 
-    public ICollection<UserClaim> UserClaims { get; set; }
+    public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; } = new List<AspNetUserToken>();
 
-    public ICollection<UserLogin> UserLogins { get; set; } 
+    public virtual ICollection<LoveProduct> LoveProducts { get; set; } = new List<LoveProduct>();
 
-    public ICollection<UserToken> UserTokens { get; set; } 
+    public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
 
-    public ICollection<Role> Roles { get; set; }
+    public virtual ICollection<AspNetRole> Roles { get; set; } = new List<AspNetRole>();
 }

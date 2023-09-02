@@ -19,9 +19,9 @@ public partial class Product
 
     public int CategoryId { get; set; }
 
-    public Category Category { get; set; }
+    public virtual Category Category { get; set; }
 
-    public ICollection<LoveProduct> LoveProducts { get; set; }
+    public virtual ICollection<LoveProduct> LoveProducts { get; set; } = new List<LoveProduct>();
 
-    public ICollection<ShoppingCart> ShoppingCarts { get; set; }
+    public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
 }

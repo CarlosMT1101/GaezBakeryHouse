@@ -1,4 +1,6 @@
-﻿using GaezBakeryHouse.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using GaezBakeryHouse.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaezBakeryHouse.Infrastructure;
@@ -14,25 +16,25 @@ public partial class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<Category> Categories { get; set; }
+    public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
-    public DbSet<LoveProduct> LoveProducts { get; set; }
+    public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
 
-    public DbSet<Product> Products { get; set; }
+    public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
-    public DbSet<Role> Roles { get; set; }
+    public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
 
-    public DbSet<RoleClaim> RoleClaims { get; set; }
+    public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
 
-    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+    public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
 
-    public DbSet<User> Users { get; set; }
+    public virtual DbSet<Category> Categories { get; set; }
 
-    public DbSet<UserClaim> UserClaims { get; set; }
+    public virtual DbSet<LoveProduct> LoveProducts { get; set; }
 
-    public DbSet<UserLogin> UserLogins { get; set; }
+    public virtual DbSet<Product> Products { get; set; }
 
-    public DbSet<UserToken> UserTokens { get; set; }
+    public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -40,48 +42,8 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Category>(entity =>
+        modelBuilder.Entity<AspNetRole>(entity =>
         {
-            entity.Property(e => e.Name)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<LoveProduct>(entity =>
-        {
-            entity.Property(e => e.UserId).HasMaxLength(450);
-
-            entity.HasOne(d => d.Product).WithMany(p => p.LoveProducts)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LoveProducts_Products");
-
-            entity.HasOne(d => d.User).WithMany(p => p.LoveProducts)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LoveProducts_Users");
-        });
-
-        modelBuilder.Entity<Product>(entity =>
-        {
-            entity.Property(e => e.Description)
-                .HasMaxLength(500)
-                .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
-
-            entity.HasOne(d => d.Category).WithMany(p => p.Products)
-                .HasForeignKey(d => d.CategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Products_Categories");
-        });
-
-        modelBuilder.Entity<Role>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK_AspNetRoles");
-
             entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
                 .IsUnique()
                 .HasFilter("([NormalizedName] IS NOT NULL)");
@@ -90,37 +52,17 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.NormalizedName).HasMaxLength(256);
         });
 
-        modelBuilder.Entity<RoleClaim>(entity =>
+        modelBuilder.Entity<AspNetRoleClaim>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_AspNetRoleClaims");
-
             entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
 
-            entity.HasOne(d => d.Role).WithMany(p => p.RoleClaims)
-                .HasForeignKey(d => d.RoleId)
-                .HasConstraintName("FK_AspNetRoleClaims_AspNetRoles_RoleId");
+            entity.Property(e => e.RoleId).IsRequired();
+
+            entity.HasOne(d => d.Role).WithMany(p => p.AspNetRoleClaims).HasForeignKey(d => d.RoleId);
         });
 
-        modelBuilder.Entity<ShoppingCart>(entity =>
+        modelBuilder.Entity<AspNetUser>(entity =>
         {
-            entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.UserId).HasMaxLength(450);
-
-            entity.HasOne(d => d.Product).WithMany(p => p.ShoppingCarts)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ShoppingCarts_Products");
-
-            entity.HasOne(d => d.User).WithMany(p => p.ShoppingCarts)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ShoppingCarts_Users");
-        });
-
-        modelBuilder.Entity<User>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK_AspNetUsers");
-
             entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
             entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
@@ -134,50 +76,103 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasMany(d => d.Roles).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(
-                    "UserRole",
-                    r => r.HasOne<Role>().WithMany()
-                        .HasForeignKey("RoleId")
-                        .HasConstraintName("FK_AspNetUserRoles_AspNetRoles_RoleId"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_AspNetUserRoles_AspNetUsers_UserId"),
+                    "AspNetUserRole",
+                    r => r.HasOne<AspNetRole>().WithMany().HasForeignKey("RoleId"),
+                    l => l.HasOne<AspNetUser>().WithMany().HasForeignKey("UserId"),
                     j =>
                     {
-                        j.HasKey("UserId", "RoleId").HasName("PK_AspNetUserRoles");
-                        j.ToTable("UserRoles");
+                        j.HasKey("UserId", "RoleId");
+                        j.ToTable("AspNetUserRoles");
                         j.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
                     });
         });
 
-        modelBuilder.Entity<UserClaim>(entity =>
+        modelBuilder.Entity<AspNetUserClaim>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_AspNetUserClaims");
-
             entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserClaims)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_AspNetUserClaims_AspNetUsers_UserId");
+            entity.Property(e => e.UserId).IsRequired();
+
+            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserClaims).HasForeignKey(d => d.UserId);
         });
 
-        modelBuilder.Entity<UserLogin>(entity =>
+        modelBuilder.Entity<AspNetUserLogin>(entity =>
         {
-            entity.HasKey(e => new { e.LoginProvider, e.ProviderKey }).HasName("PK_AspNetUserLogins");
+            entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
 
             entity.HasIndex(e => e.UserId, "IX_AspNetUserLogins_UserId");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserLogins)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_AspNetUserLogins_AspNetUsers_UserId");
+            entity.Property(e => e.UserId).IsRequired();
+
+            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserLogins).HasForeignKey(d => d.UserId);
         });
 
-        modelBuilder.Entity<UserToken>(entity =>
+        modelBuilder.Entity<AspNetUserToken>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name }).HasName("PK_AspNetUserTokens");
+            entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserTokens)
+            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
+        });
+
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<LoveProduct>(entity =>
+        {
+            entity.Property(e => e.UserId)
+                .IsRequired()
+                .HasMaxLength(450);
+
+            entity.HasOne(d => d.Product).WithMany(p => p.LoveProducts)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_LoveProducts_Products");
+
+            entity.HasOne(d => d.User).WithMany(p => p.LoveProducts)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_AspNetUserTokens_AspNetUsers_UserId");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_LoveProducts_AspNetUsers");
+        });
+
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasMaxLength(500)
+                .IsUnicode(false);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+
+            entity.HasOne(d => d.Category).WithMany(p => p.Products)
+                .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Products_Categories");
+        });
+
+        modelBuilder.Entity<ShoppingCart>(entity =>
+        {
+            entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.UserId)
+                .IsRequired()
+                .HasMaxLength(450);
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ShoppingCarts)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ShoppingCarts_Products");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ShoppingCarts)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ShoppingCarts_AspNetUsers");
         });
 
         OnModelCreatingPartial(modelBuilder);
