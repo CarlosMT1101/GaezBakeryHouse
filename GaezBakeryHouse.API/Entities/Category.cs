@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace GaezBakeryHouse.API.Entities;
+
+public partial class Category
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public byte[] Image { get; set; } = null!;
+
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+}

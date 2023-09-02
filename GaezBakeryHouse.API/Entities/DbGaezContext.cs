@@ -1,38 +1,39 @@
-﻿using GaezBakeryHouse.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace GaezBakeryHouse.Infrastructure;
+namespace GaezBakeryHouse.API.Entities;
 
-public partial class ApplicationDbContext : DbContext
+public partial class DbGaezContext : DbContext
 {
-    public ApplicationDbContext()
+    public DbGaezContext()
     {
     }
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public DbGaezContext(DbContextOptions<DbGaezContext> options)
         : base(options)
     {
     }
 
-    public DbSet<Category> Categories { get; set; }
+    public virtual DbSet<Category> Categories { get; set; }
 
-    public DbSet<LoveProduct> LoveProducts { get; set; }
+    public virtual DbSet<LoveProduct> LoveProducts { get; set; }
 
-    public DbSet<Product> Products { get; set; }
+    public virtual DbSet<Product> Products { get; set; }
 
-    public DbSet<Role> Roles { get; set; }
+    public virtual DbSet<Role> Roles { get; set; }
 
-    public DbSet<RoleClaim> RoleClaims { get; set; }
+    public virtual DbSet<RoleClaim> RoleClaims { get; set; }
 
-    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+    public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
-    public DbSet<User> Users { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 
-    public DbSet<UserClaim> UserClaims { get; set; }
+    public virtual DbSet<UserClaim> UserClaims { get; set; }
 
-    public DbSet<UserLogin> UserLogins { get; set; }
+    public virtual DbSet<UserLogin> UserLogins { get; set; }
 
-    public DbSet<UserToken> UserTokens { get; set; }
+    public virtual DbSet<UserToken> UserTokens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
