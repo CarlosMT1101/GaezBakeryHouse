@@ -28,19 +28,15 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
             // Si el usuario no existe o la contraseña es incorrecta
             if(user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
             {
-                return new AuthResponseDTO
-                {
-                    Result = AuthResult.InvalidCredentials
-                };
+                return new AuthResponseDTO { };
             }
 
             var token = _jwtService.GenerateToken(user.Id);
 
             return new AuthResponseDTO
             {
+                Expiration = DateTime.UtcNow.AddHours(1),
                 Token = token,
-                Expiration = DateTime.UtcNow.AddMinutes(60),
-                Result = AuthResult.Sucess
             };
         }
 

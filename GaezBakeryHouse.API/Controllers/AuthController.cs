@@ -14,15 +14,29 @@ namespace GaezBakeryHouse.API.Controllers
             _service = service;
 
         [HttpPost("Login")]
-        public async Task<AuthResponseDTO> Login([FromBody] AuthRequestDTO request)
+        public async Task<ActionResult<AuthResponseDTO>> Login([FromBody] AuthRequestDTO request)
         {
-            return await _service.Login(request);
+            try
+            {
+                return await _service.Login(request);
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("Register")]
-        public async Task<RegistrationResponseDTO> Register([FromBody] RegistrationRequestDTO request)
+        public async Task<ActionResult<RegistrationResponseDTO>> Register([FromBody] RegistrationRequestDTO request)
         {
-            return await _service.Register(request);
+            try
+            {
+                return await _service.Register(request);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }  
         }
     }
 }
