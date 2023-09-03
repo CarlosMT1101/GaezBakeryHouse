@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using GaezBakeryHouse.Domain.Entities;
+﻿using GaezBakeryHouse.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaezBakeryHouse.Infrastructure;
 
-public partial class ApplicationDbContext : DbContext
+public partial class ApplicationDbContext : IdentityDbContext
 {
     public ApplicationDbContext()
     {
