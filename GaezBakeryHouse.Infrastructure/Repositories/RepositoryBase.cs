@@ -1,5 +1,6 @@
 ﻿using GaezBakeryHouse.Application.Contracts;
 using GaezBakeryHouse.Domain.Common;
+using GaezBakeryHouse.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaezBakeryHouse.Infrastructure.Repositories

@@ -12,6 +12,4 @@ public partial class LoveProduct
     public int ProductId { get; set; }
 
     public virtual Product Product { get; set; }
-
-    public virtual AspNetUser User { get; set; }
 }

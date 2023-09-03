@@ -4,7 +4,7 @@ using GaezBakeryHouse.Application.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
-namespace GaezBakeryHouse.Infrastructure.Services
+namespace GaezBakeryHouse.Infrastructure.Identity.Services
 {
     public class AuthService : IAuthService
     {

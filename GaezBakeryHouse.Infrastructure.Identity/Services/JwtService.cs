@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace GaezBakeryHouse.Infrastructure.Services
+namespace GaezBakeryHouse.Infrastructure.Identity.Services
 {
     public class JwtService : IJwtService
     {

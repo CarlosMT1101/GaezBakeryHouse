@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GaezBakeryHouse.Infrastructure.Migrations
+namespace GaezBakeryHouse.Infrastructure.Identity.Migrations
 {
     /// <inheritdoc />
     public partial class sistemusuarios : Migration
