@@ -2,10 +2,8 @@
 
 namespace GaezBakeryHouse.Application.Contracts
 {
-    public interface IProductRepository
+    public interface IProductRepository : IAsyncRepository<Product>
     {
         Task<IEnumerable<Product>> GetProductsByCategory(int categoryId);
-
-        Task<Product> GetProductById(int productId);
     }
 }

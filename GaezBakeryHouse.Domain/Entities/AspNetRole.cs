@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GaezBakeryHouse.Domain.Common;
+using System;
 using System.Collections.Generic;
 
 namespace GaezBakeryHouse.Domain.Entities;

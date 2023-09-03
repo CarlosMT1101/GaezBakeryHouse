@@ -1,11 +1,12 @@
-﻿using System;
+﻿using GaezBakeryHouse.Domain.Common;
+using System;
 using System.Collections.Generic;
 
 namespace GaezBakeryHouse.Domain.Entities;
 
-public partial class Product
+public partial class Product : BaseEntity
 {
-    public int Id { get; set; }
+    // public int Id { get; set; }
 
     public string Name { get; set; }
 

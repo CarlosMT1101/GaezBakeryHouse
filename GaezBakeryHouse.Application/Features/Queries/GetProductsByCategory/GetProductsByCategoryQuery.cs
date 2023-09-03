@@ -7,9 +7,7 @@ namespace GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory
     {
         public int CategoryId { get; private set; }
 
-        public GetProductsByCategoryQuery(int categoryId)
-        {
+        public GetProductsByCategoryQuery(int categoryId) =>
             CategoryId = categoryId;
-        }
     }
 }

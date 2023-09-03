@@ -11,19 +11,18 @@ namespace GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory
         readonly IProductRepository _repository;
         readonly IMapper _mapper;
 
-        public GetProductsByCategoryHandler(IProductRepository repository,
+        public GetProductsByCategoryHandler(IProductRepository repository, 
                                             IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
-            
 
         public async Task<IEnumerable<ProductDTO>> Handle(GetProductsByCategoryQuery request, CancellationToken cancellationToken)
         {
-            var productsList = await _repository.GetProductsByCategory(request.CategoryId);
-
-            return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(productsList);
+            var products = await _repository.GetProductsByCategory(request.CategoryId);
+            
+            return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
         }
     }
 }
