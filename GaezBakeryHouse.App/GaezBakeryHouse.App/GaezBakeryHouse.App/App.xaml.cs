@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GaezBakeryHouse.App.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+
 
 namespace GaezBakeryHouse.App
 {
@@ -10,7 +10,7 @@ namespace GaezBakeryHouse.App
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new LoginPage();
         }
 
         protected override void OnStart()

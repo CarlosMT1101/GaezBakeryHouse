@@ -3,6 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GaezBakeryHouse.App.App">
     <Application.Resources>
-
+        <Color x:Key="PrimaryColor">#FF6A0E</Color>
+        <Style TargetType="Label" x:Key="lblSmallStyle">
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontSize" Value="Small"/>
+        </Style>
+        <Style TargetType="Label" x:Key="lblmicroStyle">
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="FontAttributes" Value="None"/>
+            <Setter Property="FontSize" Value="Micro"/>
+        </Style>
+        <Style TargetType="Button" x:Key="btnStyle">
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="TextTransform" Value="None"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
     </Application.Resources>
 </Application>

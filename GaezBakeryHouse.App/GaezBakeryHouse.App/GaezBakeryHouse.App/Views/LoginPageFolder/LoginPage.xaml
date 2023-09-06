@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="GaezBakeryHouse.App.Views.LoginPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Image" x:Key="imgStyle">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="HeightRequest" Value="200"/>
+            </Style>
+            <Style TargetType="Frame" x:Key="frmStyle">
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Margin" Value="30,0,30,30"/>
+                <Setter Property="TranslationY" Value="-40"/>
+                <Setter Property="Padding" Value="30"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView
+        VerticalScrollBarVisibility="Never"
+        HorizontalScrollBarVisibility="Never">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="280"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout 
+                Grid.Row="0"
+                BackgroundColor="{StaticResource PrimaryColor}">
+                <Image 
+                    Source="gaez.png"
+                    Style="{StaticResource imgStyle}"/>
+            </StackLayout>
+            <Frame
+                Grid.Row="1"
+                Style="{StaticResource frmStyle}">
+                <StackLayout
+                    Spacing="40">
+                    <Label
+                        Style="{StaticResource lblSmallStyle}"
+                        Text="INICIAR SESIÓN"
+                        HorizontalOptions="Center"/>
+                    <StackLayout
+                        Spacing="10">
+                        <Entry
+                            Placeholder="Usuario"/>
+                        <Entry
+                            IsPassword="True"
+                            Placeholder="Contraseña"/>
+                    </StackLayout>
+                    <Button
+                        Style="{StaticResource btnStyle}"
+                        Text="Ingresar"/>
+                </StackLayout>
+            </Frame>
+            <StackLayout
+                TranslationY="-20"
+                Spacing="10"
+                Orientation="Horizontal"
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                VerticalOptions="EndAndExpand">
+                <Label
+                    FontAttributes="None"
+                    Style="{StaticResource lblmicroStyle}"
+                    Text="¿No tienes cuenta?"/>
+                <Label
+                    TextDecorations="Underline"
+                    TextColor="{StaticResource PrimaryColor}"
+                    FontAttributes="None"
+                    Style="{StaticResource lblmicroStyle}"
+                    Text="Registrate aquí"/>
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>
