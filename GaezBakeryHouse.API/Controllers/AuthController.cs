@@ -38,5 +38,12 @@ namespace GaezBakeryHouse.API.Controllers
                 return BadRequest(ex.Message);
             }  
         }
+
+        [HttpGet("Get")]
+        public ActionResult Get()
+        {
+            return Ok("Hola");
+        }
+
     }
 }
