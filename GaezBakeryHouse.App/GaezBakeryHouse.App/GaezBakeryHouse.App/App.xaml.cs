@@ -1,4 +1,5 @@
 ﻿using GaezBakeryHouse.App.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 
@@ -10,11 +11,22 @@ namespace GaezBakeryHouse.App
         {
             InitializeComponent();
 
-            MainPage = new LoginPage();
+            MainPage = new AppShell();
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
+            var accessToken = SecureStorage.GetAsync("AccessToken").Result;
+
+            if(accessToken != null)
+            {
+                await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}");
+            }
+            else
+            {
+                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            }
+
         }
 
         protected override void OnSleep()

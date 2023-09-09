@@ -2,6 +2,7 @@
 using GaezBakeryHouse.Application.Models;
 using GaezBakeryHouse.Application.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.Extensions.Options;
 
 namespace GaezBakeryHouse.Infrastructure.Identity.Services
@@ -28,7 +29,7 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
             // Si el usuario no existe o la contraseña es incorrecta
             if(user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
             {
-                return new AuthResponseDTO { };
+                throw new Exception();
             }
 
             var token = _jwtService.GenerateToken(user.Id);
@@ -54,10 +55,7 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
 
             if(emailExist != null || usernameExist != null)
             {
-                return new RegistrationResponseDTO
-                {
-                    Result = RegistrationResult.Fail
-                };
+                throw new Exception();
             }
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -66,17 +64,10 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
             {
                 var token = _jwtService.GenerateToken(user.Id);
 
-                return new RegistrationResponseDTO
-                {
-                    Result = RegistrationResult.Sucess,
-                    Token = token,
-                };
+                return new RegistrationResponseDTO { Token =  token };
             }
 
-            return new RegistrationResponseDTO
-            {
-                Result = RegistrationResult.Fail
-            };
+            throw new Exception();
         }
     }
 }

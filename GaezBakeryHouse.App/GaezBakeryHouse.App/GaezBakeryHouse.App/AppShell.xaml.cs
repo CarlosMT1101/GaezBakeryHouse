@@ -1,16 +1,17 @@
 ﻿using GaezBakeryHouse.App.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace GaezBakeryHouse.App.Views
+namespace GaezBakeryHouse.App
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage
+    public partial class AppShell : Shell
     {
-        public LoginPage()
+        public AppShell()
         {
             InitializeComponent();
-            BindingContext = new LoginViewModel();
+            BindingContext = new AppShellViewModel();
         }
     }
 }

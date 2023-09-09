@@ -13,12 +13,8 @@ builder.Services.AddAuthentication();
 
 WebApplication app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 // app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();

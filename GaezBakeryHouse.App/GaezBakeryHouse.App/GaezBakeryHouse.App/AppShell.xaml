@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:views="clr-namespace:GaezBakeryHouse.App.Views"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.BackgroundColor="{StaticResource PrimaryColor}"
+    Shell.TabBarTitleColor="#CEA894"
+    Shell.TabBarUnselectedColor="White"
+    Shell.TabBarBackgroundColor="{StaticResource PrimaryColor}"
+    x:Class="GaezBakeryHouse.App.AppShell">
+
+    <ShellContent
+        Route="LoginPage"
+        FlyoutItemIsVisible="False"
+        ContentTemplate="{DataTemplate views:LoginPage}"/>
+    
+    <FlyoutItem
+        FlyoutDisplayOptions="AsSingleItem"
+        Route="Start"
+        Title="Inicio">
+        <ShellContent
+            Title="Carrito"
+            Route="ShoppingCartPage"
+            Icon="cart.png"
+            ContentTemplate="{DataTemplate views:ShoppingCartPage}"/>
+        <ShellContent
+            Title="Inicio"
+            Icon="home.png"
+            Route="HomePage"
+            ContentTemplate="{DataTemplate views:HomePage}"/>
+        <ShellContent
+            Route="NotificationsPage"
+            Title="Notificaciones"
+            Icon="bell.png"
+            ContentTemplate="{DataTemplate views:NotificationsPage}"/>
+    </FlyoutItem>
+
+    <MenuItem 
+        Text="Salir"
+        Command="{Binding OnLogoutClikedCommand}"/>
+</Shell>

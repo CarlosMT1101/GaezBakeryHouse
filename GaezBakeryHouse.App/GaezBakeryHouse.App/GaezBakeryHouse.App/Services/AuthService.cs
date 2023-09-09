@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace GaezBakeryHouse.App.Services
 {
@@ -31,13 +32,20 @@ namespace GaezBakeryHouse.App.Services
                 var response = await _httpClient.PostAsync(_httpClient.BaseAddress, content);
 
                 if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = JsonConvert.DeserializeObject<AuthResponseDTO>(await response.Content.ReadAsStringAsync());
+                    await SecureStorage.SetAsync("AccessToken", responseContent.Token);
+
                     return true;
-                else
+                }
+                else 
+                {
                     return false;
+                }
+                    
             }
             catch (Exception ex)
             {
-                await Console.Out.WriteLineAsync(ex.Message);
                 return false;
             }
         }
