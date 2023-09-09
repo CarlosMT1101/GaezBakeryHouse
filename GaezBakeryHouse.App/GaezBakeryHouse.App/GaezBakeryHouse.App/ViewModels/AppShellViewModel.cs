@@ -10,6 +10,7 @@ namespace GaezBakeryHouse.App.ViewModels
         public ICommand OnLogoutClikedCommand => new Command(async () =>
         {
             SecureStorage.Remove("AccessToken");
+            SecureStorage.Remove("ExpirationToken");
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         });
     }

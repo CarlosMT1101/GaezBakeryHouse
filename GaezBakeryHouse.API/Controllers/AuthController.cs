@@ -1,5 +1,4 @@
-﻿using Azure;
-using GaezBakeryHouse.Application.DTOs;
+﻿using GaezBakeryHouse.Application.DTOs;
 using GaezBakeryHouse.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

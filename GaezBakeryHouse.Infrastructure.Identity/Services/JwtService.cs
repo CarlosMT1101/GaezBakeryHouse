@@ -25,7 +25,9 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
                 {
                     new Claim(ClaimTypes.Name, userId)
                 }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddDays(1),
+                Audience = _jwtSettings.Audience,
+                Issuer = _jwtSettings.Issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

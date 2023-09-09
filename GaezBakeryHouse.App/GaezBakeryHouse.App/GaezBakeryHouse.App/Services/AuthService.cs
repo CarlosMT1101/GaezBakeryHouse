@@ -34,7 +34,9 @@ namespace GaezBakeryHouse.App.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = JsonConvert.DeserializeObject<AuthResponseDTO>(await response.Content.ReadAsStringAsync());
+
                     await SecureStorage.SetAsync("AccessToken", responseContent.Token);
+                    await SecureStorage.SetAsync("ExpirationToken", responseContent.Expiration.ToString());
 
                     return true;
                 }

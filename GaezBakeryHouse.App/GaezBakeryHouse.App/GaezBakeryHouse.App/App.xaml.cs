@@ -1,4 +1,5 @@
 ﻿using GaezBakeryHouse.App.Views;
+using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -17,10 +18,23 @@ namespace GaezBakeryHouse.App
         protected override async void OnStart()
         {
             var accessToken = SecureStorage.GetAsync("AccessToken").Result;
+            var expirationToken = SecureStorage.GetAsync("ExpirationToken").Result;
 
             if(accessToken != null)
             {
-                await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}");
+                var expirationDate = DateTime.Parse(expirationToken);
+
+                if(DateTime.UtcNow < expirationDate)
+                {
+                    await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}");
+                }
+                else
+                {
+                    SecureStorage.Remove("AccessToken");
+                    SecureStorage.Remove("ExpirationToken");
+
+                    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+                }  
             }
             else
             {

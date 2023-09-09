@@ -36,7 +36,7 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
 
             return new AuthResponseDTO
             {
-                Expiration = DateTime.UtcNow.AddHours(1),
+                Expiration = DateTime.UtcNow.AddDays(1),
                 Token = token,
             };
         }
