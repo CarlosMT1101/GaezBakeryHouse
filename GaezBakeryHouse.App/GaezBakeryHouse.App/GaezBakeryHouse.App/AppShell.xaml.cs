@@ -1,4 +1,5 @@
 ﻿using GaezBakeryHouse.App.ViewModels;
+using GaezBakeryHouse.App.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,6 +13,8 @@ namespace GaezBakeryHouse.App
         {
             InitializeComponent();
             BindingContext = new AppShellViewModel();
+
+            Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
         }
     }
 }

@@ -13,7 +13,7 @@
         Route="LoginPage"
         FlyoutItemIsVisible="False"
         ContentTemplate="{DataTemplate views:LoginPage}"/>
-    
+
     <FlyoutItem
         FlyoutDisplayOptions="AsSingleItem"
         Route="Start"

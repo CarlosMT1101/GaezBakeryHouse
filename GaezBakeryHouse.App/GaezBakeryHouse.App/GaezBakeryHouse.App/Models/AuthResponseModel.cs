@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GaezBakeryHouse.App.Models
 {
-    public class AuthResponseDTO
+    public class AuthResponseModel
     {
         public string Token { get; set; }
         public DateTime Expiration { get; set; }
