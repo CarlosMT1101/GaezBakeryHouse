@@ -22,7 +22,7 @@ namespace GaezBakeryHouse.API.Controllers
                 var response = await _service.Login(request);
                 return StatusCode((int) HttpStatusCode.OK, response);
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
                 var errorResponse = new ErrorReponseDTO { Message = "Algo salió mal" };
                 return StatusCode((int) HttpStatusCode.InternalServerError, errorResponse);
@@ -37,7 +37,7 @@ namespace GaezBakeryHouse.API.Controllers
                 var response = await _service.Register(request);
                 return StatusCode((int)HttpStatusCode.OK, response);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 var errorResponse = new ErrorReponseDTO { Message = "Algo salió mal" };
                 return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);

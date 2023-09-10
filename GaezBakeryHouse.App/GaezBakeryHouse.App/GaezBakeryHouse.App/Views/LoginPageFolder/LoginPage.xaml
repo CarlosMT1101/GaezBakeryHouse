@@ -3,7 +3,6 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     Shell.NavBarIsVisible="False"
     Shell.FlyoutBehavior="Disabled"
-    xmlns:vm="clr-namespace:GaezBakeryHouse.App.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="GaezBakeryHouse.App.Views.LoginPage">
     

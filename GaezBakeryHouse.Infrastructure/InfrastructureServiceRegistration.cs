@@ -1,6 +1,4 @@
 ﻿using GaezBakeryHouse.Application.Contracts;
-using GaezBakeryHouse.Application.Models;
-using GaezBakeryHouse.Application.Services;
 using GaezBakeryHouse.Domain.Entities;
 using GaezBakeryHouse.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +15,7 @@ namespace GaezBakeryHouse.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             
             return services;
         }

@@ -21,5 +21,8 @@
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="FontAttributes" Value="Bold"/>
         </Style>
+        <Style TargetType="Label" x:Key="LblIconStyle">
+            <Setter Property="FontFamily" Value="typicons.ttf"/>
+        </Style>
     </Application.Resources>
 </Application>

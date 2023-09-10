@@ -15,9 +15,9 @@ namespace GaezBakeryHouse.App.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         #region ATTRIBUTES
-        private string _email;
-        private string _password;
-        private IAuthService _service;
+        string _email;
+        string _password;
+        readonly AuthService _service;
         #endregion
         #region PROPERTIES
         public string Email
@@ -48,59 +48,40 @@ namespace GaezBakeryHouse.App.ViewModels
         #region CONSTRUCTOR
         public LoginViewModel()
         {
-            _service = RestService.For<IAuthService>(Constants.Url);
+            _service = new AuthService();
 
             OnLoginClickedCommand = new Command(
-                execute: async () =>
-                {
-                    UserDialogs.Instance.ShowLoading("Cargando");
-
-                    try
-                    {
-                        var request = new AuthRequestModel { Email = this.Email, Password = this.Password };
-                        var response = await _service.Login(request);
-                        AuthResponseModel responseContent;
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            responseContent = JsonConvert.DeserializeObject<AuthResponseModel>(await response.Content.ReadAsStringAsync());
-                            await SaveToken(responseContent);
-                            await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}");
-                        }
-                        else
-                        {
-                            throw new Exception();
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        await UserDialogs.Instance.AlertAsync("Algo salió mal", "Error", "Ok");
-                    }
-
-                    UserDialogs.Instance.HideLoading();
-                },
-                canExecute: () =>
-                {
-                    return !(string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password));
-                });
+                execute: async () => await Login(), 
+                canExecute: () => !(string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password)));
 
             OnRegisterClickedCommand = new Command(
-                execute: async () =>
-                {
-                    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}/{nameof(RegisterPage)}");
-                });
+                execute: async () => await Shell.Current.GoToAsync($"//{nameof(LoginPage)}/{nameof(RegisterPage)}"),
+                canExecute: () => true);
         }
-            
         #endregion
-        #region FUNCTIONS   
-        private async Task SaveToken(AuthResponseModel responseContent)
+        #region FUNCTIONS            
+        async Task Login()
         {
-            await SecureStorage.SetAsync("AccessToken", responseContent.Token);
-            await SecureStorage.SetAsync("ExpirationToken", responseContent.Expiration.ToString());
-        }
-        private void Login()
-        {
+            UserDialogs.Instance.ShowLoading("Cargando");
 
+            var requestModel = new AuthRequestModel
+            { 
+                Email = Email, 
+                Password = Password 
+            };
+
+            var isAuthenticate =  await _service.Login(requestModel);
+
+            if (isAuthenticate)
+            {
+                await Shell.Current.GoToAsync($"//Start/{ nameof(HomePage) }");
+            }
+            else
+            {
+                await UserDialogs.Instance.AlertAsync("Algo salió mal", "Error");
+            }
+
+            UserDialogs.Instance.HideLoading();
         }
         #endregion
     }

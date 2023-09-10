@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="GaezBakeryHouse.App.Views.HomePageFolder.CategoriesView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame" x:Key="frmStyle">
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="WidthRequest" Value="120"/>
+                <Setter Property="BorderColor" Value="#F1F1F1"/>
+            </Style>
+            <Style TargetType="Image" x:Key="imgStyle">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <CollectionView
+        ItemsSource="{Binding Categories}">
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout HorizontalItemSpacing="10"
+                             Orientation="Horizontal"/>
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame
+                    
+                    Style="{StaticResource frmStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image 
+                            Grid.Row="0"
+                            Source="{Binding ImageSource}"
+                            Style="{StaticResource imgStyle}"/>
+                        <Label
+                            xct:ShadowEffect.Color="#F1F1F1"
+                            xct:ShadowEffect.Opacity="1"
+                            Style="{StaticResource lblmicroStyle}"
+                            Grid.Row="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand"
+                            Text="{Binding Name}"/>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentView>

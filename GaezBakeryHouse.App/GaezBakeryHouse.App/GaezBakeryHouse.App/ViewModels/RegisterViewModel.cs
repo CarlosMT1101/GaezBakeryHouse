@@ -5,6 +5,7 @@ using GaezBakeryHouse.App.Views;
 using Newtonsoft.Json;
 using Refit;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -13,12 +14,12 @@ namespace GaezBakeryHouse.App.ViewModels
     public class RegisterViewModel : BaseViewModel
     {
         #region ATTRIBUTES
-        private string _email;
-        private string _password;
-        private string _confirmPassword;
-        private string _userName;
-        private string _phoneNumber;
-        readonly IRegisterService _service;
+        string _email;
+        string _password;
+        string _confirmPassword;
+        string _userName;
+        string _phoneNumber;
+        readonly RegisterService _service;
         #endregion
         #region PROPERTIES
         public string Email
@@ -79,52 +80,18 @@ namespace GaezBakeryHouse.App.ViewModels
         #region CONSTRUCTOR
         public RegisterViewModel()
         {
-            _service = RestService.For<IRegisterService>(Constants.Url);
+            _service = new RegisterService();
 
             OnBackButtonClickedCommand = new Command(
-                execute: async () =>
-                {
-                    await Shell.Current.GoToAsync($"../");
-                });
+                execute: async () => await Shell.Current.GoToAsync($"../"),
+                canExecute: () => true);
 
             OnRegisterClickedCommand = new Command(
-                execute: async () =>
-                {
-                    UserDialogs.Instance.ShowLoading("Cargando");
-
-                    try
-                    {
-                        var request = new RegistrationRequestModel 
-                        { 
-                            Email = this.Email, 
-                            Password = this.Password,
-                            PhoneNumber = this.PhoneNumber,
-                            UserName = this.UserName, 
-                        };
-
-                        var response = await _service.Register(request);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            await UserDialogs.Instance.AlertAsync("Regístro exítoso", "Mensaje", "Ok");
-                            await Shell.Current.GoToAsync($"../");
-                        }
-                        else
-                        {
-                            throw new Exception();
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        await UserDialogs.Instance.AlertAsync("Algo salió mal", "Error", "Ok");
-                    }
-
-                    UserDialogs.Instance.HideLoading();
-                },
+                execute: async () => await Register(),
                 canExecute: () =>
                 {
                     // Si los campos no están vacios y la contraseña es igual a lo que esta
-                    // en confirmar contraseña
+                    // en confirmar contraseña, regresa true, de lo contrario false
 
                     return !(string.IsNullOrWhiteSpace(Email) || 
                              string.IsNullOrWhiteSpace(Password) ||
@@ -133,6 +100,34 @@ namespace GaezBakeryHouse.App.ViewModels
                              string.IsNullOrWhiteSpace(PhoneNumber)) &&
                              Password.Equals(ConfirmPassword);
                 });
+        }
+        #endregion
+        #region FUNCTIONS
+        async Task Register()
+        {
+            UserDialogs.Instance.ShowLoading("Cargando");
+
+            var requestModel = new RegistrationRequestModel
+            {
+                Email = Email,
+                Password = Password,
+                PhoneNumber = PhoneNumber,
+                UserName = UserName,
+            };
+
+            var registrationSuccess = await _service.Register(requestModel);
+
+            if (registrationSuccess)
+            {
+                await UserDialogs.Instance.AlertAsync("Regístro exitoso", "Mensaje", "Ok");
+                await Shell.Current.GoToAsync($"../");
+            }
+            else
+            {
+                await UserDialogs.Instance.AlertAsync("Algo salió mal", "Error", "Ok");
+            }
+
+            UserDialogs.Instance.HideLoading();
         }
         #endregion
     }

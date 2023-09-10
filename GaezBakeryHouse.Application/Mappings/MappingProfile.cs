@@ -9,6 +9,7 @@ namespace GaezBakeryHouse.Application.Mappings
         public MappingProfile()
         {
             CreateMap<Product, ProductDTO>();
+            CreateMap<Category, CategoryDTO>();
         }
     }
 }

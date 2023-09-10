@@ -1,4 +1,5 @@
 ﻿using GaezBakeryHouse.Application.DTOs;
+using GaezBakeryHouse.Application.Features.Queries.GetAllCategories;
 using GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -8,21 +9,21 @@ using System.Net;
 namespace GaezBakeryHouse.API.Controllers
 {
     [ApiController]
-    [Route("api/products")]
+    [Route("api/category")]
     [Authorize]
-    public class ProductController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         readonly IMediator _mediator;
 
-        public ProductController(IMediator mediator) =>
+        public CategoryController(IMediator mediator) =>
             _mediator = mediator;
 
-        [HttpGet("GetProductsByCategory/{categoryId:int}")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductsByCategory([FromRoute] int categoryId)
+        [HttpGet("GetAllCategories")]
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAllCategories()
         {
             try
             {
-                var query = new GetProductsByCategoryQuery(categoryId);
+                var query = new GetAllCategoriesQuery();
                 var response = await _mediator.Send(query);
 
                 return StatusCode((int)HttpStatusCode.OK, response);
@@ -33,5 +34,6 @@ namespace GaezBakeryHouse.API.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
             }
         }
+
     }
 }
