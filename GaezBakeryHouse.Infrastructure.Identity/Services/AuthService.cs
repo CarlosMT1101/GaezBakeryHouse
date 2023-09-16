@@ -4,6 +4,7 @@ using GaezBakeryHouse.Application.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.Extensions.Options;
+using System.Security.Claims;
 
 namespace GaezBakeryHouse.Infrastructure.Identity.Services
 {
@@ -32,7 +33,13 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
                 throw new Exception();
             }
 
-            var token = _jwtService.GenerateToken(user.Id);
+            var claims = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName)
+            });
+
+            var token = await _jwtService.GenerateToken(claims);
 
             return new AuthResponseDTO
             {
@@ -60,9 +67,15 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
 
             var result = await _userManager.CreateAsync(user, request.Password);
 
+            var claims = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName)
+            });
+
             if (result.Succeeded)
             {
-                var token = _jwtService.GenerateToken(user.Id);
+                var token = await _jwtService.GenerateToken(claims);
 
                 return new RegistrationResponseDTO { Token =  token };
             }

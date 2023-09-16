@@ -15,16 +15,14 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
         public JwtService(IOptions<JwtSettings> jwtSettings) =>
             _jwtSettings = jwtSettings.Value;
 
-        public string GenerateToken(string userId)
+        public async Task<string> GenerateToken(ClaimsIdentity claimsIdentity)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Key);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.Name, userId)
-                }),
+                Subject = claimsIdentity,
                 Expires = DateTime.UtcNow.AddDays(1),
                 Audience = _jwtSettings.Audience,
                 Issuer = _jwtSettings.Issuer,
@@ -32,7 +30,7 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return await Task.FromResult(tokenHandler.WriteToken(token));
         }
     }
 }
