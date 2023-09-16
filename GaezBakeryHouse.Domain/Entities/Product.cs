@@ -18,6 +18,10 @@ public partial class Product : BaseEntity
 
     public int CategoryId { get; set; }
 
+    public decimal? Discount { get; set; }
+
+    public bool? InOffer { get; set; }
+
     public virtual Category Category { get; set; }
 
     public virtual ICollection<LoveProduct> LoveProducts { get; set; } = new List<LoveProduct>();

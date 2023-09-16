@@ -1,5 +1,6 @@
 ﻿using GaezBakeryHouse.Application.DTOs;
 using GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory;
+using GaezBakeryHouse.Application.Features.Queries.GetProductsInOffer;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,23 @@ namespace GaezBakeryHouse.API.Controllers
             try
             {
                 var query = new GetProductsByCategoryQuery(categoryId);
+                var response = await _mediator.Send(query);
+
+                return StatusCode((int)HttpStatusCode.OK, response);
+            }
+            catch (Exception)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = "Algo salió mal" };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+
+        [HttpGet("GetProductsInOffer")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductsInOffer()
+        {
+            try
+            {
+                var query = new GetProductsInOfferQuery();
                 var response = await _mediator.Send(query);
 
                 return StatusCode((int)HttpStatusCode.OK, response);

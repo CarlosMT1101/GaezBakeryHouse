@@ -24,5 +24,8 @@
         <Style TargetType="Label" x:Key="LblIconStyle">
             <Setter Property="FontFamily" Value="typicons.ttf"/>
         </Style>
+        <Style TargetType="ContentPage" x:Key="PageStyle">
+            <Setter Property="BackgroundColor" Value="#F1F1F1"/>
+        </Style>
     </Application.Resources>
 </Application>

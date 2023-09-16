@@ -20,11 +20,11 @@ namespace GaezBakeryHouse.App
             var accessToken = SecureStorage.GetAsync("AccessToken").Result;
             var expirationToken = SecureStorage.GetAsync("ExpirationToken").Result;
 
-            if(accessToken != null)
+            if (accessToken != null)
             {
                 var expirationDate = DateTime.Parse(expirationToken);
 
-                if(DateTime.UtcNow < expirationDate)
+                if (DateTime.UtcNow < expirationDate)
                 {
                     await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}");
                 }
@@ -34,21 +34,43 @@ namespace GaezBakeryHouse.App
                     SecureStorage.Remove("ExpirationToken");
 
                     await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-                }  
+                }
             }
             else
             {
                 await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             }
-
         }
 
         protected override void OnSleep()
         {
         }
 
-        protected override void OnResume()
+        protected override async void OnResume()
         {
+            var accessToken = SecureStorage.GetAsync("AccessToken").Result;
+            var expirationToken = SecureStorage.GetAsync("ExpirationToken").Result;
+
+            if (accessToken != null)
+            {
+                var expirationDate = DateTime.Parse(expirationToken);
+
+                if (DateTime.UtcNow < expirationDate)
+                {
+                    await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}");
+                }
+                else
+                {
+                    SecureStorage.Remove("AccessToken");
+                    SecureStorage.Remove("ExpirationToken");
+
+                    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+                }
+            }
+            else
+            {
+                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            }
         }
     }
 }

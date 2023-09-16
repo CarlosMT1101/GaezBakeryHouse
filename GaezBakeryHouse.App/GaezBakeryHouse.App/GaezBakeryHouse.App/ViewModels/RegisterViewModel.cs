@@ -1,10 +1,6 @@
 ﻿using Acr.UserDialogs;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
-using GaezBakeryHouse.App.Views;
-using Newtonsoft.Json;
-using Refit;
-using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;

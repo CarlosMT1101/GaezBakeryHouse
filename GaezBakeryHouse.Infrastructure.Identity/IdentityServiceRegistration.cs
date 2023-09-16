@@ -25,9 +25,16 @@ namespace GaezBakeryHouse.Infrastructure.Identity
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddScoped<IJwtService, JwtService>();
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+            {
+                config.Password.RequireDigit = true;
+                config.Password.RequireLowercase = true;
+                config.Password.RequireUppercase = true;
+                config.Password.RequireNonAlphanumeric = true;
+                config.Password.RequiredLength = 10;
+            })
+            .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+            .AddDefaultTokenProviders();
 
             services.AddAuthentication(options =>
             {
