@@ -17,22 +17,5 @@ namespace GaezBakeryHouse.Infrastructure.Repositories
                 .Where(product => product.CategoryId == categoryId)
                 .ToListAsync();
         }
-
-        public async Task<IEnumerable<Product>> GetProductsInOffer()
-        {
-            return await _context.Products
-                .AsNoTracking()
-                .Where(product => product.InOffer == true)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Product>> GetProductsInOfferByCategory(int categoryId)
-        {
-            return await _context.Products
-                .AsNoTracking()
-                .Where(product => product.InOffer == true &&
-                       product.CategoryId == categoryId)
-                .ToListAsync();
-        }
     }
 }

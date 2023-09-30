@@ -1,12 +1,11 @@
 ﻿using GaezBakeryHouse.Domain.Common;
 
-namespace GaezBakeryHouse.Domain.Entities;
-
-public partial class Category : BaseEntity
+namespace GaezBakeryHouse.Domain.Entities
 {
-    public string Name { get; set; }
-
-    public byte[] Image { get; set; }
-
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public class Category : BaseEntity
+    {
+        public string Name { get; set; }
+        public byte[] CategoryImage { get; set; }
+        public ICollection<Product> Products { get; set; }
+    }
 }

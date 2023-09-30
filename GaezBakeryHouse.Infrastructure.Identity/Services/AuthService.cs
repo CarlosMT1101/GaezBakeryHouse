@@ -1,8 +1,8 @@
 ﻿using GaezBakeryHouse.Application.DTOs;
 using GaezBakeryHouse.Application.Models;
 using GaezBakeryHouse.Application.Services;
+using GaezBakeryHouse.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
@@ -11,11 +11,11 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
     public class AuthService : IAuthService
     {
         readonly JwtSettings _jwtSettings;
-        readonly UserManager<IdentityUser> _userManager;
+        readonly UserManager<ApplicationUser> _userManager;
         readonly IJwtService _jwtService;
 
         public AuthService(IOptions<JwtSettings> jwtSettings, 
-                           UserManager<IdentityUser> userManager, 
+                           UserManager<ApplicationUser> userManager, 
                            IJwtService jwtService)
         {
             _jwtSettings = jwtSettings.Value;
@@ -53,7 +53,7 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
             var emailExist = await _userManager.FindByEmailAsync(request.Email);
             var usernameExist = await _userManager.FindByNameAsync(request.UserName);
 
-            var user = new IdentityUser
+            var user = new ApplicationUser
             { 
                 UserName = request.UserName,
                 Email = request.Email,

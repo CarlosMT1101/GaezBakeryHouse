@@ -1,5 +1,4 @@
 ﻿using GaezBakeryHouse.Application.Contracts;
-using GaezBakeryHouse.Domain.Entities;
 using GaezBakeryHouse.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

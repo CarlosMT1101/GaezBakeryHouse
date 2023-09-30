@@ -1,5 +1,6 @@
 ﻿using GaezBakeryHouse.Application.Models;
 using GaezBakeryHouse.Application.Services;
+using GaezBakeryHouse.Domain.Entities;
 using GaezBakeryHouse.Infrastructure.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -20,12 +21,12 @@ namespace GaezBakeryHouse.Infrastructure.Identity
 
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
-            services.AddDbContext<ApplicationIdentityDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationIdentityDbContext>(options =>
+            //    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddScoped<IJwtService, JwtService>();
-            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             {
                 config.Password.RequireDigit = true;
                 config.Password.RequireLowercase = true;
@@ -33,7 +34,7 @@ namespace GaezBakeryHouse.Infrastructure.Identity
                 config.Password.RequireNonAlphanumeric = true;
                 config.Password.RequiredLength = 10;
             })
-            .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
             services.AddAuthentication(options =>

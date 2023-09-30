@@ -1,10 +1,13 @@
-﻿namespace GaezBakeryHouse.Application.DTOs
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
+
+namespace GaezBakeryHouse.Application.Features.Commands.PostProductCommand
 {
-    public class ProductDTO
+    public class PostProductCommand :  IRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte[] ProductImage { get; set; }
+        public IFormFile ProductImage { get; set; }
         public decimal Price { get; set; }
         public bool IsTrendingProduct { get; set; }
         public int CategoryId { get; set; }

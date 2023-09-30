@@ -1,6 +1,8 @@
 ﻿using GaezBakeryHouse.Application.DTOs;
+using GaezBakeryHouse.Application.Features.Commands.DeleteProductCommand;
+using GaezBakeryHouse.Application.Features.Commands.PostProductCommand;
+using GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand;
 using GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory;
-using GaezBakeryHouse.Application.Features.Queries.GetProductsInOffer;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,31 +25,61 @@ namespace GaezBakeryHouse.API.Controllers
         {
             try
             {
-                var query = new GetProductsByCategoryQuery(categoryId);
-                var response = await _mediator.Send(query);
+                var command = new GetProductsByCategoryQuery(categoryId);
+                var response = await _mediator.Send(command);
 
                 return StatusCode((int)HttpStatusCode.OK, response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                var errorResponse = new ErrorReponseDTO { Message = "Algo salió mal" };
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
                 return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
             }
         }
 
-        [HttpGet("GetProductsInOffer")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductsInOffer()
+        [HttpPost("PostProduct")]
+        public async Task<ActionResult> PostProduct([FromForm] PostProductCommand command)
         {
             try
             {
-                var query = new GetProductsInOfferQuery();
-                var response = await _mediator.Send(query);
-
-                return StatusCode((int)HttpStatusCode.OK, response);
+                await _mediator.Send(command);
+                return StatusCode((int)HttpStatusCode.OK);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                var errorResponse = new ErrorReponseDTO { Message = "Algo salió mal" };
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+
+        [HttpPut("UpdateProduct")]
+        public async Task<ActionResult> UpdateProduct([FromForm] UpdateProductCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+
+        [HttpDelete("DeleteProduct/{id:int}")]
+        public async Task<ActionResult> DeleteProduct([FromRoute]int id)
+        {
+            try
+            {
+                var command = new DeleteProductCommand(id);
+                await _mediator.Send(command);
+
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
                 return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
             }
         }
