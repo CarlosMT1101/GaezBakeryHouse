@@ -10,12 +10,18 @@ namespace GaezBakeryHouse.Infrastructure.Repositories
         {
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategory(int categoryId)
-        {
-            return await _context.Products
-                .AsNoTracking()
-                .Where(product => product.CategoryId == categoryId)
-                .ToListAsync();
-        }
+        public IQueryable<Product> GetProductsByCategory(int categoryId) =>
+            _context.Products
+            .AsNoTracking()
+            .Where(x => x.CategoryId == categoryId)
+            .AsQueryable();
+
+        public IQueryable<Product> GetTrendingProducts() =>
+            _context.Products
+            .AsNoTracking()
+            .Where(x => x.IsTrendingProduct == true)
+            .Take(6)
+            .OrderBy(x => x.Name)
+            .AsQueryable();
     }
 }

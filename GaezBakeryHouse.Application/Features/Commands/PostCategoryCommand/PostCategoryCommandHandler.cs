@@ -30,7 +30,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.PostCategoryCommand
             }
 
             category.CategoryImage = categoryImage;
-            await _repository.Post(category);
+            await _repository.PostAsync(category);
         }
     }
 }

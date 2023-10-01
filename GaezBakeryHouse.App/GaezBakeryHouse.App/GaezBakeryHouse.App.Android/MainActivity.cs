@@ -1,9 +1,9 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Acr.UserDialogs;
+using FFImageLoading.Forms.Platform;
 
 namespace GaezBakeryHouse.App.Droid
 {
@@ -16,6 +16,8 @@ namespace GaezBakeryHouse.App.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+            CachedImageRenderer.InitImageViewHandler();
             UserDialogs.Init(this);
             LoadApplication(new App());
         }

@@ -3,9 +3,11 @@ using GaezBakeryHouse.Application.Features.Commands.DeleteProductCommand;
 using GaezBakeryHouse.Application.Features.Commands.PostProductCommand;
 using GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand;
 using GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory;
+using GaezBakeryHouse.Application.Features.Queries.GetTrendingProducts;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace GaezBakeryHouse.API.Controllers
@@ -76,6 +78,23 @@ namespace GaezBakeryHouse.API.Controllers
                 await _mediator.Send(command);
 
                 return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+
+        [HttpGet("GetTrendingProducts")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetTrendingProducts()
+        {
+            try
+            {
+                var command = new GetTrendingProductsQuery();
+                var response = await _mediator.Send(command);
+
+                return StatusCode((int)HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {

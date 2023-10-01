@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="GaezBakeryHouse.App.Views.HomePageFolder.TrendingProductsView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame" x:Key="frmStyle">
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="HeightRequest" Value="180"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <CollectionView
+        ItemsSource="{Binding TrendingProductsList}">
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout
+                VerticalItemSpacing="10"
+                HorizontalItemSpacing="10"
+                Orientation="Vertical"
+                Span="2"/>
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame
+                    xct:TouchEffect.NativeAnimation="True"
+                    Style="{StaticResource frmStyle}">
+                    <Grid
+                        RowSpacing="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ffimageloading:CachedImage
+                            Grid.Row="0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Source="{Binding ImageSource}"/>
+                        <StackLayout
+                            VerticalOptions="EndAndExpand"
+                            Spacing="5"
+                            Grid.Row="1">
+                            <Label 
+                                Style="{StaticResource lblmicroStyle}"
+                                Text="{Binding Name}"/>
+                            <Label
+                                FontAttributes="Bold"
+                                Style="{StaticResource lblmicroStyle}"
+                                TextColor="{StaticResource PrimaryColor}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="$ "/>
+                                            <Span Text="{Binding Price, StringFormat='{0:F2}'}"/>
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentView>

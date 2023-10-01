@@ -7,7 +7,7 @@ using MediatR;
 
 namespace GaezBakeryHouse.Application.Features.Queries.GetAllCategories
 {
-    public class GetAllCategoriesHandler : IRequestHandler<GetAllCategoriesQuery, IEnumerable<CategoryDTO>>
+    public class GetAllCategoriesHandler : IRequestHandler<GetAllCategoriesQuery, IQueryable<CategoryDTO>>
     {
         readonly ICategoryRepository _repository;
         readonly IMapper _mapper;
@@ -19,11 +19,12 @@ namespace GaezBakeryHouse.Application.Features.Queries.GetAllCategories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CategoryDTO>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
+        Task<IQueryable<CategoryDTO>> IRequestHandler<GetAllCategoriesQuery, IQueryable<CategoryDTO>>.Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var categories = await _repository.GetAll();
+            var categories = _repository.GetAll();
+            var categoriesDTO = _mapper.ProjectTo<CategoryDTO>(categories);
 
-            return _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
+            return Task.FromResult(categoriesDTO);
         }
     }
 }

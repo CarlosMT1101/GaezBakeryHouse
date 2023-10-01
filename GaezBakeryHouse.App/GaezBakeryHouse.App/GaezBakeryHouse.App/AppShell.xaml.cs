@@ -1,6 +1,5 @@
 ﻿using GaezBakeryHouse.App.ViewModels;
 using GaezBakeryHouse.App.Views;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

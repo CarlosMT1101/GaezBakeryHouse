@@ -25,7 +25,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.DeleteProductCommand
         {
             var productToDelete = await _repository.GetById(request.Id);
 
-            await _repository.Delete(productToDelete);
+            await _repository.DeleteAsync(productToDelete);
         }
     }
 }

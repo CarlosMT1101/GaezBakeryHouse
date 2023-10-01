@@ -1,4 +1,5 @@
-﻿using GaezBakeryHouse.App.Views;
+﻿using DLToolkit.Forms.Controls;
+using GaezBakeryHouse.App.Views;
 using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -11,7 +12,6 @@ namespace GaezBakeryHouse.App
         public App()
         {
             InitializeComponent();
-
             MainPage = new AppShell();
         }
 

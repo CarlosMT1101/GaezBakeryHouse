@@ -3,10 +3,62 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     Style="{StaticResource PageStyle}"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:GaezBakeryHouse.App.Views.HomePageFolder"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:Class="GaezBakeryHouse.App.Views.HomePage">
 
     <Shell.SearchHandler>
-        <SearchHandler/>
+        <SearchHandler FontSize="Small"/>
     </Shell.SearchHandler>
 
+    
+    <RefreshView
+        Command="{Binding OnRefreshCommand}"
+        IsRefreshing="{Binding IsRefreshing}"
+        RefreshColor="{StaticResource PrimaryColor}">
+        <ScrollView
+            HorizontalScrollBarVisibility="Never"
+            VerticalScrollBarVisibility="Never">
+            <Grid
+                xct:StateLayout.CurrentState="{Binding CurrentState}"
+                xct:StateLayout.AnimateStateChanges="False">
+                <xct:StateLayout.StateViews>
+                    <xct:StateView StateKey="Loading">
+                    </xct:StateView>
+                    <xct:StateView StateKey="Error">
+                    </xct:StateView>
+                    <xct:StateView StateKey="Success">
+                        <Grid
+                            RowSpacing="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="150"/>
+                                <RowDefinition Height="150"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <views:OffertsView
+                                Grid.Row="0"/>
+                            <StackLayout
+                                Spacing="20"
+                                Margin="10,0"
+                                Grid.Row="1">
+                                <Label
+                                    Style="{StaticResource lblSmallStyle}"
+                                    Text="Categorías"/>
+                                <views:CategoriesView/>
+                            </StackLayout>
+                            <StackLayout
+                                Spacing="20"
+                                Margin="10,0"
+                                Grid.Row="2">
+                                <Label
+                                    Style="{StaticResource lblSmallStyle}"
+                                    Text="En oferta"/>
+                                <views:TrendingProductsView/>
+                            </StackLayout>
+                        </Grid>
+                    </xct:StateView>
+                </xct:StateLayout.StateViews>
+            </Grid>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>

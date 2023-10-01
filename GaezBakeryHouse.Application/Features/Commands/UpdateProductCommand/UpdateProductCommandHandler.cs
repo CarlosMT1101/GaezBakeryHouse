@@ -31,7 +31,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand
             }
 
             productToUpdate.ProductImage = productImage;
-            await _repository.Update(productToUpdate);
+            await _repository.UpdateAsync(productToUpdate);
         }
     }
 }

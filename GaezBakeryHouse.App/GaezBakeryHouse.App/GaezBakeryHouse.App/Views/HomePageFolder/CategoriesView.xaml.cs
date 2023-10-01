@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace GaezBakeryHouse.App.Views
+namespace GaezBakeryHouse.App.Views.HomePageFolder
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NotificationsPage : ContentPage
+    public partial class CategoriesView : ContentView
     {
-        public NotificationsPage()
+        public CategoriesView()
         {
             InitializeComponent();
         }

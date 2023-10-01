@@ -20,7 +20,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.DeleteCategoryCommand
         {
             var categoryToDelete = await _repository.GetById(request.Id);
 
-            await _repository.Delete(categoryToDelete);
+            await _repository.DeleteAsync(categoryToDelete);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.UpdateCategoryCommand
             }
 
             categoryToUpdate.CategoryImage = categoryImage;
-            await _repository.Update(categoryToUpdate);
+            await _repository.UpdateAsync(categoryToUpdate);
         }
     }
 }

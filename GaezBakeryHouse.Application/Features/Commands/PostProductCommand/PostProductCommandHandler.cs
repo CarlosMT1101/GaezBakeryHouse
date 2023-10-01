@@ -29,7 +29,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.PostProductCommand
             }
 
             product.ProductImage = productImage;
-            await _repository.Post(product);
+            await _repository.PostAsync(product);
         }
     }
 }

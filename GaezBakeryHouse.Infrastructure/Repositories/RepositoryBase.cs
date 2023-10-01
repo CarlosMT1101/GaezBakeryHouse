@@ -11,33 +11,25 @@ namespace GaezBakeryHouse.Infrastructure.Repositories
         public RepositoryBase(ApplicationDbContext context) =>
             _context = context;
 
-        public async Task Delete(T entity)
-        {
-            _context.Remove(entity);
-            await _context.SaveChangesAsync();
-        }
+        public IQueryable<T> GetAll() =>
+            _context.Set<T>().AsNoTracking();
 
-        public async Task<IEnumerable<T>> GetAll()
-        {
-            return await _context.Set<T>()
-                .AsNoTracking()
-                .ToListAsync();
-        }
+        public async Task<T> GetById(int id) =>
+            await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<T> GetById(int id)
-        {
-            return await _context.Set<T>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(i => i.Id == id);
-        }
-
-        public async Task Post(T entity)
+        public async Task PostAsync(T entity)
         {
             _context.Add(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(T entity)
+        public async Task DeleteAsync(T entity)
+        {
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(T entity)
         {
             _context.Update(entity);
             await _context.SaveChangesAsync();
