@@ -21,7 +21,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand
         {
             byte[] productImage;
 
-            var productToUpdate = await _repository.GetById(request.Id);
+            var productToUpdate = await _repository.GetByIdAsync(request.Id);
             _mapper.Map(request, productToUpdate, typeof(UpdateProductCommand), typeof(Product));
 
             using (var memoryStream = new MemoryStream())

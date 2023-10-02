@@ -18,7 +18,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.DeleteCategoryCommand
 
         public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
-            var categoryToDelete = await _repository.GetById(request.Id);
+            var categoryToDelete = await _repository.GetByIdAsync(request.Id);
 
             await _repository.DeleteAsync(categoryToDelete);
         }

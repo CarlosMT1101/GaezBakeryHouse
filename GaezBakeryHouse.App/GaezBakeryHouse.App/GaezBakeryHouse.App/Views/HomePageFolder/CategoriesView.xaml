@@ -18,6 +18,7 @@
     </ContentView.Resources>
 
     <CollectionView 
+        x:Name="collectionView"
         ItemsSource="{Binding CategoriesList}">
         <CollectionView.ItemsLayout>
             <GridItemsLayout
@@ -29,6 +30,11 @@
                 <Frame
                     xct:TouchEffect.NativeAnimation="True"
                     Style="{StaticResource frmStyle}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding BindingContext.OnCategoryClicked, Source= {x:Reference collectionView}}"
+                            CommandParameter="{Binding .}"/>
+                    </Frame.GestureRecognizers>
                     <Grid
                         RowSpacing="0">
                         <Grid.RowDefinitions>

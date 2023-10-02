@@ -2,6 +2,7 @@
 using GaezBakeryHouse.Application.Features.Commands.DeleteProductCommand;
 using GaezBakeryHouse.Application.Features.Commands.PostProductCommand;
 using GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand;
+using GaezBakeryHouse.Application.Features.Queries.GetProductById;
 using GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory;
 using GaezBakeryHouse.Application.Features.Queries.GetTrendingProducts;
 using MediatR;
@@ -92,6 +93,23 @@ namespace GaezBakeryHouse.API.Controllers
             try
             {
                 var command = new GetTrendingProductsQuery();
+                var response = await _mediator.Send(command);
+
+                return StatusCode((int)HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+
+        [HttpGet("GetProductById/{id:int}")]
+        public async Task<ActionResult<ProductDTO>> GetProductById([FromRoute] int id)
+        {
+            try
+            {
+                var command = new GetProductByIdQuery(id);
                 var response = await _mediator.Send(command);
 
                 return StatusCode((int)HttpStatusCode.OK, response);

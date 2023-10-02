@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Style="{StaticResource PageStyle}"
+             Title="{Binding Title}"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="GaezBakeryHouse.App.Views.ProductDetailPageFolder.ProductDetailPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame" x:Key="frmStyle">
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <RefreshView
+        RefreshColor="{StaticResource PrimaryColor}"
+        IsRefreshing="{Binding IsRefreshing}"
+        Command="{Binding OnRefreshCommand}">
+        <ScrollView>
+            <Grid
+                RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Frame
+                    Style="{StaticResource frmStyle}">
+                    <ffimageloading:CachedImage
+                        HorizontalOptions="Center"
+                        HeightRequest="300"
+                        WidthRequest="300"
+                        VerticalOptions="CenterAndExpand"
+                        Source="{Binding Product.ImageSource}"/>
+                </Frame>
+                <StackLayout
+                    Spacing="20"
+                    Margin="10,0"
+                    Grid.Row="1">
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            Style="{StaticResource lblSmallStyle}"
+                            Text="{Binding Product.Name}"/>
+                        <Label
+                            HorizontalOptions="EndAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            TextColor="{StaticResource PrimaryColor}"
+                            Style="{StaticResource lblSmallStyle}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="$ "/>
+                                    <Span Text="{Binding Product.Price}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+                    <Label
+                        TextColor="Black"
+                        Text="{Binding Product.Description}"/>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </RefreshView> 
+</ContentPage>

@@ -2,6 +2,8 @@
 using GaezBakeryHouse.App.Helpers;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
+using GaezBakeryHouse.App.Views;
+using GaezBakeryHouse.App.Views.CategorySelectedPageFolder;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.UI.Views;
@@ -18,6 +20,7 @@ namespace GaezBakeryHouse.App.ViewModels
         #endregion
         #region PROPERTIES
         public ICommand OnRefreshCommand { get; private set; }
+        public ICommand OnCategoryClicked { get; private set; }
         public AwesomeObservableCollection<CategoryModel> CategoriesList { get; private set; }
         public AwesomeObservableCollection<ProductModel> TrendingProductsList { get; private set; }
         public AwesomeObservableCollection<OffertModel> Banners { get; private set; }
@@ -35,6 +38,9 @@ namespace GaezBakeryHouse.App.ViewModels
             OnRefreshCommand = new Command(
                 execute: () => OnRefesh(),
                 canExecute: () => true);
+
+            OnCategoryClicked = new Command<CategoryModel>(
+                execute: async (e) => await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}/{nameof(CategorySelectedPage)}?id={e.Id}&name={e.Name}"));
         }
         #endregion
         #region FUNCTIONS

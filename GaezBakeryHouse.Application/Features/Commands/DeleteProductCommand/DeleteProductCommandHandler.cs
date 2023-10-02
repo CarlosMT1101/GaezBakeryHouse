@@ -23,7 +23,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.DeleteProductCommand
 
         public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            var productToDelete = await _repository.GetById(request.Id);
+            var productToDelete = await _repository.GetByIdAsync(request.Id);
 
             await _repository.DeleteAsync(productToDelete);
         }

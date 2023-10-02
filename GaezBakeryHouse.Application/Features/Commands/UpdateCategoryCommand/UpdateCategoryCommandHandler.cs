@@ -22,7 +22,7 @@ namespace GaezBakeryHouse.Application.Features.Commands.UpdateCategoryCommand
         {
             byte[] categoryImage;
 
-            var categoryToUpdate = await _repository.GetById(request.Id);
+            var categoryToUpdate = await _repository.GetByIdAsync(request.Id);
             _mapper.Map(request, categoryToUpdate, typeof(UpdateCategoryCommand), typeof(Category));
 
             using(var memoryStream = new MemoryStream())

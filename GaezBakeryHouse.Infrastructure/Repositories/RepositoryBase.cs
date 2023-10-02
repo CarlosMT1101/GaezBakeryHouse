@@ -14,7 +14,7 @@ namespace GaezBakeryHouse.Infrastructure.Repositories
         public IQueryable<T> GetAll() =>
             _context.Set<T>().AsNoTracking();
 
-        public async Task<T> GetById(int id) =>
+        public async Task<T> GetByIdAsync(int id) =>
             await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task PostAsync(T entity)
