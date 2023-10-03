@@ -2,6 +2,7 @@
 using GaezBakeryHouse.Application.DTOs;
 using GaezBakeryHouse.Application.Features.Commands.PostCategoryCommand;
 using GaezBakeryHouse.Application.Features.Commands.PostProductCommand;
+using GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItemCommand;
 using GaezBakeryHouse.Application.Features.Commands.UpdateCategoryCommand;
 using GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand;
 using GaezBakeryHouse.Domain.Entities;
@@ -25,7 +26,11 @@ namespace GaezBakeryHouse.Application.Mappings
                 .ForMember(x => x.CategoryImage, x => x.Ignore());
 
             CreateMap<UpdateProductCommand, Product>()
-                .ForMember(x => x.ProductImage, x => x.Ignore()); ;
+                .ForMember(x => x.ProductImage, x => x.Ignore());
+
+            CreateMap<PostShoppingCartItemCommand, ShoppingCartItem>();
+
+            CreateMap<ShoppingCartItem, ShoppingCartItemDTO>().ReverseMap();
         }
     }
 }

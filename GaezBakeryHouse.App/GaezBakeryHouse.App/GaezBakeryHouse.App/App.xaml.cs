@@ -32,6 +32,7 @@ namespace GaezBakeryHouse.App
                 {
                     SecureStorage.Remove("AccessToken");
                     SecureStorage.Remove("ExpirationToken");
+                    SecureStorage.Remove("ApplicationUserId");
 
                     await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
                 }
@@ -63,6 +64,7 @@ namespace GaezBakeryHouse.App
                 {
                     SecureStorage.Remove("AccessToken");
                     SecureStorage.Remove("ExpirationToken");
+                    SecureStorage.Remove("ApplicationUserId");
 
                     await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
                 }

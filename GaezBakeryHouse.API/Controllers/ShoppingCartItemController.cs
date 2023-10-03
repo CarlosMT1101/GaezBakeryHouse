@@ -1,0 +1,52 @@
+﻿using GaezBakeryHouse.Application.DTOs;
+using GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItemCommand;
+using GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory;
+using GaezBakeryHouse.Application.Features.Queries.GetShoppingCartItemsByUserId;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+
+namespace GaezBakeryHouse.API.Controllers
+{
+    [ApiController]
+    [Route("api/shoppingCartItem")]
+    public class ShoppingCartItemController : ControllerBase
+    {
+        readonly IMediator _mediator;
+
+        public ShoppingCartItemController(IMediator mediator) =>
+            _mediator = mediator;
+
+        [HttpPost("PostShoppingCartItem")]
+        public async Task<ActionResult> PostShoppingCartItem([FromBody] PostShoppingCartItemCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+
+        [HttpGet("GetShoppingCartItemsByUserIdQuery/{userId}")]
+        public async Task<ActionResult<IEnumerable<ShoppingCartItemDTO>>> GetShoppingCartItemsByUserIdQuery([FromRoute] string userId)
+        {
+            try
+            {
+                var command = new GetShoppingCartItemsByUserIdQuery(userId);
+                var response = await _mediator.Send(command);
+
+                return StatusCode((int)HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+    }
+}

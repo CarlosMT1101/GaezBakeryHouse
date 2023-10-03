@@ -4,10 +4,11 @@ using System.Text;
 
 namespace GaezBakeryHouse.App.Models
 {
-    public class AuthResponseModel
+    public class ShoppingCartItemModel
     {
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+        public int ProductId { get; set; }
         public string ApplicationUserId { get; set; }
-        public string Token { get; set; }
-        public DateTime Expiration { get; set; }
     }
 }

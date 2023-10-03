@@ -33,6 +33,7 @@ namespace GaezBakeryHouse.App.Services
 
                     await SecureStorage.SetAsync("AccessToken", $"Bearer {authResponseModel.Token}");
                     await SecureStorage.SetAsync("ExpirationToken", authResponseModel.Expiration.ToString());
+                    await SecureStorage.SetAsync("ApplicationUserId", authResponseModel.ApplicationUserId);
 
                     return true;
                 }

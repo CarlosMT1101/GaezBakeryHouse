@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.UI.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
@@ -14,10 +15,24 @@ namespace GaezBakeryHouse.App.ViewModels
     {
         #region ATRIBUTES
         int _productId;
+        int _productAmount = 1;
         readonly ProductService _productService;
+        readonly ShoppingService _shoppingService;
         ProductModel _product;
         #endregion
         #region PROPERTIES
+        public int ProductAmount
+        {
+            get => _productAmount;
+            set
+            {
+                _productAmount = value;
+
+                OnPropertyChanged();
+                ((Command)OnIncrementAmountCommand).ChangeCanExecute();
+                ((Command)OnDecrementAmountCommand).ChangeCanExecute();
+            }
+        }
         public int ProductId
         {
             get => _productId;
@@ -39,16 +54,32 @@ namespace GaezBakeryHouse.App.ViewModels
         #endregion
         #region COMMANDS
         public ICommand OnRefreshCommand { get; private set; }
+        public ICommand OnIncrementAmountCommand { get; private set; }
+        public ICommand OnDecrementAmountCommand { get; private set; }
+        public ICommand OnAddToCartClickedCommand { get; private set; }
         #endregion
         #region CONSTRUCTOR
         public ProductDetailViewModel()
         {
             Title = "Producto";
             _productService = new ProductService();
+            _shoppingService = new ShoppingService();
 
             OnRefreshCommand = new Command(
                execute: async () => await LoadDataAsync(),
                canExecute: () => true);
+
+            OnIncrementAmountCommand = new Command(
+                execute: () => ProductAmount += 1,
+                canExecute: () => ProductAmount < 100);
+
+            OnDecrementAmountCommand = new Command(
+                execute: () => ProductAmount -= 1,
+                canExecute: () => ProductAmount > 1);
+
+            OnAddToCartClickedCommand = new Command(
+                execute: async () => await AddToCart(),
+                canExecute: () => true);
         }
         #endregion
         #region FUNCTIONS
@@ -67,6 +98,31 @@ namespace GaezBakeryHouse.App.ViewModels
         }
         private async Task LoadProduct() =>
             Product = await _productService.GetProductById(ProductId);
+        private async Task AddToCart()
+        {
+            UserDialogs.Instance.ShowLoading("Cargando");
+
+            var item = new ShoppingCartItemModel
+            {
+                ApplicationUserId = SecureStorage.GetAsync("ApplicationUserId").Result,
+                Price = Product.Price,
+                ProductId = Product.Id,
+                Quantity = ProductAmount,
+            };
+
+            var addToCartSuccesfull = await _shoppingService.PostShoppingCartItem(item);
+
+            if (addToCartSuccesfull)
+            {
+                await UserDialogs.Instance.AlertAsync("Producto agregado al carrito", "Mensaje", "Ok");
+            }
+            else
+            {
+                await UserDialogs.Instance.AlertAsync("Algo salío mal", "Mensaje", "Ok");
+            }
+
+            UserDialogs.Instance.HideLoading();
+        }
         #endregion
     }
 }

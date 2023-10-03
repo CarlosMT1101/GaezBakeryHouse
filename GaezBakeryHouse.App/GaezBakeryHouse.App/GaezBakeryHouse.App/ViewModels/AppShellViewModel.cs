@@ -21,6 +21,7 @@ namespace GaezBakeryHouse.App.ViewModels
         {
             SecureStorage.Remove("AccessToken");
             SecureStorage.Remove("ExpirationToken");
+            SecureStorage.Remove("ApplicationUserId");
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
     }

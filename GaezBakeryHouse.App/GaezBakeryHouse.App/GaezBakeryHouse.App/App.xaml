@@ -27,5 +27,13 @@
         <Style TargetType="ContentPage" x:Key="PageStyle">
             <Setter Property="BackgroundColor" Value="#F1F1F1"/>
         </Style>
+        <Style TargetType="Button" x:Key="BtnStyle">
+            <Setter Property="TextTransform" Value="None"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="HeightRequest" Value="60"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
     </Application.Resources>
 </Application>

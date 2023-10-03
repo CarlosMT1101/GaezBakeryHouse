@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Style="{StaticResource PageStyle}"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts"
              Title="{Binding Title}"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="GaezBakeryHouse.App.Views.ProductDetailPageFolder.ProductDetailPage">
@@ -11,6 +13,14 @@
             <Style TargetType="Frame" x:Key="frmStyle">
                 <Setter Property="HasShadow" Value="False"/>
                 <Setter Property="Padding" Value="10"/>
+            </Style>
+            <Style TargetType="Frame" x:Key="frmBtnStyle">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="HeightRequest" Value="30"/>
+                <Setter Property="WidthRequest" Value="30"/>
+                <Setter Property="CornerRadius" Value="30"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -25,6 +35,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="300"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Frame
                     Style="{StaticResource frmStyle}">
@@ -39,13 +51,13 @@
                     Spacing="20"
                     Margin="10,0"
                     Grid.Row="1">
-                    <StackLayout Orientation="Horizontal">
+                    <StackLayout
+                        Spacing="5"
+                        Orientation="Vertical">
                         <Label
                             Style="{StaticResource lblSmallStyle}"
                             Text="{Binding Product.Name}"/>
                         <Label
-                            HorizontalOptions="EndAndExpand"
-                            VerticalOptions="CenterAndExpand"
                             TextColor="{StaticResource PrimaryColor}"
                             Style="{StaticResource lblSmallStyle}">
                             <Label.FormattedText>
@@ -60,6 +72,55 @@
                         TextColor="Black"
                         Text="{Binding Product.Description}"/>
                 </StackLayout>
+                <StackLayout
+                    Spacing="20"
+                    HorizontalOptions="End"
+                    Margin="10,0"
+                    Grid.Row="2"
+                    Orientation="Horizontal">
+                    <Frame
+                        xct:TouchEffect.NativeAnimation="True"
+                        Style="{StaticResource frmBtnStyle}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OnDecrementAmountCommand}"/>
+                        </Frame.GestureRecognizers>
+                        <Label
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand"
+                            TextColor="White"
+                            Style="{StaticResource LblIconStyle}"
+                            Text="{Static fonts:IconFont.Minus}"/>
+                    </Frame>
+                    <Label 
+                        FontAttributes="Bold"
+                        Text="{Binding ProductAmount}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        TextColor="Black"
+                        FontSize="Title"/>
+                    <Frame
+                        xct:TouchEffect.NativeAnimation="True"
+                        Style="{StaticResource frmBtnStyle}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OnIncrementAmountCommand}"/>
+                        </Frame.GestureRecognizers>
+                        <Label
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand"
+                            TextColor="White"
+                            Style="{StaticResource LblIconStyle}"
+                            Text="{Static fonts:IconFont.Plus}"/>
+                    </Frame>
+                </StackLayout>
+                <Button
+                    Command="{Binding OnAddToCartClickedCommand}"
+                    Style="{StaticResource BtnStyle}"
+                    Text="Agregar al carrito"
+                    Margin="10,0,10,10"
+                    VerticalOptions="EndAndExpand"
+                    Grid.Row="3"/>
             </Grid>
         </ScrollView>
     </RefreshView> 

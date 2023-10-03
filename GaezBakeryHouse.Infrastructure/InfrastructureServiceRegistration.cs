@@ -15,7 +15,8 @@ namespace GaezBakeryHouse.Infrastructure
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            
+            services.AddScoped<IShoppingCartItemRepository, ShoppingCartItemRepository>();
+
             return services;
         }
     }
