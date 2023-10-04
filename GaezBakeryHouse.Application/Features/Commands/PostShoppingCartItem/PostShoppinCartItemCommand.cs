@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItemCommand
-{
+namespace GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItem
+{ 
     public class PostShoppingCartItemCommand : IRequest
     {
         [Required]

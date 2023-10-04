@@ -3,7 +3,7 @@ using GaezBakeryHouse.Application.Contracts;
 using GaezBakeryHouse.Domain.Entities;
 using MediatR;
 
-namespace GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItemCommand
+namespace GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItem
 {
     public class PostShoppinCartItemHandler : IRequestHandler<PostShoppingCartItemCommand>
     {

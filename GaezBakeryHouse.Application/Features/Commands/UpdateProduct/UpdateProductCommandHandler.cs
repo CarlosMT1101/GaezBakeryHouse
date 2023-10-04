@@ -3,7 +3,7 @@ using GaezBakeryHouse.Application.Contracts;
 using GaezBakeryHouse.Domain.Entities;
 using MediatR;
 
-namespace GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand
+namespace GaezBakeryHouse.Application.Features.Commands.UpdateProduct
 {
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
     {

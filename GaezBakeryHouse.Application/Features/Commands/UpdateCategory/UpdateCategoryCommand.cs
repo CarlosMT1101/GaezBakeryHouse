@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace GaezBakeryHouse.Application.Features.Commands.UpdateCategoryCommand
+namespace GaezBakeryHouse.Application.Features.Commands.UpdateCategory
 {
     public class UpdateCategoryCommand : IRequest
     {

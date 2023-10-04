@@ -3,7 +3,7 @@ using GaezBakeryHouse.Application.Contracts;
 using GaezBakeryHouse.Domain.Entities;
 using MediatR;
 
-namespace GaezBakeryHouse.Application.Features.Commands.PostProductCommand
+namespace GaezBakeryHouse.Application.Features.Commands.PostProduct
 {
     public class PostProductCommandHandler : IRequestHandler<PostProductCommand>
     {

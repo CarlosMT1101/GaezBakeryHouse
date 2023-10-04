@@ -1,7 +1,7 @@
 ﻿using MediatR;
 
 
-namespace GaezBakeryHouse.Application.Features.Commands.DeleteProductCommand
+namespace GaezBakeryHouse.Application.Features.Commands.DeleteProduct
 {
     public class DeleteProductCommand : IRequest
     {

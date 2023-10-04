@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace GaezBakeryHouse.Application.Features.Commands.PostProductCommand
-{
+namespace GaezBakeryHouse.Application.Features.Commands.PostProduct
+{ 
     public class PostProductCommand :  IRequest
     {
         public string Name { get; set; }

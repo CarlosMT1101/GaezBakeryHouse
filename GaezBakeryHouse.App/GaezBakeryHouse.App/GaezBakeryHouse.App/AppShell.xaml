@@ -20,9 +20,17 @@
         Title="Inicio">
         <ShellContent
             Title="Inicio"
-            Icon="home.png"
             Route="HomePage"
             ContentTemplate="{DataTemplate views:HomePage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem
+        FlyoutDisplayOptions="AsSingleItem"
+        Route="ShoppingCart"
+        Title="Carrito">
+        <ShellContent
+            Route="ShoppingCartPage"
+            ContentTemplate="{DataTemplate views:ShoppingCartPage}"/>
     </FlyoutItem>
 
     <MenuItem 

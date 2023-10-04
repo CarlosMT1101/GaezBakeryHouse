@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GaezBakeryHouse.App.Views.ShoppingCartPageFolder.TotalView">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackLayout
+            Margin="10,0,0,0"
+            Grid.Column="0">
+            <Label
+                FontAttributes="None"
+                Style="{StaticResource lblSmallStyle}"
+                Text="Total"/>
+            <Label 
+                TextColor="{StaticResource PrimaryColor}"
+                Style="{StaticResource lblSmallStyle}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="$ "/>
+                        <Span Text="{Binding TotalAmount}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+        <Button 
+            Command="{Binding OnOrderClickedCommand}"
+            Text="Ordenar"
+            Grid.Column="1"
+            Style="{StaticResource btnStyle}"/>
+    </Grid>
+</ContentView>

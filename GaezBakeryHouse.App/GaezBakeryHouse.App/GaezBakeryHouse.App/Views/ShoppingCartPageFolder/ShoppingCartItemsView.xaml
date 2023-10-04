@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="GaezBakeryHouse.App.Views.ShoppingCartPageFolder.ShoppingCartItemsView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame" x:Key="frmStyle">
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="HeightRequest" Value="100"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <CollectionView
+        x:Name="collectionView"
+        ItemsSource="{Binding ShoppingCartItemsList}">
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout
+                VerticalItemSpacing="10"
+                Orientation="Vertical"/>
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame
+                    Style="{StaticResource frmStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <ffimageloading:CachedImage
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand"
+                            Source="{Binding ImageSource}"
+                            Grid.Column="0"/>
+                        <StackLayout
+                            VerticalOptions="Center"
+                            Grid.Column="1">
+                            <Label
+                                FontAttributes="None"
+                                Style="{StaticResource lblSmallStyle}"
+                                Text="{Binding ProductName}"/>
+                            <Label
+                                TextColor="Black">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Quantity}"/>
+                                        <Span Text=" X "/>
+                                        <Span Text="{Binding Price}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label 
+                                xct:TouchEffect.NativeAnimation="True"
+                                HorizontalOptions="EndAndExpand"
+                                Style="{StaticResource lblmicroStyle}"
+                                TextColor="{StaticResource PrimaryColor}"
+                                Text="Eliminar">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding BindingContext.OnDeleteClickedCommand, Source= {x:Reference collectionView}}"
+                                        CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        
+    </CollectionView>
+</ContentView>

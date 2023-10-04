@@ -4,7 +4,7 @@ using GaezBakeryHouse.Domain.Entities;
 using MediatR;
 
 
-namespace GaezBakeryHouse.Application.Features.Commands.PostCategoryCommand
+namespace GaezBakeryHouse.Application.Features.Commands.PostCategory
 {
     public class PostCategoryCommandHandler : IRequestHandler<PostCategoryCommand>
     {

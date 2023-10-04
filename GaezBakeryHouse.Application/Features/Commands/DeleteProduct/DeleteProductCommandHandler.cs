@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GaezBakeryHouse.Application.Features.Commands.DeleteProductCommand
+namespace GaezBakeryHouse.Application.Features.Commands.DeleteProduct
 {
     public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand>
     {

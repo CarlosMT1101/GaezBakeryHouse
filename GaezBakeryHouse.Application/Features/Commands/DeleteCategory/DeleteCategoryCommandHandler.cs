@@ -2,7 +2,7 @@
 using GaezBakeryHouse.Application.Contracts;
 using MediatR;
 
-namespace GaezBakeryHouse.Application.Features.Commands.DeleteCategoryCommand
+namespace GaezBakeryHouse.Application.Features.Commands.DeleteCategory
 {
     public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
     {

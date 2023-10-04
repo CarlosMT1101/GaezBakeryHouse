@@ -1,7 +1,7 @@
 ﻿using GaezBakeryHouse.Application.DTOs;
-using GaezBakeryHouse.Application.Features.Commands.DeleteCategoryCommand;
-using GaezBakeryHouse.Application.Features.Commands.PostCategoryCommand;
-using GaezBakeryHouse.Application.Features.Commands.UpdateCategoryCommand;
+using GaezBakeryHouse.Application.Features.Commands.DeleteCategory;
+using GaezBakeryHouse.Application.Features.Commands.PostCategory;
+using GaezBakeryHouse.Application.Features.Commands.UpdateCategory;
 using GaezBakeryHouse.Application.Features.Queries.GetAllCategories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

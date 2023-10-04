@@ -21,9 +21,20 @@ namespace GaezBakeryHouse.Application.Features.Queries.GetShoppingCartItemsByUse
         {
             var shopItems = _repository.GetShoppingCartItemsByUserId(request.Id);
 
-            var shopItemsDTO = _mapper.ProjectTo<ShoppingCartItemDTO>(shopItems);
+            var shopItemsListDTO = from t1 in shopItems
+                                   select new ShoppingCartItemDTO
+                                   {
+                                        ApplicationUserId = t1.ApplicationUserId,
+                                        Id = t1.Id,
+                                        Price = t1.Price,
+                                        ProductId = t1.ProductId,
+                                        ProductImage = t1.Product.ProductImage,
+                                        Quantity = t1.Quantity,
+                                        TotalAmount = t1.TotalAmount,
+                                        ProductName = t1.Product.Name
+                                   };
 
-            return Task.FromResult(shopItemsDTO);
+            return Task.FromResult(shopItemsListDTO);
         }
     }
 }

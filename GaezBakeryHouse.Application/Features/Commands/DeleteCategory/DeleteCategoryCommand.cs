@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace GaezBakeryHouse.Application.Features.Commands.DeleteCategoryCommand
+namespace GaezBakeryHouse.Application.Features.Commands.DeleteCategory
 {
     public class DeleteCategoryCommand : IRequest
     {

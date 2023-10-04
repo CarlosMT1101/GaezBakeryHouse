@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using GaezBakeryHouse.App.Helpers;
+using GaezBakeryHouse.App.Interfaces;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
 using GaezBakeryHouse.App.Views;
@@ -11,7 +12,7 @@ using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
-    public class HomeViewModel : BaseViewModel
+    public class HomeViewModel : BaseViewModel, IRefresh
     {
         #region ATRIBUTES
         readonly CategoryService _categoryService;
@@ -19,7 +20,6 @@ namespace GaezBakeryHouse.App.ViewModels
         readonly ProductService _productService;
         #endregion
         #region PROPERTIES
-        public ICommand OnRefreshCommand { get; private set; }
         public ICommand OnCategoryClicked { get; private set; }
         public AwesomeObservableCollection<CategoryModel> CategoriesList { get; private set; }
         public AwesomeObservableCollection<ProductModel> TrendingProductsList { get; private set; }
@@ -36,7 +36,7 @@ namespace GaezBakeryHouse.App.ViewModels
             Banners = new AwesomeObservableCollection<OffertModel>();
 
             OnRefreshCommand = new Command(
-                execute: () => OnRefesh(),
+                execute: async () => await LoadDataAsync(),
                 canExecute: () => true);
 
             OnCategoryClicked = new Command<CategoryModel>(
@@ -53,10 +53,10 @@ namespace GaezBakeryHouse.App.ViewModels
         }
         private void LoadBanners()
         {
-            var banners = _offertService.GetBanners();
-
-            Banners.ClearRange();
-            Banners.AddRange(banners);
+            if(Banners.Count == 0)
+            {
+                Banners.AddRange(_offertService.GetBanners());
+            }
         }
         private async Task LoadTrendingProducts()
         {
@@ -78,8 +78,6 @@ namespace GaezBakeryHouse.App.ViewModels
             CurrentState = LayoutState.Success;
             UserDialogs.Instance.HideLoading();
         }
-        public async void OnRefesh() =>
-            await LoadDataAsync();
         #endregion
     }
 }

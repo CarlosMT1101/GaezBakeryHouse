@@ -16,7 +16,6 @@
     </ContentView.Resources>
 
     <CarouselView
-        x:Name="carrousellView"
         ItemsSource="{Binding Banners}">
         <CarouselView.ItemTemplate>
             <DataTemplate>

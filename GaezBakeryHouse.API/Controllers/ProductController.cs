@@ -1,14 +1,13 @@
 ﻿using GaezBakeryHouse.Application.DTOs;
-using GaezBakeryHouse.Application.Features.Commands.DeleteProductCommand;
-using GaezBakeryHouse.Application.Features.Commands.PostProductCommand;
-using GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand;
+using GaezBakeryHouse.Application.Features.Commands.DeleteProduct;
+using GaezBakeryHouse.Application.Features.Commands.PostProduct;
+using GaezBakeryHouse.Application.Features.Commands.UpdateProduct;
 using GaezBakeryHouse.Application.Features.Queries.GetProductById;
 using GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory;
 using GaezBakeryHouse.Application.Features.Queries.GetTrendingProducts;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace GaezBakeryHouse.API.Controllers

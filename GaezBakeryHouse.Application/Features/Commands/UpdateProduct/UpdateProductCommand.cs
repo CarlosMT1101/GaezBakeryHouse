@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand
+namespace GaezBakeryHouse.Application.Features.Commands.UpdateProduct
 {
     public class UpdateProductCommand : IRequest
     {

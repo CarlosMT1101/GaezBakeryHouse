@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using GaezBakeryHouse.Application.DTOs;
-using GaezBakeryHouse.Application.Features.Commands.PostCategoryCommand;
-using GaezBakeryHouse.Application.Features.Commands.PostProductCommand;
-using GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItemCommand;
-using GaezBakeryHouse.Application.Features.Commands.UpdateCategoryCommand;
-using GaezBakeryHouse.Application.Features.Commands.UpdateProductCommand;
+using GaezBakeryHouse.Application.Features.Commands.PostCategory;
+using GaezBakeryHouse.Application.Features.Commands.PostProduct;
+using GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItem;
+using GaezBakeryHouse.Application.Features.Commands.UpdateCategory;
+using GaezBakeryHouse.Application.Features.Commands.UpdateProduct;
 using GaezBakeryHouse.Domain.Entities;
 
 namespace GaezBakeryHouse.Application.Mappings

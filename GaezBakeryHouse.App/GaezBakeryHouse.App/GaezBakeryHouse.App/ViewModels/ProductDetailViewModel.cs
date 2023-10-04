@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using GaezBakeryHouse.App.Interfaces;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
-    public class ProductDetailViewModel : BaseViewModel, IQueryAttributable
+    public class ProductDetailViewModel : BaseViewModel, IQueryAttributable, IRefresh
     {
         #region ATRIBUTES
         int _productId;
@@ -53,7 +54,6 @@ namespace GaezBakeryHouse.App.ViewModels
         }
         #endregion
         #region COMMANDS
-        public ICommand OnRefreshCommand { get; private set; }
         public ICommand OnIncrementAmountCommand { get; private set; }
         public ICommand OnDecrementAmountCommand { get; private set; }
         public ICommand OnAddToCartClickedCommand { get; private set; }

@@ -13,10 +13,11 @@ using System.Windows.Input;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using GaezBakeryHouse.App.Views.ProductDetailPageFolder;
+using GaezBakeryHouse.App.Interfaces;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
-    public class CategorySelectedViewModel : BaseViewModel, IQueryAttributable
+    public class CategorySelectedViewModel : BaseViewModel, IQueryAttributable, IRefresh
     {
         #region ATRIBUTES
         readonly ProductService _productService;
@@ -35,7 +36,6 @@ namespace GaezBakeryHouse.App.ViewModels
         public AwesomeObservableCollection<ProductModel> ProductsList { get; private set; }
         #endregion
         #region COMMANDS
-        public ICommand OnRefreshCommand { get; private set; }
         public ICommand OnProductClickedCommand { get; private set; }
         #endregion
         #region CONSTRUCTOR
@@ -60,6 +60,15 @@ namespace GaezBakeryHouse.App.ViewModels
             ProductsList.ClearRange();
             ProductsList.AddRange(products);
         }
+        #endregion
+        #region IQueryAttributable
+        public void ApplyQueryAttributes(IDictionary<string, string> query)
+        {
+            CategoryId = int.Parse(HttpUtility.UrlDecode(query["id"]));
+            Title = HttpUtility.UrlDecode(query["name"]);
+        }
+        #endregion
+        #region IRefresh
         public async Task LoadDataAsync()
         {
             UserDialogs.Instance.ShowLoading("Cargando");
@@ -70,11 +79,6 @@ namespace GaezBakeryHouse.App.ViewModels
 
             CurrentState = LayoutState.Success;
             UserDialogs.Instance.HideLoading();
-        }
-        public void ApplyQueryAttributes(IDictionary<string, string> query)
-        {
-            CategoryId = int.Parse(HttpUtility.UrlDecode(query["id"]));
-            Title = HttpUtility.UrlDecode(query["name"]);
         }
         #endregion
     }
