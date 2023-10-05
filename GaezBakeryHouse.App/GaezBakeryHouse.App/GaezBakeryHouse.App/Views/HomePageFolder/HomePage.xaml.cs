@@ -1,5 +1,4 @@
 ﻿using GaezBakeryHouse.App.ViewModels;
-using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,14 +7,29 @@ namespace GaezBakeryHouse.App.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
+        StackLayout _leftStackLayout;
+        StackLayout _rightStackLayout;
         readonly HomeViewModel _viewModel;
 
         public HomePage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new HomeViewModel();
+            GetLayouts();
 
-            
+            BindingContext = _viewModel = new HomeViewModel(_leftStackLayout, _rightStackLayout);
+        }
+  
+        // *** WARNING ***
+        // If you modify the HomePageViews, it is very likely
+        // that this method will stop working and cause some
+        // exception.
+        void GetLayouts()
+        {
+            var stackLayout = (StackLayout) trendingProductsView.Children[0];
+            var grid = (Grid) stackLayout.Children[1];
+
+            _leftStackLayout = grid.FindByName<StackLayout>("leftStackLayout");
+            _rightStackLayout = grid.FindByName<StackLayout>("rightStackLayout");
         }
 
         protected async override void OnAppearing()

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageLoading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             x:Class="GaezBakeryHouse.App.Views.HomePageFolder.OffertsView">
+             x:Class="GaezBakeryHouse.App.Views.HomePageFolder.BannersView">
 
     <ContentView.Resources>
         <ResourceDictionary>
@@ -19,10 +19,11 @@
         ItemsSource="{Binding Banners}">
         <CarouselView.ItemTemplate>
             <DataTemplate>
-                <Grid Padding ="10">
+                <Grid 
+                    Padding ="10">
                     <Frame 
                         xct:TouchEffect.NativeAnimation="True"
-                        Style="{StaticResource frmStyle}">  
+                        Style="{StaticResource frmStyle}">
                         <ffimageLoading:CachedImage
                             Aspect="Fill"
                             Source="{Binding ImageSource}"/>
@@ -30,6 +31,5 @@
                 </Grid>
             </DataTemplate>
         </CarouselView.ItemTemplate>
-        
     </CarouselView> 
 </ContentView>

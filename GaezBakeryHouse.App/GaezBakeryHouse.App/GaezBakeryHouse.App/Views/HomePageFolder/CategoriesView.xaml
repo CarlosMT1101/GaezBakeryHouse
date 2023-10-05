@@ -9,52 +9,64 @@
     <ContentView.Resources>
         <ResourceDictionary>
             <Style TargetType="Frame" x:Key="frmStyle">
+                <Setter Property="xct:TouchEffect.NativeAnimation" Value="True"/>
                 <Setter Property="CornerRadius" Value="10"/>
                 <Setter Property="HasShadow" Value="False"/>
                 <Setter Property="Padding" Value="0"/>
-                <Setter Property="WidthRequest" Value="120"/>
+                <Setter Property="WidthRequest" Value="130"/>
             </Style>
         </ResourceDictionary>
     </ContentView.Resources>
 
-    <CollectionView 
-        x:Name="collectionView"
-        ItemsSource="{Binding CategoriesList}">
-        <CollectionView.ItemsLayout>
-            <GridItemsLayout
-                HorizontalItemSpacing="15"
-                Orientation="Horizontal"/>
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame
-                    xct:TouchEffect.NativeAnimation="True"
-                    Style="{StaticResource frmStyle}">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding BindingContext.OnCategoryClicked, Source= {x:Reference collectionView}}"
-                            CommandParameter="{Binding .}"/>
-                    </Frame.GestureRecognizers>
-                    <Grid
-                        RowSpacing="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <ffimageloading:CachedImage
-                            Grid.Row="0"
-                            Aspect="AspectFill"
-                            Source="{Binding ImageSource}"/>
-                        <Label 
-                            Padding="10,10"
-                            Style="{StaticResource lblmicroStyle}"
-                            Grid.Row="1"
-                            HorizontalOptions="Center"
-                            VerticalOptions="CenterAndExpand"
-                            Text="{Binding Name}"/>
-                    </Grid>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+
+    <StackLayout
+        Spacing="15">
+        <Label
+            Margin="10,0"
+            Text="Categorías"
+            Style="{StaticResource lblSmallStyle}"/>
+        <CollectionView
+            x:Name="collectionView"
+            HeightRequest="140"
+            Margin="10,0"
+            ItemsSource="{Binding CategoriesList}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout 
+                    HorizontalItemSpacing="10"
+                    Orientation="Horizontal">
+                </GridItemsLayout>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Style="{StaticResource frmStyle}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                NumberOfTapsRequired="1"
+                                Command="{Binding BindingContext.OnCategoryClicked, Source= {x:Reference collectionView}}"
+                                CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+                        <Grid
+                            RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <ffimageloading:CachedImage
+                                Grid.Row="0"
+                                Aspect="AspectFill"
+                                Source="{Binding ImageSource}"/>
+                            <Label 
+                                Padding="10,10"
+                                Style="{StaticResource lblmicroStyle}"
+                                Grid.Row="1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="CenterAndExpand"
+                                Text="{Binding Name}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
 </ContentView>

@@ -11,7 +11,6 @@
         <SearchHandler FontSize="Small"/>
     </Shell.SearchHandler>
 
-    
     <RefreshView
         Command="{Binding OnRefreshCommand}"
         IsRefreshing="{Binding IsRefreshing}"
@@ -29,32 +28,19 @@
                     </xct:StateView>
                     <xct:StateView StateKey="Success">
                         <Grid
-                            RowSpacing="20">
+                            RowSpacing="15">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="150"/>
-                                <RowDefinition Height="150"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <views:OffertsView
+                            <views:BannersView
                                 Grid.Row="0"/>
-                            <StackLayout
-                                Spacing="20"
-                                Margin="10,0"
-                                Grid.Row="1">
-                                <Label
-                                    Style="{StaticResource lblSmallStyle}"
-                                    Text="Categorías"/>
-                                <views:CategoriesView/>
-                            </StackLayout>
-                            <StackLayout
-                                Spacing="20"
-                                Margin="10,0"
-                                Grid.Row="2">
-                                <Label
-                                    Style="{StaticResource lblSmallStyle}"
-                                    Text="En oferta"/>
-                                <views:TrendingProductsView/>
-                            </StackLayout>
+                            <views:CategoriesView
+                                Grid.Row="1"/>
+                            <views:TrendingProductsView
+                                x:Name="trendingProductsView"
+                                Grid.Row="2"/>
                         </Grid>
                     </xct:StateView>
                 </xct:StateLayout.StateViews>
