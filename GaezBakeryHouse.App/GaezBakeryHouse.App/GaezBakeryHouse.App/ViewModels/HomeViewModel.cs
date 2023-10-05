@@ -77,7 +77,6 @@ namespace GaezBakeryHouse.App.ViewModels
         }
         private async Task LoadTrendingProducts()
         {
-
             var products = await _productService.GetTrendingProducts();
 
             _leftStackLayout.Children.Clear();
@@ -89,13 +88,9 @@ namespace GaezBakeryHouse.App.ViewModels
             for(int i = 0; i < TrendingProductsList.Count; i++)
             {
                 if((i + 1) % 2 == 0)
-                {
-                    _leftStackLayout.Children.Add(DrawTrendingProductCart(TrendingProductsList[i]));
-                }
-                else
-                {
                     _rightStackLayout.Children.Add(DrawTrendingProductCart(TrendingProductsList[i]));
-                }
+                else
+                    _leftStackLayout.Children.Add(DrawTrendingProductCart(TrendingProductsList[i]));
             }
         }
         public async Task LoadDataAsync()

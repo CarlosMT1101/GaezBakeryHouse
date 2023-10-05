@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              Style="{StaticResource PageStyle}"
              Title="{Binding Title}"
+             xmlns:views="clr-namespace:GaezBakeryHouse.App.Views.CategorySelectedPageFolder"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -24,7 +25,6 @@
             RefreshColor="{StaticResource PrimaryColor}">
         <ScrollView
             HorizontalScrollBarVisibility="Never"
-            Orientation="Neither"
             VerticalScrollBarVisibility="Never">
             <Grid
                 xct:StateLayout.CurrentState="{Binding CurrentState}"
@@ -35,68 +35,14 @@
                     <xct:StateView StateKey="Error">
                     </xct:StateView>
                     <xct:StateView StateKey="Success">
-                        <CollectionView
-                            x:Name="collectionView"
-                            ItemsSource="{Binding ProductsList}">
-                            <CollectionView.ItemsLayout>
-                                <GridItemsLayout
-                                    VerticalItemSpacing="10"
-                                    HorizontalItemSpacing="10"
-                                    Orientation="Vertical"
-                                    Span="2"/>
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid 
-                                        xct:StateLayout.CurrentState="{Binding CurrentState}"
-                                        xct:StateLayout.AnimateStateChanges="False"
-                                        Padding="10">
-                                        <Frame
-                                            xct:TouchEffect.NativeAnimation="True"
-                                            Style="{StaticResource frmStyle}">
-                                            <Frame.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding BindingContext.OnProductClickedCommand, Source= {x:Reference collectionView}}"
-                                                    CommandParameter="{Binding .}"/>
-                                            </Frame.GestureRecognizers>
-                                            <Grid
-                                                RowSpacing="20">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <ffimageloading:CachedImage
-                                                    Grid.Row="0"
-                                                    HorizontalOptions="Center"
-                                                    VerticalOptions="Center"
-                                                    Source="{Binding ImageSource}"/>
-                                                <StackLayout
-                                                    VerticalOptions="EndAndExpand"
-                                                    Spacing="5"
-                                                    Grid.Row="1">
-                                                    <Label 
-                                                        Style="{StaticResource lblmicroStyle}"
-                                                        Text="{Binding Name}"/>
-                                                    <Label
-                                                        FontAttributes="Bold"
-                                                        Style="{StaticResource lblmicroStyle}"
-                                                        TextColor="{StaticResource PrimaryColor}">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <FormattedString.Spans>
-                                                                    <Span Text="$ "/>
-                                                                    <Span Text="{Binding Price, StringFormat='{0:F2}'}"/>
-                                                                </FormattedString.Spans>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                </StackLayout>
-                                            </Grid>
-                                        </Frame>
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <views:ProductCategoryView
+                                x:Name="productCategoryView"
+                                Grid.Row="0"/>
+                        </Grid>
                     </xct:StateView>
                 </xct:StateLayout.StateViews>
             </Grid>
