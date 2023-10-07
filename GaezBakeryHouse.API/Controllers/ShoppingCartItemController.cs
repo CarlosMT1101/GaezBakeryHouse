@@ -3,6 +3,7 @@ using GaezBakeryHouse.Application.Features.Commands.DeleteAllShoppingCartItemsBy
 using GaezBakeryHouse.Application.Features.Commands.DeleteShoppingCartItem;
 using GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItem;
 using GaezBakeryHouse.Application.Features.Queries.GetShoppingCartItemsByUserId;
+using GaezBakeryHouse.Application.Features.Queries.GetUserTotalAmount;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +79,23 @@ namespace GaezBakeryHouse.API.Controllers
                 await _mediator.Send(command);
 
                 return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+
+        [HttpGet("GetUserTotalAmount/{userId}")]
+        public async Task<ActionResult<decimal>> GetUserTotalAmount([FromRoute] string userId)
+        {
+            try
+            {
+                var command = new GetUserTotalAmountQuery(userId);
+                var response = await _mediator.Send(command);
+
+                return StatusCode((int)HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {

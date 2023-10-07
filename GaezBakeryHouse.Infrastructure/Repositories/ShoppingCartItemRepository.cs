@@ -32,5 +32,16 @@ namespace GaezBakeryHouse.Infrastructure.Repositories
             .AsNoTracking()
             .Where(x => x.ApplicationUserId == id)
             .AsQueryable();
+
+        public Task<decimal> GetUserTotalAmount(string userId)
+        {
+            var totalAmount = _context.ShoppingCarItems
+                 .Include(x => x.Product)
+                 .AsNoTracking()
+                 .Where(x => x.ApplicationUserId == userId)
+                 .Sum(x => x.TotalAmount);
+
+            return Task.FromResult(totalAmount);
+        }
     }
 }

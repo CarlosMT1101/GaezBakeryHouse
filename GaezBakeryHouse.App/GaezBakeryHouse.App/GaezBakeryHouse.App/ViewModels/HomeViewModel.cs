@@ -27,7 +27,6 @@ namespace GaezBakeryHouse.App.ViewModels
         #endregion
         #region PROPERTIES
         public ICommand OnCategoryClicked { get; private set; }
-        public ICommand OnProductClicked { get; private set; }
         public AwesomeObservableCollection<CategoryModel> CategoriesList { get; private set; }
         public AwesomeObservableCollection<ProductModel> TrendingProductsList { get; private set; }
         public AwesomeObservableCollection<OffertModel> Banners { get; private set; }
@@ -52,12 +51,6 @@ namespace GaezBakeryHouse.App.ViewModels
 
             OnCategoryClicked = new Command<CategoryModel>(
                 execute: async (e) => await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}/{nameof(CategorySelectedPage)}?id={e.Id}&name={e.Name}"));
-
-            OnProductClicked = new Command<ProductModel>(
-                execute: (e) =>
-                {
-
-                });
         }
         #endregion
         #region FUNCTIONS
@@ -106,6 +99,11 @@ namespace GaezBakeryHouse.App.ViewModels
             CurrentState = LayoutState.Success;
             UserDialogs.Instance.HideLoading();
         }
+
+        // *** WARNING ***
+        // If you modify the HomePageViews, it is very likely
+        // that this method will stop working and cause some
+        // exception.
         Frame DrawTrendingProductCart(ProductModel productModel)
         {
             var frame = new Frame

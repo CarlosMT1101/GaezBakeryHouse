@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -32,6 +33,12 @@ namespace GaezBakeryHouse.App.Services
 
         [Delete("/shoppingCartItem/DeleteAllShoppingCartItemsByUserId/{applicationUserId}")]
         Task<HttpResponseMessage> DeleteAllShoppingCartItemsByUserId(
+            [Header("Authorization")] string authorization,
+            [AliasAs("applicationUserId")] string applicationUserId);
+
+
+        [Get("/shoppingCartItem/GetUserTotalAmount/{applicationUserId}")]
+        Task<HttpResponseMessage> GetUserTotalAmount(
             [Header("Authorization")] string authorization,
             [AliasAs("applicationUserId")] string applicationUserId);
     }
@@ -143,6 +150,32 @@ namespace GaezBakeryHouse.App.Services
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public async Task<decimal> GetUserTotalAmount()
+        {
+            try
+            {
+                var accessToken = SecureStorage.GetAsync("AccessToken").Result;
+                var applicationUserId = SecureStorage.GetAsync("ApplicationUserId").Result;
+
+                var response = await _service.GetUserTotalAmount(accessToken, applicationUserId);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    
+                    return decimal.Parse(responseContent.Replace('.', ','));
+                }
+                else
+                {
+                    return 0.0M;
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0.0M;
             }
         }
     }

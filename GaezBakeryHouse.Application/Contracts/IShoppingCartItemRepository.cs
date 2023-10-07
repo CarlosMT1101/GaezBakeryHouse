@@ -7,5 +7,6 @@ namespace GaezBakeryHouse.Application.Contracts
         IQueryable<ShoppingCartItem> GetShoppingCartItemsByUserId(string id);
         Task<ShoppingCartItem> GetShoppingCartItemAsync(int id, int productId, string userId);
         Task DeleteAllShoppingCartItemsByUserId(string userId);
+        Task<decimal> GetUserTotalAmount(string userId);
     }
 }
