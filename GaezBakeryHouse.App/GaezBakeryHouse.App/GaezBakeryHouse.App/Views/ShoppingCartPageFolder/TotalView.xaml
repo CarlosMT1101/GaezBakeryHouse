@@ -29,8 +29,8 @@
         </StackLayout>
         <Button
             Style="{StaticResource btnStyle}"
-            Command="{Binding OnOrderClickedCommand}"
-            Text="Ordenar"
+            Command="{Binding OnContinueClickedCommand}"
+            Text="Continuar"
             Grid.Column="1"/>
     </Grid>
 </ContentView>

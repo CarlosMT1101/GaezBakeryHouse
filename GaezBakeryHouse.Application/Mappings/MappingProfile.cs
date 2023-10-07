@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GaezBakeryHouse.Application.DTOs;
 using GaezBakeryHouse.Application.Features.Commands.PostCategory;
+using GaezBakeryHouse.Application.Features.Commands.PostOrder;
 using GaezBakeryHouse.Application.Features.Commands.PostProduct;
 using GaezBakeryHouse.Application.Features.Commands.PostShoppingCartItem;
 using GaezBakeryHouse.Application.Features.Commands.UpdateCategory;
@@ -31,6 +32,8 @@ namespace GaezBakeryHouse.Application.Mappings
             CreateMap<PostShoppingCartItemCommand, ShoppingCartItem>();
 
             CreateMap<ShoppingCartItem, ShoppingCartItemDTO>().ReverseMap();
+
+            CreateMap<PostOrderCommand, Order>();
         }
     }
 }

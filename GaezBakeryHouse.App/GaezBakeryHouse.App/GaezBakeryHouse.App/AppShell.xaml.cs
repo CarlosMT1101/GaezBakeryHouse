@@ -18,6 +18,7 @@ namespace GaezBakeryHouse.App
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(CategorySelectedPage), typeof(CategorySelectedPage));
             Routing.RegisterRoute(nameof(ProductDetailPage), typeof(ProductDetailPage));
+            Routing.RegisterRoute(nameof(OrderDetailPage), typeof(OrderDetailPage));
         }
     }
 }

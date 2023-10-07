@@ -4,6 +4,7 @@ using GaezBakeryHouse.App.Helpers;
 using GaezBakeryHouse.App.Interfaces;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
+using GaezBakeryHouse.App.Views;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,12 +31,12 @@ namespace GaezBakeryHouse.App.ViewModels
             {
                 _totalAmount = value;
                 OnPropertyChanged();
-                ((Command)OnOrderClickedCommand).ChangeCanExecute();
+                ((Command)OnContinueClickedCommand).ChangeCanExecute();
             }
         }
         #endregion
         #region COMMANDS
-        public ICommand OnOrderClickedCommand { get; private set; }
+        public ICommand OnContinueClickedCommand { get; private set; }
         #endregion
         #region CONSTRUCTOR
         public ShoppingCartViewModel(StackLayout stackLayout)
@@ -50,8 +51,8 @@ namespace GaezBakeryHouse.App.ViewModels
                 execute: async () => await LoadDataAsync(),
                 canExecute: () => true);
 
-            OnOrderClickedCommand = new Command(
-                execute: async () => await Order(),
+            OnContinueClickedCommand = new Command(
+                execute: async () => await Shell.Current.GoToAsync($"{nameof(OrderDetailPage)}"),
                 canExecute: () => ShoppingCartItemsList.Count() > 0);
         }
         #endregion
@@ -100,27 +101,7 @@ namespace GaezBakeryHouse.App.ViewModels
             CurrentState = LayoutState.Success;
             UserDialogs.Instance.HideLoading();
         } 
-        private async Task Order()
-        {
-            UserDialogs.Instance.ShowLoading("Cargando");
-            CurrentState = LayoutState.Loading;
-
-            var isOrdered = await _shoppingService.DeleteAllShoppingCartItemsByUserId();
-            await LoadShoppingCartItems();
-            TotalAmount = await _shoppingService.GetUserTotalAmount();
-
-            if(isOrdered)
-            {
-                await UserDialogs.Instance.AlertAsync("Orden realizada con exíto", "Mensaje", "Ok");
-            }
-            else
-            {
-                await UserDialogs.Instance.AlertAsync("Ocurrío un error", "Mensaje", "Ok");
-            }
-
-            CurrentState = LayoutState.Success;
-            UserDialogs.Instance.HideLoading();
-        }
+        
 
         // *** WARNING ***
         // If you modify the ShoppingCartPages, it is very likely

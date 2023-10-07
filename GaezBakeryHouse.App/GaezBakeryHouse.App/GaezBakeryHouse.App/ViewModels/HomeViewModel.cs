@@ -50,7 +50,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 canExecute: () => true);
 
             OnCategoryClicked = new Command<CategoryModel>(
-                execute: async (e) => await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}/{nameof(CategorySelectedPage)}?id={e.Id}&name={e.Name}"));
+                execute: async (e) => await Shell.Current.GoToAsync($"{nameof(CategorySelectedPage)}?id={e.Id}&name={e.Name}"));
         }
         #endregion
         #region FUNCTIONS
