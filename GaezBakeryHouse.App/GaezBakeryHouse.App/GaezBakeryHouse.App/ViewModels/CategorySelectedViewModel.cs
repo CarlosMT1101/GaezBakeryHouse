@@ -1,33 +1,30 @@
 ﻿using Acr.UserDialogs;
+using FFImageLoading.Forms;
 using GaezBakeryHouse.App.Helpers;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
-using GaezBakeryHouse.App.Views.CategorySelectedPageFolder;
 using GaezBakeryHouse.App.Views;
+using Refit;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Web;
-using System.Windows.Input;
-using Xamarin.CommunityToolkit.UI.Views;
-using Xamarin.Forms;
-using GaezBakeryHouse.App.Views.ProductDetailPageFolder;
-using GaezBakeryHouse.App.Interfaces;
-using FFImageLoading.Forms;
 using Xamarin.CommunityToolkit.Effects;
+using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
-    public class CategorySelectedViewModel : BaseViewModel, IQueryAttributable, IRefresh
+    public class CategorySelectedViewModel : BaseViewModel, IQueryAttributable
     {
-        #region ATRIBUTES
-        readonly ProductService _productService;
-        StackLayout _leftStackLayout;
-        StackLayout _rightStackLayout;
+        #region Attributes
+        private readonly IProductService _productService;
+        private StackLayout _leftStackLayout;
+        private StackLayout _rightStackLayout;
         int _categoryId;
         #endregion
-        #region PROPERTIES
+
+        #region Properties
         public int CategoryId
         {
             get => _categoryId;
@@ -37,43 +34,72 @@ namespace GaezBakeryHouse.App.ViewModels
                 OnPropertyChanged();
             }
         }
-        public AwesomeObservableCollection<ProductModel> ProductsList { get; private set; }
+
+        public AwesomeObservableCollection<ProductModel> Products { get; private set; }
         #endregion
-        #region COMMANDS
+
+        #region Commands
+
         #endregion
-        #region CONSTRUCTOR
-        public CategorySelectedViewModel(StackLayout leftStackLayout, StackLayout rightStackLayout)
+
+        #region Constructor
+        public CategorySelectedViewModel(
+            StackLayout leftStackLayout, 
+            StackLayout rightStackLayout)
         {
             _leftStackLayout = leftStackLayout;
             _rightStackLayout = rightStackLayout;
 
-            _productService = new ProductService();
-            ProductsList = new AwesomeObservableCollection<ProductModel>();
+            _productService = RestService.For<IProductService>(Constants.Url);
+            Products = new AwesomeObservableCollection<ProductModel>();
 
             OnRefreshCommand = new Command(
                 execute: async () => await LoadDataAsync(),
                 canExecute: () => true);
         }
         #endregion
-        #region FUNCTIONS
+
+        #region Functions
+        public void ApplyQueryAttributes(IDictionary<string, string> query)
+        {
+            CategoryId = int.Parse(HttpUtility.UrlDecode(query["id"]));
+            Title = HttpUtility.UrlDecode(query["name"]);
+        }
+
         private async Task LoadProducts()
         {
-            var products = await _productService.GetProductsByCategory(CategoryId);
+            var products = await _productService.GetProductsByCategory(AccessToken, CategoryId);
 
             _leftStackLayout.Children.Clear();
             _rightStackLayout.Children.Clear();
 
-            ProductsList.ClearRange();
-            ProductsList.AddRange(products);
+            Products.ClearRange();
+            Products.AddRange(products);
 
-            for (int i = 0; i < ProductsList.Count; i++)
+            LoadProductImages();
+            DrawProductsInLayouts();
+        }
+
+        private void LoadProductImages()
+        {
+            foreach (var product in Products)
+            {
+                product.ImageSource = ImageSource.FromStream(() => new MemoryStream(product.ProductImage));
+            }
+
+        }
+
+        private void DrawProductsInLayouts()
+        {
+            for (int i = 0; i < Products.Count; i++)
             {
                 if ((i + 1) % 2 == 0)
-                    _rightStackLayout.Children.Add(DrawProducts(ProductsList[i]));
+                    _rightStackLayout.Children.Add(DrawProducts(Products[i]));
                 else
-                    _leftStackLayout.Children.Add(DrawProducts(ProductsList[i]));
+                    _leftStackLayout.Children.Add(DrawProducts(Products[i]));
             }
         }
+
         Frame DrawProducts(ProductModel productModel)
         {
             var frame = new Frame
@@ -138,7 +164,7 @@ namespace GaezBakeryHouse.App.ViewModels
             tapGestureRecognizer.NumberOfTapsRequired = 1;
 
             tapGestureRecognizer.Tapped += async (object sender, EventArgs e) =>
-                 await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}/{nameof(CategorySelectedPage)}/{nameof(ProductDetailPage)}?id={productModel.Id}");
+                 await Shell.Current.GoToAsync($"{nameof(ProductDetailPage)}?id={productModel.Id}");
 
             frame.GestureRecognizers.Add(tapGestureRecognizer);
 
@@ -146,24 +172,22 @@ namespace GaezBakeryHouse.App.ViewModels
 
             return frame;
         }
-        #endregion
-        #region IQueryAttributable
-        public void ApplyQueryAttributes(IDictionary<string, string> query)
-        {
-            CategoryId = int.Parse(HttpUtility.UrlDecode(query["id"]));
-            Title = HttpUtility.UrlDecode(query["name"]);
-        }
-        #endregion
-        #region IRefresh
+
         public async Task LoadDataAsync()
         {
-            UserDialogs.Instance.ShowLoading("Cargando");
-            CurrentState = LayoutState.Loading;
-            IsRefreshing = false;
+            UserDialogs.Instance.ShowLoading(Constants.LoadingMessage);
+            OnLoadingTask();
 
-            await LoadProducts();
+            try
+            {
+                await LoadProducts();
+                OnSuccessTask();
+            }
+            catch (Exception)
+            {
+                OnErrorTask();
+            }
 
-            CurrentState = LayoutState.Success;
             UserDialogs.Instance.HideLoading();
         }
         #endregion

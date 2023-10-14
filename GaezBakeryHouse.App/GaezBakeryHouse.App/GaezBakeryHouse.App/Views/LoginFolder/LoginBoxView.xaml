@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GaezBakeryHouse.App.Views.LoginFolder.LoginBoxView">
+    <Frame
+        Padding="30"
+        Style="{StaticResource BaseFrameStyle}"
+        TranslationY="-40"
+        Margin="30,0,30,0">
+        <StackLayout
+                Spacing="40">
+            <Label
+                Style="{StaticResource LblSmallStyle}"
+                Text="INICIAR SESIÓN"
+                HorizontalOptions="Center"/>
+            <StackLayout
+                Spacing="10">
+                <Entry
+                    Text="{Binding Email}"
+                    Placeholder="Correo electrónico"/>
+                <Entry
+                    Text="{Binding Password}"
+                    IsPassword="True"
+                    Placeholder="Contraseña"/>
+            </StackLayout>
+            <Button
+                Style="{StaticResource BaseBtnStyle}"
+                BackgroundColor="{StaticResource PrimaryColor}"
+                TextColor="White"
+                Command="{Binding OnLoginClickedCommand}"
+                Text="Ingresar"/>
+        </StackLayout>
+    </Frame>
+</ContentView>

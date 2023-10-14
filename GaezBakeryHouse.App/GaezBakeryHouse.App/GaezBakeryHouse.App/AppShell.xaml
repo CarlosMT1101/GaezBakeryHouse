@@ -1,38 +1,79 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Shell 
     xmlns="http://xamarin.com/schemas/2014/forms"
+    Shell.BackgroundColor="{StaticResource PrimaryColor}"
+    xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts"
     xmlns:views="clr-namespace:GaezBakeryHouse.App.Views"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Shell.BackgroundColor="{StaticResource PrimaryColor}"
-    Shell.TabBarTitleColor="#CEA894"
-    Shell.TabBarUnselectedColor="White"
-    Shell.TabBarBackgroundColor="{StaticResource PrimaryColor}"
     x:Class="GaezBakeryHouse.App.AppShell">
 
     <ShellContent
-        Route="LoginPage"
         FlyoutItemIsVisible="False"
-        ContentTemplate="{DataTemplate views:LoginPage}"/>
-
-    <FlyoutItem
-        FlyoutDisplayOptions="AsSingleItem"
-        Route="Start"
-        Title="Inicio">
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage"/>
+    <FlyoutItem>
         <ShellContent
-            Title="Inicio"
             Route="HomePage"
             ContentTemplate="{DataTemplate views:HomePage}"/>
+        <Shell.ItemTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Style="{StaticResource StackDataTemplateStyle}">
+                    <Label
+                        VerticalOptions="Center"
+                        Text="{Static fonts:IconFont.HomeOutline}"
+                        Style="{StaticResource LblIconStyle}"/>
+                    <Label
+                        VerticalOptions="Center"
+                        FontAttributes="None"
+                        Style="{StaticResource LblSubStyle}"
+                        Text="Inicio"/>
+                </StackLayout>
+            </DataTemplate>
+        </Shell.ItemTemplate>
     </FlyoutItem>
-
-    <FlyoutItem
-        FlyoutDisplayOptions="AsSingleItem"
-        Route="ShoppingCart"
-        Title="Carrito">
+    <FlyoutItem>
         <ShellContent
             Route="ShoppingCartPage"
             ContentTemplate="{DataTemplate views:ShoppingCartPage}"/>
+        <Shell.ItemTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Style="{StaticResource StackDataTemplateStyle}">
+                    <Label
+                        VerticalOptions="Center"
+                        Text="{Static fonts:IconFont.ShoppingCart}"
+                        Style="{StaticResource LblIconStyle}"/>
+                    <Label
+                        VerticalOptions="Center"
+                        FontAttributes="None"
+                        Style="{StaticResource LblSubStyle}"
+                        Text="Mi carrito"/>
+                </StackLayout>
+            </DataTemplate>
+        </Shell.ItemTemplate>
     </FlyoutItem>
-
+    <FlyoutItem>
+        <ShellContent
+            Route="OrderPage"
+            ContentTemplate="{DataTemplate views:OrderPage}"/>
+        <Shell.ItemTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Style="{StaticResource StackDataTemplateStyle}">
+                    <Label
+                        VerticalOptions="Center"
+                        Text="{Static fonts:IconFont.Book}"
+                        Style="{StaticResource LblIconStyle}"/>
+                    <Label
+                        VerticalOptions="Center"
+                        FontAttributes="None"
+                        Style="{StaticResource LblSubStyle}"
+                        Text="Mis órdenes"/>
+                </StackLayout>
+            </DataTemplate>
+        </Shell.ItemTemplate>
+    </FlyoutItem>
     <MenuItem 
         Text="Salir"
         Command="{Binding OnLogoutClikedCommand}"/>

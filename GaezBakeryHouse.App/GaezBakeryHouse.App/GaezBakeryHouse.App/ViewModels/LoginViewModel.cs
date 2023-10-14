@@ -2,24 +2,24 @@
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
 using GaezBakeryHouse.App.Views;
-using Newtonsoft.Json;
 using Refit;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        #region ATTRIBUTES
-        string _email;
-        string _password;
-        readonly AuthService _service;
+        #region Attributes
+        private string _email;
+        private string _password;
+        private IAuthService _authService;
         #endregion
-        #region PROPERTIES
+
+        #region Properties
         public string Email
         {
             get => _email;
@@ -27,9 +27,11 @@ namespace GaezBakeryHouse.App.ViewModels
             {
                 _email = value;
                 OnPropertyChanged();
+
                 ((Command)OnLoginClickedCommand).ChangeCanExecute();
             }
         }
+
         public string Password
         {
             get => _password;
@@ -41,48 +43,68 @@ namespace GaezBakeryHouse.App.ViewModels
             }
         }
         #endregion
-        #region COMMANDS
+
+        #region Commands
         public ICommand OnLoginClickedCommand { get; private set; }
+
         public ICommand OnRegisterClickedCommand { get; private set; }
         #endregion
-        #region CONSTRUCTOR
+
+        #region Constructor
         public LoginViewModel()
         {
-            _service = new AuthService();
+            _authService = RestService.For<IAuthService>(Constants.Url);
 
             OnLoginClickedCommand = new Command(
-                execute: async () => await Login(), 
+                execute: async () => await Login(),
                 canExecute: () => !(string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password)));
 
             OnRegisterClickedCommand = new Command(
-                execute: async () => await Shell.Current.GoToAsync($"//{nameof(LoginPage)}/{nameof(RegisterPage)}"),
+                execute: async () => await Shell.Current.GoToAsync($"{nameof(RegisterPage)}"),
                 canExecute: () => true);
         }
         #endregion
-        #region FUNCTIONS            
-        async Task Login()
+
+        #region Functions
+        private async Task Login()
         {
             UserDialogs.Instance.ShowLoading("Cargando");
 
-            var requestModel = new AuthRequestModel
-            { 
-                Email = Email, 
-                Password = Password 
-            };
-
-            var isAuthenticate =  await _service.Login(requestModel);
-
-            if (isAuthenticate)
+            try
             {
-                await Shell.Current.GoToAsync($"//Start/{ nameof(HomePage) }");
+                var authRequestModel = CreateAuthRequestModel();
+                var response = await _authService.Login(authRequestModel);
+
+                if(response != null)
+                {
+                    App.SaveUserInformation(response);
+                    await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
+                }
+                else
+                {
+                    await UserDialogs.Instance.AlertAsync(
+                        Constants.ErrorMessage,
+                        Constants.ErrorTitle,
+                        Constants.Ok);
+                }
             }
-            else
+            catch (Exception)
             {
-                await UserDialogs.Instance.AlertAsync("Algo salió mal", "Error");
+                await UserDialogs.Instance.AlertAsync(
+                        Constants.ErrorMessage,
+                        Constants.ErrorTitle,
+                        Constants.Ok);
             }
 
             UserDialogs.Instance.HideLoading();
         }
+
+        private AuthRequestModel CreateAuthRequestModel() =>
+            new AuthRequestModel
+            {
+                Email = Email,
+                Password = Password
+            };
         #endregion
     }
 }

@@ -38,50 +38,60 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\HomePageFolder\BannersView.xaml.cs">
-      <DependentUpon>BannersView.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Update="AppShell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\CategorySelectedPageFolder\CategorySelectedPage.xaml">
+    <EmbeddedResource Update="Views\CategorySelectedFolder\CategorySelectedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\CategorySelectedPageFolder\ProductCategoryView.xaml">
+    <EmbeddedResource Update="Views\CategorySelectedFolder\ProductCategoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\HomePageFolder\CategoriesView.xaml">
+    <EmbeddedResource Update="Views\HomeFolder\BannersView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\HomePageFolder\HomePage.xaml">
+    <EmbeddedResource Update="Views\HomeFolder\CategoriesView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\HomePageFolder\BannersView.xaml">
+    <EmbeddedResource Update="Views\HomeFolder\HomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\HomePageFolder\TrendingProductsView.xaml">
+    <EmbeddedResource Update="Views\HomeFolder\TrendingProductsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LoginPageFolder\LoginPage.xaml">
+    <EmbeddedResource Update="Views\LoginFolder\LoginBoxView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\OrderDetailPageFolder\OrderDetailPage.xaml">
+    <EmbeddedResource Update="Views\LoginFolder\LoginFooterView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProductDetailPageFolder\ProductDetailPage.xaml">
+    <EmbeddedResource Update="Views\LoginFolder\LoginImageView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ShoppingCartPageFolder\ShoppingCartItemsView.xaml">
+    <EmbeddedResource Update="Views\LoginFolder\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ShoppingCartPageFolder\ShoppingCartPage.xaml">
+    <EmbeddedResource Update="Views\OrderFolder\OrderPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ShoppingCartPageFolder\TotalView.xaml">
+    <EmbeddedResource Update="Views\ProductDetailFolder\ProductDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\RegisterFolder\RegisterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ShoppingCartFolder\ShoppingCartItemsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ShoppingCartFolder\ShoppingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ShoppingCartFolder\TotalView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\OrderDetailFolder\" />
   </ItemGroup>
 </Project>

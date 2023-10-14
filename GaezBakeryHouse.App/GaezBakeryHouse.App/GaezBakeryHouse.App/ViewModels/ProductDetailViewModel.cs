@@ -1,40 +1,41 @@
 ﻿using Acr.UserDialogs;
-using GaezBakeryHouse.App.Interfaces;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
-using GaezBakeryHouse.App.Views;
+using Refit;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Input;
-using Xamarin.CommunityToolkit.UI.Views;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
-    public class ProductDetailViewModel : BaseViewModel, IQueryAttributable, IRefresh
+    public class ProductDetailViewModel : BaseViewModel, IQueryAttributable
     {
-        #region ATRIBUTES
-        int _productId;
-        int _productAmount = 1;
-        readonly ProductService _productService;
-        readonly ShoppingService _shoppingService;
-        ProductModel _product;
+        #region Attributes
+        private int _productId;
+        private int _productAmount = 1;
+        private readonly IProductService _productService;
+        private readonly IShoppingCartItemService _shoppingService;
+        private ProductModel _product;
         #endregion
-        #region PROPERTIES
+
+        #region Properties
         public int ProductAmount
         {
             get => _productAmount;
             set
             {
                 _productAmount = value;
-
                 OnPropertyChanged();
-                ((Command)OnIncrementAmountCommand).ChangeCanExecute();
+
                 ((Command)OnDecrementAmountCommand).ChangeCanExecute();
+                ((Command)OnIncrementAmountCommand).ChangeCanExecute();
             }
         }
+
         public int ProductId
         {
             get => _productId;
@@ -44,6 +45,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public ProductModel Product
         {
             get => _product;
@@ -54,17 +56,21 @@ namespace GaezBakeryHouse.App.ViewModels
             }
         }
         #endregion
-        #region COMMANDS
+
+        #region Commands
         public ICommand OnIncrementAmountCommand { get; private set; }
+
         public ICommand OnDecrementAmountCommand { get; private set; }
+
         public ICommand OnAddToCartClickedCommand { get; private set; }
         #endregion
-        #region CONSTRUCTOR
+
+        #region Constructor
         public ProductDetailViewModel()
         {
             Title = "Producto";
-            _productService = new ProductService();
-            _shoppingService = new ShoppingService();
+            _productService = RestService.For<IProductService>(Constants.Url);
+            _shoppingService = RestService.For<IShoppingCartItemService>(Constants.Url);
 
             OnRefreshCommand = new Command(
                execute: async () => await LoadDataAsync(),
@@ -83,47 +89,75 @@ namespace GaezBakeryHouse.App.ViewModels
                 canExecute: () => true);
         }
         #endregion
-        #region FUNCTIONS
+
+        #region Functions
         public void ApplyQueryAttributes(IDictionary<string, string> query) =>
-            ProductId = int.Parse(HttpUtility.UrlDecode(query["id"]));
+           ProductId = int.Parse(HttpUtility.UrlDecode(query["id"]));
+
+        private async Task LoadProduct()
+        {
+            Product = await _productService.GetProductById(AccessToken, ProductId);
+            Product.ImageSource = ImageSource.FromStream(() => new MemoryStream(Product.ProductImage));
+        }
+            
         public async Task LoadDataAsync()
         {
-            UserDialogs.Instance.ShowLoading("Cargando");
-            CurrentState = LayoutState.Loading;
-            IsRefreshing = false;
+            UserDialogs.Instance.ShowLoading(Constants.LoadingMessage);
+            OnLoadingTask();
 
-            await LoadProduct();
+            try
+            {
+                await LoadProduct();
+                OnSuccessTask();
+            }
+            catch (Exception)
+            {
+                OnErrorTask();
+            }
 
-            CurrentState = LayoutState.Success;
             UserDialogs.Instance.HideLoading();
         }
-        private async Task LoadProduct() =>
-            Product = await _productService.GetProductById(ProductId);
+
         private async Task AddToCart()
         {
             UserDialogs.Instance.ShowLoading("Cargando");
 
-            var item = new ShoppingCartItemModel
+            try
             {
-                ApplicationUserId = SecureStorage.GetAsync("ApplicationUserId").Result,
-                Price = Product.Price,
-                ProductId = Product.Id,
-                Quantity = ProductAmount,
-            };
+                var item = CreateShoppingCartItemModel();
+                var response = await _shoppingService.PostShoppingCartItem(AccessToken, item);
 
-            var addToCartSuccesfull = await _shoppingService.PostShoppingCartItem(item);
-
-            if (addToCartSuccesfull)
-            {
-                await UserDialogs.Instance.AlertAsync("Producto agregado al carrito", "Mensaje", "Ok");
+                if (response.IsSuccessStatusCode)
+                {
+                    await UserDialogs.Instance.AlertAsync(
+                        Constants.AddToCartMessage,
+                        Constants.MessageTitle,
+                        Constants.Ok);
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            else
+            catch (Exception)
             {
-                await UserDialogs.Instance.AlertAsync("Algo salío mal", "Mensaje", "Ok");
+                await UserDialogs.Instance.AlertAsync(
+                        Constants.ErrorMessage,
+                        Constants.ErrorTitle,
+                        Constants.Ok);
             }
 
             UserDialogs.Instance.HideLoading();
         }
+
+        private ShoppingCartItemModel CreateShoppingCartItemModel() =>
+            new ShoppingCartItemModel
+            {
+                ApplicationUserId = ApplicationUserId,
+                Price = Product.Price,
+                ProductId = Product.Id,
+                Quantity = ProductAmount
+            };
         #endregion
     }
 }
