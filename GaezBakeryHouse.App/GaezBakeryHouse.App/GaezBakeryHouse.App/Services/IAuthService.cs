@@ -9,5 +9,8 @@ namespace GaezBakeryHouse.App.Services
     {
         [Post("/auth/Login")]
         Task<AuthResponseModel> Login([Body] AuthRequestModel requestModel);
+
+        [Post("/auth/Register")]
+        Task<HttpResponseMessage> Register([Body] RegisterRequestModel requestModel);
     }
 }

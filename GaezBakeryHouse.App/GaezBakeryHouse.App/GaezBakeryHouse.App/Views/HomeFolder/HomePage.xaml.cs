@@ -8,7 +8,7 @@ namespace GaezBakeryHouse.App.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
-        private readonly HomeViewModel _viewModel;
+        private HomeViewModel _viewModel;
         private StackLayout _leftStackLayout;
         private StackLayout _rightStackLayout;
 
@@ -37,6 +37,11 @@ namespace GaezBakeryHouse.App.Views
         {
             base.OnAppearing();
             await _viewModel.LoadDataAsync();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
         }
     }
 }

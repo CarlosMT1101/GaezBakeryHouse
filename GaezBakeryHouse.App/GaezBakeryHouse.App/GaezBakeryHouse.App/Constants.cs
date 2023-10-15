@@ -15,6 +15,7 @@ namespace GaezBakeryHouse.App
         public static readonly string ApplicationUserId = "ApplicationUserId";
         public static readonly string Bearer = "Bearer";
         public static readonly string LoadingMessage = "Cargando";
+        public static readonly string RegisterMessage = "Regístro exitoso";
 
         #region Attributes
 

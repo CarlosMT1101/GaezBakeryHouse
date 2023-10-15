@@ -7,7 +7,7 @@ namespace GaezBakeryHouse.App.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ShoppingCartPage : ContentPage
 	{
-        private readonly ShoppingCartViewModel _viewModel;
+        private ShoppingCartViewModel _viewModel;
         private StackLayout _stackLayout;
 
         public ShoppingCartPage()

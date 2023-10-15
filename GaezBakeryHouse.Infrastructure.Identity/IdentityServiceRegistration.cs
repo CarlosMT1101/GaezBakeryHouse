@@ -28,10 +28,10 @@ namespace GaezBakeryHouse.Infrastructure.Identity
             services.AddScoped<IJwtService, JwtService>();
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             {
-                config.Password.RequireDigit = true;
-                config.Password.RequireLowercase = true;
-                config.Password.RequireUppercase = true;
-                config.Password.RequireNonAlphanumeric = true;
+                config.Password.RequireDigit = false;
+                config.Password.RequireLowercase = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequiredLength = 10;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
