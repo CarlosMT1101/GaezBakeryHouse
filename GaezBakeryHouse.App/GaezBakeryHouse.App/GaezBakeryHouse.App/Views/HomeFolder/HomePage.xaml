@@ -2,9 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:views="clr-namespace:GaezBakeryHouse.App.Views.HomeFolder"
              Style="{StaticResource BasePageStyle}"
+             xmlns:handlers="clr-namespace:GaezBakeryHouse.App.Helpers"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GaezBakeryHouse.App.Views.HomePage">
+
+    <Shell.SearchHandler>
+        <handlers:ProductSearchHandler
+            FontSize="Small"
+            ShowsResults="True"
+            ItemTemplate="{StaticResource searchTemplate}"/>
+    </Shell.SearchHandler>
 
     <RefreshView
         Style="{StaticResource BaseRefreshViewStyle}">

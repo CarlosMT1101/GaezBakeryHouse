@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using FFImageLoading.Forms;
+using GaezBakeryHouse.App.Data;
 using GaezBakeryHouse.App.Helpers;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
@@ -110,11 +111,13 @@ namespace GaezBakeryHouse.App.ViewModels
             {
                 await LoadCategoriesAsync();
                 await LoadTrendingProducts();
+                await ProductData.LoadData();
+
                 LoadBanners();
 
                 OnSuccessTask();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 OnErrorTask();
             }

@@ -76,5 +76,22 @@
     </FlyoutItem>
     <MenuItem 
         Text="Salir"
-        Command="{Binding OnLogoutClikedCommand}"/>
+        Command="{Binding OnLogoutClikedCommand}">
+        <Shell.MenuItemTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Style="{StaticResource StackDataTemplateStyle}">
+                    <Label
+                        VerticalOptions="Center"
+                        Text="{Static fonts:IconFont.PowerOutline}"
+                        Style="{StaticResource LblIconStyle}"/>
+                    <Label
+                         VerticalOptions="Center"
+                         FontAttributes="None"
+                         Style="{StaticResource LblSubStyle}"
+                         Text="Salir"/>
+                </StackLayout>
+            </DataTemplate>
+        </Shell.MenuItemTemplate>
+    </MenuItem>
 </Shell>

@@ -64,5 +64,31 @@
             <Setter Property="TextTransform" Value="None"/>
             <Setter Property="FontAttributes" Value="Bold"/>
         </Style>
+        <DataTemplate x:Key="searchTemplate">
+            <Grid 
+                Style="{StaticResource gridDataTemplateStyle}"
+                RowDefinitions="50">
+                <Label 
+                    Text="{Binding Name}"
+                    TextColor="Black"
+                    TextTransform="Lowercase"
+                    Margin="10,0"
+                    VerticalOptions="Center"/>
+            </Grid>
+        </DataTemplate>
+        <Style TargetType="Grid" x:Key="gridDataTemplateStyle">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#FFDAC3" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>
