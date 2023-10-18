@@ -1,6 +1,8 @@
 ﻿using Acr.UserDialogs;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
+using Refit;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -9,15 +11,18 @@ namespace GaezBakeryHouse.App.ViewModels
 {
     public class RegisterViewModel : BaseViewModel
     {
-        #region ATTRIBUTES
-        string _email;
-        string _password;
-        string _confirmPassword;
-        string _userName;
-        string _phoneNumber;
-        readonly RegisterService _service;
+        #region Attributes
+        private string _email;
+        private string _password;
+        private string _confirmPassword;
+        private string _userName;
+        private string _fullName;
+        private string _lastName;
+        private string _phoneNumber;
+        private readonly IAuthService _service;
         #endregion
-        #region PROPERTIES
+
+        #region Properties
         public string Email
         {
             get { return _email; }
@@ -28,6 +33,29 @@ namespace GaezBakeryHouse.App.ViewModels
                 ((Command)OnRegisterClickedCommand).ChangeCanExecute();
             }
         }
+
+        public string FullName
+        {
+            get { return _fullName; }
+            set
+            {
+                _fullName = value;
+                OnPropertyChanged();
+                ((Command)OnRegisterClickedCommand).ChangeCanExecute();
+            }
+        }
+
+        public string LastName
+        {
+            get { return _lastName; }
+            set
+            {
+                _lastName = value;
+                OnPropertyChanged();
+                ((Command)OnRegisterClickedCommand).ChangeCanExecute();
+            }
+        }
+
         public string Password
         {
             get { return _password; }
@@ -38,6 +66,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 ((Command)OnRegisterClickedCommand).ChangeCanExecute();
             }
         }
+
         public string ConfirmPassword
         {
             get { return _confirmPassword; }
@@ -48,6 +77,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 ((Command)OnRegisterClickedCommand).ChangeCanExecute();
             }
         }
+
         public string UserName
         {
             get { return _userName; }
@@ -58,10 +88,11 @@ namespace GaezBakeryHouse.App.ViewModels
                 ((Command)OnRegisterClickedCommand).ChangeCanExecute();
             }
         }
+
         public string PhoneNumber
         {
             get { return _phoneNumber; }
-            set 
+            set
             {
                 _phoneNumber = value;
                 OnPropertyChanged();
@@ -69,18 +100,15 @@ namespace GaezBakeryHouse.App.ViewModels
             }
         }
         #endregion
-        #region COMMANDS
-        public ICommand OnBackButtonClickedCommand { get; private set; }
+
+        #region Commands
         public ICommand OnRegisterClickedCommand { get; private set; }
         #endregion
-        #region CONSTRUCTOR
+
+        #region Constructor
         public RegisterViewModel()
         {
-            _service = new RegisterService();
-
-            OnBackButtonClickedCommand = new Command(
-                execute: async () => await Shell.Current.GoToAsync($"../"),
-                canExecute: () => true);
+            _service = RestService.For<IAuthService>(Constants.Url);
 
             OnRegisterClickedCommand = new Command(
                 execute: async () => await Register(),
@@ -89,42 +117,63 @@ namespace GaezBakeryHouse.App.ViewModels
                     // Si los campos no están vacios y la contraseña es igual a lo que esta
                     // en confirmar contraseña, regresa true, de lo contrario false
 
-                    return !(string.IsNullOrWhiteSpace(Email) || 
+                    return !(string.IsNullOrWhiteSpace(Email) ||
                              string.IsNullOrWhiteSpace(Password) ||
-                             string.IsNullOrWhiteSpace(ConfirmPassword) || 
+                             string.IsNullOrWhiteSpace(ConfirmPassword) ||
                              string.IsNullOrWhiteSpace(UserName) ||
-                             string.IsNullOrWhiteSpace(PhoneNumber)) &&
+                             string.IsNullOrWhiteSpace(PhoneNumber) ||
+                             string.IsNullOrWhiteSpace(FullName) ||
+                             string.IsNullOrWhiteSpace(LastName)) &&
                              Password.Equals(ConfirmPassword);
                 });
         }
         #endregion
-        #region FUNCTIONS
-        async Task Register()
+
+        #region Functions
+        private async Task Register()
         {
-            UserDialogs.Instance.ShowLoading("Cargando");
+            UserDialogs.Instance.ShowLoading(Constants.LoadingMessage);
 
-            var requestModel = new RegistrationRequestModel
+            try
             {
-                Email = Email,
-                Password = Password,
-                PhoneNumber = PhoneNumber,
-                UserName = UserName,
-            };
+                var registerRequestModel = CreateRegisterRequestModel();
+                var response = await _service.Register(registerRequestModel);
 
-            var registrationSuccess = await _service.Register(requestModel);
+                if (response.IsSuccessStatusCode)
+                {
+                    await UserDialogs.Instance.AlertAsync(
+                        Constants.RegisterMessage,
+                        Constants.MessageTitle,
+                        Constants.Ok);
 
-            if (registrationSuccess)
-            {
-                await UserDialogs.Instance.AlertAsync("Regístro exitoso", "Mensaje", "Ok");
-                await Shell.Current.GoToAsync($"../");
+                    await Shell.Current.GoToAsync("../");
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            else
+            catch(Exception)
             {
-                await UserDialogs.Instance.AlertAsync("Algo salió mal", "Error", "Ok");
+                await UserDialogs.Instance.AlertAsync(
+                        Constants.ErrorMessage,
+                        Constants.ErrorTitle,
+                        Constants.Ok);
             }
 
             UserDialogs.Instance.HideLoading();
         }
+
+        private RegisterRequestModel CreateRegisterRequestModel() =>
+            new RegisterRequestModel
+            {
+                FullName = FullName,
+                LastName = LastName,
+                Email = Email,
+                Password = Password,
+                PhoneNumber = PhoneNumber,
+                UserName = UserName
+            };
         #endregion
     }
 }

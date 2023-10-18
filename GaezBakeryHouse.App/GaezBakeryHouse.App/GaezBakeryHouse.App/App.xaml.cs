@@ -1,4 +1,4 @@
-﻿using DLToolkit.Forms.Controls;
+﻿using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Views;
 using System;
 using Xamarin.Essentials;
@@ -15,10 +15,10 @@ namespace GaezBakeryHouse.App
             MainPage = new AppShell();
         }
 
-        protected override async void OnStart()
+        protected async override void OnStart()
         {
-            var accessToken = SecureStorage.GetAsync("AccessToken").Result;
-            var expirationToken = SecureStorage.GetAsync("ExpirationToken").Result;
+            var accessToken = await SecureStorage.GetAsync(Constants.AccessToken);
+            var expirationToken = await SecureStorage.GetAsync(Constants.ExpirationToken);
 
             if (accessToken != null)
             {
@@ -26,14 +26,11 @@ namespace GaezBakeryHouse.App
 
                 if (DateTime.UtcNow < expirationDate)
                 {
-                    await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}");
+                    await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
                 }
                 else
                 {
-                    SecureStorage.Remove("AccessToken");
-                    SecureStorage.Remove("ExpirationToken");
-                    SecureStorage.Remove("ApplicationUserId");
-
+                    App.RemoveUserInformation();
                     await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
                 }
             }
@@ -43,14 +40,36 @@ namespace GaezBakeryHouse.App
             }
         }
 
+        public static async void SaveUserInformation(AuthResponseModel authResponseModel)
+        {
+            await SecureStorage.SetAsync(Constants.FullName, $"{authResponseModel.FullName}");
+            await SecureStorage.SetAsync(Constants.PhoneNumber, $"{authResponseModel.PhoneNumber}");
+            await SecureStorage.SetAsync(Constants.LastName, $"{authResponseModel.LastName}");
+            await SecureStorage.SetAsync(Constants.UserName, $"{authResponseModel.UserName}");
+            await SecureStorage.SetAsync(Constants.AccessToken, $"{Constants.Bearer} {authResponseModel.Token}");
+            await SecureStorage.SetAsync(Constants.ExpirationToken, authResponseModel.Expiration.ToString());
+            await SecureStorage.SetAsync(Constants.ApplicationUserId, authResponseModel.ApplicationUserId);
+        }
+
+        public static void RemoveUserInformation()
+        {
+            SecureStorage.Remove(Constants.UserName);
+            SecureStorage.Remove(Constants.PhoneNumber);
+            SecureStorage.Remove(Constants.FullName);
+            SecureStorage.Remove(Constants.LastName);
+            SecureStorage.Remove(Constants.AccessToken);
+            SecureStorage.Remove(Constants.ExpirationToken);
+            SecureStorage.Remove(Constants.ApplicationUserId);
+        }
+
         protected override void OnSleep()
         {
         }
 
-        protected override async void OnResume()
+        protected async override void OnResume()
         {
-            var accessToken = SecureStorage.GetAsync("AccessToken").Result;
-            var expirationToken = SecureStorage.GetAsync("ExpirationToken").Result;
+            var accessToken = await SecureStorage.GetAsync(Constants.AccessToken);
+            var expirationToken = await SecureStorage.GetAsync(Constants.ExpirationToken);
 
             if (accessToken != null)
             {
@@ -58,14 +77,11 @@ namespace GaezBakeryHouse.App
 
                 if (DateTime.UtcNow < expirationDate)
                 {
-                    await Shell.Current.GoToAsync($"//Start/{nameof(HomePage)}");
+                    await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
                 }
                 else
                 {
-                    SecureStorage.Remove("AccessToken");
-                    SecureStorage.Remove("ExpirationToken");
-                    SecureStorage.Remove("ApplicationUserId");
-
+                    App.RemoveUserInformation();
                     await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
                 }
             }

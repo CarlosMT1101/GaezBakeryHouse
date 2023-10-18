@@ -1,30 +1,51 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.UI.Views;
-using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        #region ATRIBUTES
-        bool isRefreshing;
-        string _title;
-        LayoutState _currentState;
+        #region Attributes
+        private bool _isRefreshing;
+        private string _title;
+        private string _userName;
+        private LayoutState _currentState;
         #endregion
-        #region PROPERTIES
+
+        #region Properties
         public bool IsRefreshing
         {
-            get => isRefreshing;
+            get => _isRefreshing;
             set
             {
-                isRefreshing = value;
+                _isRefreshing = value;
                 OnPropertyChanged();
             }
         }
+
+        public string UserName
+        {
+            get => SecureStorage.GetAsync(Constants.UserName).Result;
+            set
+            {
+                _userName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //public string FullName
+        //{
+        //    get => SecureStorage.GetAsync(Constants.FullName).Result;
+        //}
+
+        //public string LastName
+        //{
+        //    get => SecureStorage.GetAsync(Constants.LastName).Result;
+        //}
+
         public LayoutState CurrentState
         {
             get => _currentState;
@@ -34,6 +55,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string Title
         {
             get => _title;
@@ -43,8 +65,42 @@ namespace GaezBakeryHouse.App.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string AccessToken
+        {
+            get => SecureStorage.GetAsync(Constants.AccessToken).Result;
+        }
+
+        public string ApplicationUserId
+        {
+            get => SecureStorage.GetAsync(Constants.ApplicationUserId).Result;
+        }
+        #endregion
+
+        #region Commands
         public ICommand OnRefreshCommand { get; set; }
         #endregion
+
+        #region Functions
+        protected void OnLoadingTask()
+        {
+            CurrentState = LayoutState.Loading;
+            IsRefreshing = false;
+        }
+
+        protected void OnSuccessTask()
+        {
+            CurrentState = LayoutState.Success;
+            IsRefreshing = false;
+        }
+
+        protected void OnErrorTask()
+        {
+            CurrentState = LayoutState.Error;
+            IsRefreshing = false;
+        }
+        #endregion
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

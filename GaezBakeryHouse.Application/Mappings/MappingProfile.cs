@@ -14,7 +14,10 @@ namespace GaezBakeryHouse.Application.Mappings
     {
         public MappingProfile()
         {
+            CreateMap<Order, OrderDTO>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Product, GetAllProductDTO>().ReverseMap();
             CreateMap<Category, CategoryDTO>().ReverseMap();
 
             CreateMap<PostProductCommand, Product>()

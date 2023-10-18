@@ -1,29 +1,39 @@
 ﻿using GaezBakeryHouse.App.Views;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
     public class AppShellViewModel : BaseViewModel
     {
-        public ICommand OnLogoutClikedCommand { get; private set; }
+        #region Attributes
 
+        #endregion
+
+        #region Properties
+
+        #endregion
+
+        #region Commands
+        public ICommand OnLogoutClikedCommand { get; private set; }
+        #endregion
+
+        #region Constructor
         public AppShellViewModel()
         {
             OnLogoutClikedCommand = new Command(
                 execute: async () => await Logout(),
                 canExecute: () => true);
         }
-       
-        async Task Logout()
-        {
-            SecureStorage.Remove("AccessToken");
-            SecureStorage.Remove("ExpirationToken");
-            SecureStorage.Remove("ApplicationUserId");
+        #endregion
 
+        #region Functions
+        private async Task Logout()
+        {
+            App.RemoveUserInformation();
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
+        #endregion
     }
 }

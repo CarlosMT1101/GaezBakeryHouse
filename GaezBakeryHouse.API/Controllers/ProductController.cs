@@ -2,6 +2,7 @@
 using GaezBakeryHouse.Application.Features.Commands.DeleteProduct;
 using GaezBakeryHouse.Application.Features.Commands.PostProduct;
 using GaezBakeryHouse.Application.Features.Commands.UpdateProduct;
+using GaezBakeryHouse.Application.Features.Queries.GetAllProducts;
 using GaezBakeryHouse.Application.Features.Queries.GetProductById;
 using GaezBakeryHouse.Application.Features.Queries.GetProductsByCategory;
 using GaezBakeryHouse.Application.Features.Queries.GetTrendingProducts;
@@ -109,6 +110,23 @@ namespace GaezBakeryHouse.API.Controllers
             try
             {
                 var command = new GetProductByIdQuery(id);
+                var response = await _mediator.Send(command);
+
+                return StatusCode((int)HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+        }
+
+        [HttpGet("GetAllProducts")]
+        public async Task<ActionResult<IEnumerable<GetAllProductDTO>>> GetAllProducts()
+        {
+            try
+            {
+                var command = new GetAllProductsQuery();
                 var response = await _mediator.Send(command);
 
                 return StatusCode((int)HttpStatusCode.OK, response);

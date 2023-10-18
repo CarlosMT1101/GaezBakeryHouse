@@ -1,29 +1,30 @@
 ﻿using Acr.UserDialogs;
-using FFImageLoading.Forms;
 using GaezBakeryHouse.App.Helpers;
-using GaezBakeryHouse.App.Interfaces;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
-using GaezBakeryHouse.App.Views;
-using System;
-using System.Linq;
+using Refit;
 using System.Threading.Tasks;
+using System;
 using System.Windows.Input;
-using Xamarin.CommunityToolkit.Effects;
-using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
+using System.Linq;
+using FFImageLoading.Forms;
+using Xamarin.CommunityToolkit.Effects;
+using System.IO;
+using Xamarin.CommunityToolkit.UI.Views;
+using GaezBakeryHouse.App.Views;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
-    public class ShoppingCartViewModel : BaseViewModel, IRefresh
+    public class ShoppingCartViewModel : BaseViewModel
     {
-        #region ATRIBUTES
-        readonly ShoppingService _shoppingService;
+        #region Attributes
+        private readonly IShoppingCartItemService _shoppingService;
         decimal _totalAmount;
         StackLayout _stackLayout;
         #endregion
-        #region PROPERTIES
-        public AwesomeObservableCollection<ShoppingCartItemModel> ShoppingCartItemsList { get; private set; }
+
+        #region Properties
         public decimal TotalAmount
         {
             get => _totalAmount;
@@ -34,79 +35,116 @@ namespace GaezBakeryHouse.App.ViewModels
                 ((Command)OnContinueClickedCommand).ChangeCanExecute();
             }
         }
+
+        public AwesomeObservableCollection<ShoppingCartItemModel> ShoppingCartItems { get; private set; }
         #endregion
-        #region COMMANDS
+
+        #region Commands
         public ICommand OnContinueClickedCommand { get; private set; }
         #endregion
-        #region CONSTRUCTOR
+
+        #region Constructor
         public ShoppingCartViewModel(StackLayout stackLayout)
         {
-            Title = "Carrito";
+            Title = "Mi carrito";
             _stackLayout = stackLayout;
 
-            _shoppingService = new ShoppingService();
-            ShoppingCartItemsList = new AwesomeObservableCollection<ShoppingCartItemModel>();
+            _shoppingService = RestService.For<IShoppingCartItemService>(Constants.Url);
+            ShoppingCartItems = new AwesomeObservableCollection<ShoppingCartItemModel>();
 
             OnRefreshCommand = new Command(
                 execute: async () => await LoadDataAsync(),
                 canExecute: () => true);
 
             OnContinueClickedCommand = new Command(
-                execute: async () => await Shell.Current.GoToAsync($"{nameof(OrderDetailPage)}"),
-                canExecute: () => ShoppingCartItemsList.Count() > 0);
+                execute:  async () => await Shell.Current.GoToAsync($"{nameof(OrderDetailPage)}"),
+                canExecute: () => ShoppingCartItems.Count() > 0);
         }
         #endregion
-        #region FUNCTIONS
+
+        #region Functions
         public async Task LoadDataAsync()
         {
-            UserDialogs.Instance.ShowLoading("Cargando");
-            CurrentState = LayoutState.Loading;
-            IsRefreshing = false;
+            UserDialogs.Instance.ShowLoading(Constants.LoadingMessage);
+            OnLoadingTask();
 
-            await LoadShoppingCartItems();
-            TotalAmount = await _shoppingService.GetUserTotalAmount();
+            try
+            {
+                await LoadShoppingCartItems();
+                await LoadTotalAmount();
+                OnSuccessTask();
+            }
+            catch (Exception)
+            {
+                OnErrorTask();
+            }
 
-            CurrentState = LayoutState.Success;
             UserDialogs.Instance.HideLoading();
         }
+
         private async Task LoadShoppingCartItems()
         {
-            var shopItems = await _shoppingService.GetShoppingCartItemsByUserId();
+            var shopItems = await _shoppingService.GetShoppingCartItemsByUserId(AccessToken, ApplicationUserId);
 
             _stackLayout.Children.Clear();
 
-            ShoppingCartItemsList.ClearRange();
-            ShoppingCartItemsList.AddRange(shopItems);
+            ShoppingCartItems.ClearRange();
+            ShoppingCartItems.AddRange(shopItems);
 
-            foreach(var item in ShoppingCartItemsList)
-                _stackLayout.Children.Add(DrawProductInCart(item));
+            LoadProductImages();
+            DrawProductsInLayouts();
         }
+
+        private void LoadProductImages()
+        {
+            foreach (var product in ShoppingCartItems)
+            {
+                product.ImageSource = ImageSource.FromStream(() => new MemoryStream(product.ProductImage));
+            }
+        }
+
+        private void DrawProductsInLayouts()
+        {
+            foreach (var item in ShoppingCartItems)
+            {
+                _stackLayout.Children.Add(DrawProductInCart(item));
+            }
+        }
+
         private async Task DeleteShoppingCartItem(int id, int productId)
         {
             UserDialogs.Instance.ShowLoading("Cargando");
-            CurrentState = LayoutState.Loading;
+            OnLoadingTask();
 
-            var isDeleted = await _shoppingService.DeleteShoppingCartItem(id, productId);
-
-            if(isDeleted)
+            try
             {
-                await LoadShoppingCartItems();
-                TotalAmount = await _shoppingService.GetUserTotalAmount();
+                var response = await _shoppingService.DeleteShoppingCartItem(AccessToken, id, productId, ApplicationUserId);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await LoadShoppingCartItems();
+                    await LoadTotalAmount();
+                    OnSuccessTask();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
             }
-            else
+            catch (Exception)
             {
-                await UserDialogs.Instance.AlertAsync("Ocurrío un error", "Mensaje", "Ok");
+                OnErrorTask();
+
+                await UserDialogs.Instance.AlertAsync(
+                    Constants.ErrorMessage,
+                    Constants.ErrorTitle,
+                    Constants.Ok);
             }
 
-            CurrentState = LayoutState.Success;
             UserDialogs.Instance.HideLoading();
-        } 
-        
+        }
 
-        // *** WARNING ***
-        // If you modify the ShoppingCartPages, it is very likely
-        // that this method will stop working and cause some
-        // exception.
         private Frame DrawProductInCart(ShoppingCartItemModel shoppingCartItemModel)
         {
             var frame = new Frame
@@ -144,7 +182,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 new Label
                 {
                     TextColor = Color.Black,
-                    FormattedText = new FormattedString 
+                    FormattedText = new FormattedString
                     {
                         Spans =
                         {
@@ -185,6 +223,14 @@ namespace GaezBakeryHouse.App.ViewModels
             frame.Content = grid;
 
             return frame;
+        }
+
+        private async Task LoadTotalAmount()
+        {
+            var response = await _shoppingService.GetUserTotalAmount(AccessToken, ApplicationUserId);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            TotalAmount = decimal.Parse(responseContent.Replace('.', ','));
         }
         #endregion
     }

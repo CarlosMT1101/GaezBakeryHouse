@@ -1,7 +1,10 @@
 ﻿using Acr.UserDialogs;
-using GaezBakeryHouse.App.Interfaces;
+using GaezBakeryHouse.App.Data;
 using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
+using Refit;
+using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.UI.Views;
@@ -10,17 +13,18 @@ using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
-    public class OrderDetailViewModel : BaseViewModel, IRefresh
+    public class OrderDetailViewModel : BaseViewModel
     {
-        #region ATTRIBUTES
-        readonly OrderService _orderService;
-        readonly ShoppingService _shoppingService;
-        decimal _totalAmount;
-        string _name;
-        string _phoneNumber;
-        string _address;
+        #region Attributes
+        private string _name;
+        private readonly IOrderService _orderService;
+        private string _phoneNumber;
+        private readonly IShoppingCartItemService _shoppingService;
+        private decimal _totalAmount;
+        private string _address;
         #endregion
-        #region PROPERTIES
+
+        #region Properties
         public string Name
         {
             get => _name;
@@ -31,16 +35,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 ((Command)OnOrderClickedCommand).ChangeCanExecute();
             }
         }
-        public string Address
-        {
-            get => _address;
-            set
-            {
-                _address = value;
-                OnPropertyChanged();
-                ((Command)OnOrderClickedCommand).ChangeCanExecute();
-            }
-        }
+
         public string PhoneNumber
         {
             get => _phoneNumber;
@@ -51,6 +46,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 ((Command)OnOrderClickedCommand).ChangeCanExecute();
             }
         }
+
         public decimal TotalAmount
         {
             get => _totalAmount;
@@ -60,72 +56,132 @@ namespace GaezBakeryHouse.App.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string Address
+        {
+            get => _address;
+            set
+            {
+                _address = value;
+                OnPropertyChanged();
+                ((Command)OnOrderClickedCommand).ChangeCanExecute();
+            }
+        }
         #endregion
-        #region COMMANDS
+
+        #region Commands
         public ICommand OnOrderClickedCommand { get; private set; }
         #endregion
-        #region CONSTRUCTOR
+
+        #region Constructor
         public OrderDetailViewModel()
         {
-            Title = "Detalle De Orden";
-            _orderService = new OrderService();
-            _shoppingService = new ShoppingService();
+            Title = "Orden";
+
+            _orderService = RestService.For<IOrderService>(Constants.Url);
+            _shoppingService = RestService.For<IShoppingCartItemService>(Constants.Url);
 
             OnOrderClickedCommand = new Command(
                 execute: async () => await Order(),
-                canExecute: () => !(string.IsNullOrEmpty(Name) ||
+                canExecute: () =>
+                {
+                    return !(string.IsNullOrEmpty(Name) ||
                                     string.IsNullOrEmpty(PhoneNumber) ||
-                                    string.IsNullOrEmpty(Address)));
+                                    string.IsNullOrEmpty(Address));
+                });
         }
         #endregion
-        #region FUNCTIONS
+
+        #region Functions
         public async Task LoadDataAsync()
         {
-            UserDialogs.Instance.ShowLoading("Cargando");
-            CurrentState = LayoutState.Loading;
-            IsRefreshing = false;
+            UserDialogs.Instance.ShowLoading(Constants.LoadingMessage);
+            OnLoadingTask();
 
-            TotalAmount = await _shoppingService.GetUserTotalAmount();
+            try
+            {
+                await LoadTotalAmount();
 
-            CurrentState = LayoutState.Success;
+                PhoneNumber = SecureStorage.GetAsync(Constants.PhoneNumber).Result;
+                Name = $"{SecureStorage.GetAsync(Constants.FullName).Result} {SecureStorage.GetAsync(Constants.LastName).Result}"; 
+
+                OnSuccessTask();
+            }
+            catch (Exception ex)
+            {
+                OnErrorTask();
+            }
+
             UserDialogs.Instance.HideLoading();
         }
-        async Task Order()
-        {
-            UserDialogs.Instance.ShowLoading("Cargando");
 
-            var order = new OrderModel
+        private async Task Order()
+        {
+            UserDialogs.Instance.ShowLoading(Constants.LoadingMessage);
+            OnLoadingTask();
+
+            try
+            {
+                var orderModel = CreateOrderModel();
+
+                var response = await _orderService.PostOrder(AccessToken, orderModel);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var deletedResponse = await _shoppingService.DeleteAllShoppingCartItemsByUserId(AccessToken, ApplicationUserId);
+
+                    if (deletedResponse.IsSuccessStatusCode)
+                    {
+                        await UserDialogs.Instance.AlertAsync(
+                            Constants.OrderMessage,
+                            Constants.MessageTitle,
+                            Constants.Ok);
+
+                        await Shell.Current.GoToAsync("../");
+                    }
+                    else
+                    {
+                        await UserDialogs.Instance.AlertAsync(
+                            Constants.ErrorMessage,
+                            Constants.ErrorTitle,
+                            Constants.Ok);
+                    }
+                }
+                else
+                {
+                    await UserDialogs.Instance.AlertAsync(
+                            Constants.ErrorMessage,
+                            Constants.ErrorTitle,
+                            Constants.Ok);
+                }
+
+                OnSuccessTask();
+            }
+            catch (Exception ex)
+            {
+                OnErrorTask();
+            }
+
+            UserDialogs.Instance.HideLoading();
+        }
+
+        private async Task LoadTotalAmount()
+        {
+            var response = await _shoppingService.GetUserTotalAmount(AccessToken, ApplicationUserId);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            TotalAmount = decimal.Parse(responseContent.Replace('.', ','));
+        }
+
+        private OrderModel CreateOrderModel() =>
+            new OrderModel
             {
                 Address = Address,
-                ApplicationUserId = await SecureStorage.GetAsync("ApplicationUserId"),
+                ApplicationUserId = ApplicationUserId,
                 FullName = Name,
                 OrderTotal = TotalAmount,
                 Phone = PhoneNumber
             };
-
-            var isOrdered = await _orderService.PostOrder(order);
-
-            if(isOrdered) 
-            {
-                var isDeleted = await _shoppingService.DeleteAllShoppingCartItemsByUserId();
-
-                if (isDeleted)
-                {
-                    await UserDialogs.Instance.AlertAsync("Orden realizada con exíto", "Mensaje", "Ok");
-                    await Shell.Current.GoToAsync("../");
-                }
-                else
-                {
-                    await UserDialogs.Instance.AlertAsync("Ocurrío un error", "Error", "Ok");
-                }
-            }
-            else
-            {
-                await UserDialogs.Instance.AlertAsync("Ocurrío un error", "Error", "Ok");
-            }
-
-            UserDialogs.Instance.HideLoading();
-        }
         #endregion
     }
 }

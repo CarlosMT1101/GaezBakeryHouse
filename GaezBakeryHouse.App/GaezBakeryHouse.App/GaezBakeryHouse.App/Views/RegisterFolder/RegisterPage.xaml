@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             Shell.NavBarIsVisible="False"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts"
+             x:Class="GaezBakeryHouse.App.Views.RegisterPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Image" x:Key="imgStyle">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="HeightRequest" Value="200"/>
+            </Style>
+            <Style TargetType="Frame" x:Key="frmStyle">
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Margin" Value="30,0,30,0"/>
+                <Setter Property="TranslationY" Value="-40"/>
+                <Setter Property="Padding" Value="30"/>
+            </Style>
+            <Style TargetType="Frame" x:Key="frmRndStyle">
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="CornerRadius" Value="90"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HeightRequest" Value="180"/>
+                <Setter Property="WidthRequest" Value="180"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView
+        Style="{StaticResource BaseScrollViewStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="280"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackLayout 
+                Grid.Row="0"
+                BackgroundColor="{StaticResource PrimaryColor}">
+                <Frame
+                    Style="{StaticResource frmRndStyle}">
+                    <Label
+                        Style="{StaticResource LblIconStyle}"
+                        HorizontalOptions="Center"
+                        TextColor="Black"
+                        VerticalOptions="CenterAndExpand"
+                        FontSize="Header"
+                        Text="{x:Static fonts:IconFont.UserOutline}"/>
+                </Frame>
+            </StackLayout>
+            <Frame 
+                Grid.Row="1"
+                Style="{StaticResource frmStyle}">
+                <StackLayout
+                    Spacing="40">
+                    <Label
+                        Style="{StaticResource LblSmallStyle}"
+                        Text="REGISTRO"
+                        HorizontalOptions="Center"/>
+                    <StackLayout
+                        Spacing="10">
+                        <Entry
+                            Text="{Binding Email}"
+                            Placeholder="Correo electrónico"/>
+                        <Entry
+                            Text="{Binding UserName}"
+                            Placeholder="Usuario"/>
+                        <Entry
+                            Text="{Binding FullName}"
+                            Placeholder="Nombre completo"/>
+                        <Entry
+                            Text="{Binding LastName}"
+                            Placeholder="Apellido(s)"/>
+                        <Entry
+                            Text="{Binding PhoneNumber}"
+                            MaxLength="10"
+                            Keyboard="Numeric"
+                            Placeholder="Teléfono"/>
+                        <Entry
+                            MaxLength="10"
+                            Text="{Binding Password}"
+                            IsPassword="True"
+                            Placeholder="Contraseña"/>
+                        <Entry
+                            MaxLength="10"
+                            Text="{Binding ConfirmPassword}"
+                            IsPassword="True"
+                            Placeholder="Confirmar contraseña"/>
+                    </StackLayout>
+                    <Button
+                        TextColor="White"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        Command="{Binding OnRegisterClickedCommand}"
+                        Style="{StaticResource BaseBtnStyle}"
+                        Text="Regístrarme"/>
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </ScrollView>
+</ContentPage>

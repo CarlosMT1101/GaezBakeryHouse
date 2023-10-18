@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             Style="{StaticResource BasePageStyle}"
+             xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts"
+             Title="{Binding Title}"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="GaezBakeryHouse.App.Views.ProductDetailPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame" x:Key="frmStyle">
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+            <Style TargetType="Button" x:Key="btnStyle">
+                <Setter Property="HeightRequest" Value="55"/>
+                <Setter Property="WidthRequest" Value="55"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="Title"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="FontFamily" Value="typicons.ttf"/>
+            </Style>
+            <Style TargetType="Frame" x:Key="frmBtnStyle">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="HeightRequest" Value="30"/>
+                <Setter Property="WidthRequest" Value="30"/>
+                <Setter Property="CornerRadius" Value="30"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <RefreshView
+        Style="{StaticResource BaseRefreshViewStyle}">
+        <ScrollView
+            Style="{StaticResource BaseScrollViewStyle}">
+            <Grid
+                RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Frame
+                    Style="{StaticResource frmStyle}">
+                    <ffimageloading:CachedImage
+                        HorizontalOptions="Center"
+                        HeightRequest="300"
+                        WidthRequest="300"
+                        VerticalOptions="CenterAndExpand"
+                        Source="{Binding Product.ImageSource}"/>
+                </Frame>
+                <StackLayout
+                    Spacing="20"
+                    Margin="10,0"
+                    Grid.Row="1">
+                    <StackLayout
+                        Spacing="5"
+                        Orientation="Vertical">
+                        <Label
+                            Style="{StaticResource LblSmallStyle}"
+                            Text="{Binding Product.Name}"/>
+                        <Label
+                            TextColor="{StaticResource PrimaryColor}"
+                            Style="{StaticResource LblSmallStyle}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="$ "/>
+                                    <Span Text="{Binding Product.Price}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+                    <Label
+                        TextColor="Black"
+                        Text="{Binding Product.Description}"/>
+                </StackLayout>
+                <StackLayout
+                    Spacing="20"
+                    HorizontalOptions="End"
+                    Margin="10,0"
+                    Grid.Row="2"
+                    Orientation="Horizontal">
+                    <Button
+                       Style="{StaticResource btnStyle}"
+                       Command="{Binding OnDecrementAmountCommand}"
+                       Text="{Static fonts:IconFont.Minus}">
+                    </Button>
+                    <Label 
+                        FontAttributes="Bold"
+                        Text="{Binding ProductAmount}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        TextColor="Black"
+                        FontSize="Title"/>
+                    <Button
+                        Command="{Binding OnIncrementAmountCommand}"
+                        Style="{StaticResource btnStyle}"
+                        Text="{Static fonts:IconFont.Plus}">
+                    </Button>
+                </StackLayout>
+                <Button
+                    TextColor="White"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Command="{Binding OnAddToCartClickedCommand}"
+                    Style="{StaticResource BaseBtnStyle}"
+                    Text="Agregar al carrito"
+                    Margin="10,0,10,10"
+                    VerticalOptions="EndAndExpand"
+                    Grid.Row="3"/>
+            </Grid>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>
