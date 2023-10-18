@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    Shell.BackgroundColor="{StaticResource PrimaryColor}"
+    xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:views="clr-namespace:GaezBakeryHouse.App.Views"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="GaezBakeryHouse.App.AppShell">
+
+    <Shell.FlyoutHeader>
+        <Grid
+            RowSpacing="0"
+            Padding="10"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="{StaticResource PrimaryColor}"
+            HeightRequest="180">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ffimageloading:CachedImage
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand"
+                HeightRequest="150"
+                Source="gaez"/>
+        </Grid>
+    </Shell.FlyoutHeader>
+    
+    <ShellContent
+        FlyoutItemIsVisible="False"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage"/>
+    <FlyoutItem>
+        <ShellContent
+            Route="HomePage"
+            ContentTemplate="{DataTemplate views:HomePage}"/>
+        <Shell.ItemTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Style="{StaticResource StackDataTemplateStyle}">
+                    <Label
+                        VerticalOptions="Center"
+                        Text="{Static fonts:IconFont.HomeOutline}"
+                        Style="{StaticResource LblIconStyle}"/>
+                    <Label
+                        VerticalOptions="Center"
+                        FontAttributes="None"
+                        Style="{StaticResource LblSubStyle}"
+                        Text="Inicio"/>
+                </StackLayout>
+            </DataTemplate>
+        </Shell.ItemTemplate>
+    </FlyoutItem>
+    <FlyoutItem>
+        <ShellContent
+            Route="ShoppingCartPage"
+            ContentTemplate="{DataTemplate views:ShoppingCartPage}"/>
+        <Shell.ItemTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Style="{StaticResource StackDataTemplateStyle}">
+                    <Label
+                        VerticalOptions="Center"
+                        Text="{Static fonts:IconFont.ShoppingCart}"
+                        Style="{StaticResource LblIconStyle}"/>
+                    <Label
+                        VerticalOptions="Center"
+                        FontAttributes="None"
+                        Style="{StaticResource LblSubStyle}"
+                        Text="Mi carrito"/>
+                </StackLayout>
+            </DataTemplate>
+        </Shell.ItemTemplate>
+    </FlyoutItem>
+    <FlyoutItem>
+        <ShellContent
+            Route="OrderPage"
+            ContentTemplate="{DataTemplate views:OrderPage}"/>
+        <Shell.ItemTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Style="{StaticResource StackDataTemplateStyle}">
+                    <Label
+                        VerticalOptions="Center"
+                        Text="{Static fonts:IconFont.Book}"
+                        Style="{StaticResource LblIconStyle}"/>
+                    <Label
+                        VerticalOptions="Center"
+                        FontAttributes="None"
+                        Style="{StaticResource LblSubStyle}"
+                        Text="Mis ordenes"/>
+                </StackLayout>
+            </DataTemplate>
+        </Shell.ItemTemplate>
+    </FlyoutItem>
+    <MenuItem 
+        Text="Salir"
+        Command="{Binding OnLogoutClikedCommand}">
+        <Shell.MenuItemTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Style="{StaticResource StackDataTemplateStyle}">
+                    <Label
+                        VerticalOptions="Center"
+                        Text="{Static fonts:IconFont.PowerOutline}"
+                        Style="{StaticResource LblIconStyle}"/>
+                    <Label
+                         VerticalOptions="Center"
+                         FontAttributes="None"
+                         Style="{StaticResource LblSubStyle}"
+                         Text="Salir"/>
+                </StackLayout>
+            </DataTemplate>
+        </Shell.MenuItemTemplate>
+    </MenuItem>
+</Shell>

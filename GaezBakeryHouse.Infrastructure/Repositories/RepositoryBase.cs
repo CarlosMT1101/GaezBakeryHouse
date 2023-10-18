@@ -1,6 +1,5 @@
 ﻿using GaezBakeryHouse.Application.Contracts;
 using GaezBakeryHouse.Domain.Common;
-using GaezBakeryHouse.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaezBakeryHouse.Infrastructure.Repositories
@@ -12,18 +11,28 @@ namespace GaezBakeryHouse.Infrastructure.Repositories
         public RepositoryBase(ApplicationDbContext context) =>
             _context = context;
 
-        public async Task<IEnumerable<T>> GetAll()
+        public IQueryable<T> GetAll() =>
+            _context.Set<T>().AsNoTracking();
+
+        public async Task<T> GetByIdAsync(int id) =>
+            await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task PostAsync(T entity)
         {
-            return await _context.Set<T>()
-                .AsNoTracking()
-                .ToListAsync();
+            _context.Add(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<T> GetById(int id)
+        public async Task DeleteAsync(T entity)
         {
-            return await _context.Set<T>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(i => i.Id == id);
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _context.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

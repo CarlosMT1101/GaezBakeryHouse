@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GaezBakeryHouse.App.Views.LoginFolder.LoginFooterView">
+    <StackLayout
+        TranslationY="-20"
+        Spacing="10"
+        Orientation="Horizontal"
+        Grid.Row="2"
+        HorizontalOptions="Center"
+        VerticalOptions="EndAndExpand">
+        <Label
+            FontAttributes="None"
+            Style="{StaticResource LblMicroStyle}"
+            Text="¿No tienes cuenta?"/>
+        <Label
+            TextDecorations="Underline"
+            TextColor="{StaticResource PrimaryColor}"
+            FontAttributes="None"
+            Style="{StaticResource LblMicroStyle}"
+            Text="Regístrate aquí">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding OnRegisterClickedCommand}"
+                    NumberOfTapsRequired="1"/>
+            </Label.GestureRecognizers>
+        </Label>
+    </StackLayout>
+</ContentView>

@@ -1,19 +1,21 @@
 ﻿using GaezBakeryHouse.Application.DTOs;
 using GaezBakeryHouse.Application.Models;
 using GaezBakeryHouse.Application.Services;
+using GaezBakeryHouse.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using System.Security.Claims;
 
 namespace GaezBakeryHouse.Infrastructure.Identity.Services
 {
     public class AuthService : IAuthService
     {
         readonly JwtSettings _jwtSettings;
-        readonly UserManager<IdentityUser> _userManager;
+        readonly UserManager<ApplicationUser> _userManager;
         readonly IJwtService _jwtService;
 
         public AuthService(IOptions<JwtSettings> jwtSettings, 
-                           UserManager<IdentityUser> userManager, 
+                           UserManager<ApplicationUser> userManager, 
                            IJwtService jwtService)
         {
             _jwtSettings = jwtSettings.Value;
@@ -28,15 +30,26 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
             // Si el usuario no existe o la contraseña es incorrecta
             if(user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
             {
-                return new AuthResponseDTO { };
+                throw new Exception();
             }
 
-            var token = _jwtService.GenerateToken(user.Id);
+            var claims = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName)
+            });
+
+            var token = await _jwtService.GenerateToken(claims);
 
             return new AuthResponseDTO
             {
-                Expiration = DateTime.UtcNow.AddHours(1),
+                FullName = user.FullName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                ApplicationUserId = user.Id,
+                Expiration = DateTime.UtcNow.AddDays(1),
                 Token = token,
+                UserName = user.UserName
             };
         }
 
@@ -45,8 +58,10 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
             var emailExist = await _userManager.FindByEmailAsync(request.Email);
             var usernameExist = await _userManager.FindByNameAsync(request.UserName);
 
-            var user = new IdentityUser
+            var user = new ApplicationUser
             { 
+                FullName = request.FullName,
+                LastName = request.LastName,
                 UserName = request.UserName,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber
@@ -54,29 +69,25 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
 
             if(emailExist != null || usernameExist != null)
             {
-                return new RegistrationResponseDTO
-                {
-                    Result = RegistrationResult.Fail
-                };
+                throw new Exception();
             }
 
             var result = await _userManager.CreateAsync(user, request.Password);
 
+            var claims = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName)
+            });
+
             if (result.Succeeded)
             {
-                var token = _jwtService.GenerateToken(user.Id);
+                var token = await _jwtService.GenerateToken(claims);
 
-                return new RegistrationResponseDTO
-                {
-                    Result = RegistrationResult.Sucess,
-                    Token = token,
-                };
+                return new RegistrationResponseDTO { Token =  token };
             }
 
-            return new RegistrationResponseDTO
-            {
-                Result = RegistrationResult.Fail
-            };
+            throw new Exception();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GaezBakeryHouse.Application.DTOs;
 using GaezBakeryHouse.Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace GaezBakeryHouse.API.Controllers
 {
@@ -14,28 +15,32 @@ namespace GaezBakeryHouse.API.Controllers
             _service = service;
 
         [HttpPost("Login")]
-        public async Task<ActionResult<AuthResponseDTO>> Login([FromBody] AuthRequestDTO request)
+        public async Task<ActionResult> Login([FromBody] AuthRequestDTO request)
         {
             try
             {
-                return await _service.Login(request);
+                var response = await _service.Login(request);
+                return StatusCode((int) HttpStatusCode.OK, response);
             }
             catch (Exception ex) 
             {
-                return BadRequest(ex.Message);
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int) HttpStatusCode.InternalServerError, errorResponse);
             }
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<RegistrationResponseDTO>> Register([FromBody] RegistrationRequestDTO request)
+        public async Task<ActionResult> Register([FromBody] RegistrationRequestDTO request)
         {
             try
             {
-                return await _service.Register(request);
+                var response = await _service.Register(request);
+                return StatusCode((int)HttpStatusCode.OK, response);
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                var errorResponse = new ErrorReponseDTO { Message = ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
             }  
         }
     }
