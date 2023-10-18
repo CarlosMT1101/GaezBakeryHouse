@@ -11,6 +11,7 @@ namespace GaezBakeryHouse.App.ViewModels
         #region Attributes
         private bool _isRefreshing;
         private string _title;
+        private string _userName;
         private LayoutState _currentState;
         #endregion
 
@@ -24,6 +25,26 @@ namespace GaezBakeryHouse.App.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string UserName
+        {
+            get => SecureStorage.GetAsync(Constants.UserName).Result;
+            set
+            {
+                _userName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //public string FullName
+        //{
+        //    get => SecureStorage.GetAsync(Constants.FullName).Result;
+        //}
+
+        //public string LastName
+        //{
+        //    get => SecureStorage.GetAsync(Constants.LastName).Result;
+        //}
 
         public LayoutState CurrentState
         {

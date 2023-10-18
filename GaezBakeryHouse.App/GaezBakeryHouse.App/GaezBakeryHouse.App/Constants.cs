@@ -16,7 +16,11 @@ namespace GaezBakeryHouse.App
         public static readonly string Bearer = "Bearer";
         public static readonly string LoadingMessage = "Cargando";
         public static readonly string RegisterMessage = "Regístro exitoso";
-
+        public static readonly string UserName = "UserName";
+        public static readonly string FullName = "FullName";
+        public static readonly string LastName = "LastName";
+        public static readonly string PhoneNumber = "PhoneNumber";
+        public static readonly string OrderMessage = "Orden realizada con exíto";
         #region Attributes
 
         #endregion

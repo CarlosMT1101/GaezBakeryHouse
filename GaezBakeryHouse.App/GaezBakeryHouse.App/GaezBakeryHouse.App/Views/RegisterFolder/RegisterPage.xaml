@@ -68,7 +68,13 @@
                             Placeholder="Correo electrónico"/>
                         <Entry
                             Text="{Binding UserName}"
-                            Placeholder="Nombre de usuario"/>
+                            Placeholder="Usuario"/>
+                        <Entry
+                            Text="{Binding FullName}"
+                            Placeholder="Nombre completo"/>
+                        <Entry
+                            Text="{Binding LastName}"
+                            Placeholder="Apellido(s)"/>
                         <Entry
                             Text="{Binding PhoneNumber}"
                             MaxLength="10"

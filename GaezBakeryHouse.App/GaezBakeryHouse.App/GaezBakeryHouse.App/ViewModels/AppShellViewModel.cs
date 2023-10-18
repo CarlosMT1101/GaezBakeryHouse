@@ -1,7 +1,6 @@
 ﻿using GaezBakeryHouse.App.Views;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GaezBakeryHouse.App.ViewModels
@@ -32,8 +31,6 @@ namespace GaezBakeryHouse.App.ViewModels
         #region Functions
         private async Task Logout()
         {
-            var stack = Shell.Current.Navigation.NavigationStack;
-
             App.RemoveUserInformation();
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }

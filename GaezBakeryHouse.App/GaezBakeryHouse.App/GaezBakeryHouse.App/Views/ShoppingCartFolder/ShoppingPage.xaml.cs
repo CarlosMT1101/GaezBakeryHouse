@@ -16,7 +16,6 @@ namespace GaezBakeryHouse.App.Views
             GetLayout();
 
             BindingContext = _viewModel = new ShoppingCartViewModel(_stackLayout);
-
         }
 
         // *** WARNING ***
@@ -25,9 +24,9 @@ namespace GaezBakeryHouse.App.Views
         // exception.
         void GetLayout()
         {
-            var refreshView = (RefreshView)shoppingCartItemsView.Children[0];
-            var scrollView = (ScrollView)refreshView.Children[0];
-            _stackLayout = scrollView.FindByName<StackLayout>("stackLayout");
+            var scrollView = (ScrollView)shoppingCartItemsView.Children[0];
+            var stackLayout = (StackLayout)scrollView.Children[0];
+            _stackLayout = stackLayout;
         }
 
         protected async override void OnAppearing()

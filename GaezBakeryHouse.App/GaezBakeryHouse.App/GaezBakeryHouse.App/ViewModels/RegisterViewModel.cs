@@ -16,6 +16,8 @@ namespace GaezBakeryHouse.App.ViewModels
         private string _password;
         private string _confirmPassword;
         private string _userName;
+        private string _fullName;
+        private string _lastName;
         private string _phoneNumber;
         private readonly IAuthService _service;
         #endregion
@@ -27,6 +29,28 @@ namespace GaezBakeryHouse.App.ViewModels
             set
             {
                 _email = value;
+                OnPropertyChanged();
+                ((Command)OnRegisterClickedCommand).ChangeCanExecute();
+            }
+        }
+
+        public string FullName
+        {
+            get { return _fullName; }
+            set
+            {
+                _fullName = value;
+                OnPropertyChanged();
+                ((Command)OnRegisterClickedCommand).ChangeCanExecute();
+            }
+        }
+
+        public string LastName
+        {
+            get { return _lastName; }
+            set
+            {
+                _lastName = value;
                 OnPropertyChanged();
                 ((Command)OnRegisterClickedCommand).ChangeCanExecute();
             }
@@ -97,7 +121,9 @@ namespace GaezBakeryHouse.App.ViewModels
                              string.IsNullOrWhiteSpace(Password) ||
                              string.IsNullOrWhiteSpace(ConfirmPassword) ||
                              string.IsNullOrWhiteSpace(UserName) ||
-                             string.IsNullOrWhiteSpace(PhoneNumber)) &&
+                             string.IsNullOrWhiteSpace(PhoneNumber) ||
+                             string.IsNullOrWhiteSpace(FullName) ||
+                             string.IsNullOrWhiteSpace(LastName)) &&
                              Password.Equals(ConfirmPassword);
                 });
         }
@@ -141,6 +167,8 @@ namespace GaezBakeryHouse.App.ViewModels
         private RegisterRequestModel CreateRegisterRequestModel() =>
             new RegisterRequestModel
             {
+                FullName = FullName,
+                LastName = LastName,
                 Email = Email,
                 Password = Password,
                 PhoneNumber = PhoneNumber,

@@ -43,9 +43,13 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
 
             return new AuthResponseDTO
             {
+                FullName = user.FullName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
                 ApplicationUserId = user.Id,
                 Expiration = DateTime.UtcNow.AddDays(1),
                 Token = token,
+                UserName = user.UserName
             };
         }
 
@@ -56,6 +60,8 @@ namespace GaezBakeryHouse.Infrastructure.Identity.Services
 
             var user = new ApplicationUser
             { 
+                FullName = request.FullName,
+                LastName = request.LastName,
                 UserName = request.UserName,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber

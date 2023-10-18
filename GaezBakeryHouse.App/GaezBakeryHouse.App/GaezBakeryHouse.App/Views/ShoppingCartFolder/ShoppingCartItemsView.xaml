@@ -1,20 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="GaezBakeryHouse.App.Views.ShoppingCartFolder.ShoppingCartItemsView">
-    <RefreshView
-        Style="{StaticResource BaseRefreshViewStyle}">
-        <ScrollView
-            Padding="0,0,0,10"
-           Style="{StaticResource BaseScrollViewStyle}">
-            <StackLayout
-                x:Name="stackLayout"
-                Margin="10"
-                Spacing="15">
-            </StackLayout>
-        </ScrollView>
-    </RefreshView>
+    <ScrollView
+        Padding="10"
+        Style="{StaticResource BaseScrollViewStyle}">
+        <StackLayout
+             x:Name="stackLayout"
+             Spacing="15">
+        </StackLayout>
+    </ScrollView>
 </ContentView>

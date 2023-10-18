@@ -12,6 +12,7 @@ using FFImageLoading.Forms;
 using Xamarin.CommunityToolkit.Effects;
 using System.IO;
 using Xamarin.CommunityToolkit.UI.Views;
+using GaezBakeryHouse.App.Views;
 
 namespace GaezBakeryHouse.App.ViewModels
 {
@@ -56,7 +57,7 @@ namespace GaezBakeryHouse.App.ViewModels
                 canExecute: () => true);
 
             OnContinueClickedCommand = new Command(
-                execute:  () => { },
+                execute:  async () => await Shell.Current.GoToAsync($"{nameof(OrderDetailPage)}"),
                 canExecute: () => ShoppingCartItems.Count() > 0);
         }
         #endregion

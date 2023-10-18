@@ -42,14 +42,21 @@ namespace GaezBakeryHouse.App
 
         public static async void SaveUserInformation(AuthResponseModel authResponseModel)
         {
+            await SecureStorage.SetAsync(Constants.FullName, $"{authResponseModel.FullName}");
+            await SecureStorage.SetAsync(Constants.PhoneNumber, $"{authResponseModel.PhoneNumber}");
+            await SecureStorage.SetAsync(Constants.LastName, $"{authResponseModel.LastName}");
+            await SecureStorage.SetAsync(Constants.UserName, $"{authResponseModel.UserName}");
             await SecureStorage.SetAsync(Constants.AccessToken, $"{Constants.Bearer} {authResponseModel.Token}");
             await SecureStorage.SetAsync(Constants.ExpirationToken, authResponseModel.Expiration.ToString());
             await SecureStorage.SetAsync(Constants.ApplicationUserId, authResponseModel.ApplicationUserId);
         }
 
-
         public static void RemoveUserInformation()
         {
+            SecureStorage.Remove(Constants.UserName);
+            SecureStorage.Remove(Constants.PhoneNumber);
+            SecureStorage.Remove(Constants.FullName);
+            SecureStorage.Remove(Constants.LastName);
             SecureStorage.Remove(Constants.AccessToken);
             SecureStorage.Remove(Constants.ExpirationToken);
             SecureStorage.Remove(Constants.ApplicationUserId);

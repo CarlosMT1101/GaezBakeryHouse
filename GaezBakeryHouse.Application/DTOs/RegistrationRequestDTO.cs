@@ -14,6 +14,12 @@ namespace GaezBakeryHouse.Application.DTOs
         [Required]
         public string UserName { get; set; }
 
+        [Required]
+        public string FullName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
         [Phone]
         [Required]
         public string PhoneNumber { get; set; }

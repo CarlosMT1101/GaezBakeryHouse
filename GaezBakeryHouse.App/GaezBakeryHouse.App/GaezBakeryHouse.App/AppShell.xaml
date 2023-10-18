@@ -3,10 +3,30 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     Shell.BackgroundColor="{StaticResource PrimaryColor}"
     xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:views="clr-namespace:GaezBakeryHouse.App.Views"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="GaezBakeryHouse.App.AppShell">
 
+    <Shell.FlyoutHeader>
+        <Grid
+            RowSpacing="0"
+            Padding="10"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="{StaticResource PrimaryColor}"
+            HeightRequest="180">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ffimageloading:CachedImage
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand"
+                HeightRequest="150"
+                Source="gaez"/>
+        </Grid>
+    </Shell.FlyoutHeader>
+    
     <ShellContent
         FlyoutItemIsVisible="False"
         ContentTemplate="{DataTemplate views:LoginPage}"
@@ -69,7 +89,7 @@
                         VerticalOptions="Center"
                         FontAttributes="None"
                         Style="{StaticResource LblSubStyle}"
-                        Text="Mis órdenes"/>
+                        Text="Mis ordenes"/>
                 </StackLayout>
             </DataTemplate>
         </Shell.ItemTemplate>
