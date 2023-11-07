@@ -61,7 +61,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="AppShell.xaml">
+	  <MauiXaml Update="Controls\CustomMenuBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\BagPageFolder\BagPage.xaml">
@@ -70,11 +70,16 @@
 	  <MauiXaml Update="Views\HomePageFolder\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\SearchPageFolder\SearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Behaviors\" />
+	  <Folder Include="ViewModels\" />
 	  <Folder Include="Views\AccountPageFolder\" />
-	  <Folder Include="Views\WhishListPage\" />
+	  <Folder Include="Views\WhishListPageFolder\" />
 	</ItemGroup>
 
 </Project>
