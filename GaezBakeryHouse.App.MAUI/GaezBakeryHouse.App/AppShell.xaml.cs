@@ -1,10 +1,9 @@
-﻿namespace GaezBakeryHouse.App
+namespace GaezBakeryHouse.App;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
-    {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
-    }
+	public AppShell()
+	{
+		InitializeComponent();
+	}
 }
