@@ -1,4 +1,5 @@
-﻿using GaezBakeryHouse.App.Views;
+﻿using GaezBakeryHouse.App.Controls;
+using GaezBakeryHouse.App.Views;
 
 namespace GaezBakeryHouse.App
 {
