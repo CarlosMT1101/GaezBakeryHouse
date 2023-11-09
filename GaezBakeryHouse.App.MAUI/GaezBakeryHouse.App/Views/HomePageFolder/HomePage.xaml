@@ -8,10 +8,6 @@
     xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
     xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material">
 
-    <ContentPage.Behaviors>
-        <bh:ContentPageBehavior />
-    </ContentPage.Behaviors>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />

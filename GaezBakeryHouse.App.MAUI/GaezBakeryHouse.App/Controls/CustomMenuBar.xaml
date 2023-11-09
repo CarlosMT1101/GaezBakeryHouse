@@ -3,6 +3,7 @@
     x:Class="GaezBakeryHouse.App.Controls.CustomMenuBar"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bh="clr-namespace:GaezBakeryHouse.App.Behaviors"
     xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
     xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material">
     <Grid Padding="15">
@@ -13,7 +14,11 @@
         <Image
             Grid.Column="0"
             HorizontalOptions="Start"
-            Source="{material:Icon Icon=Menu}" />
+            Source="{material:Icon Icon=Menu}">
+            <Image.Behaviors>
+                <bh:MenuIconBehavior />
+            </Image.Behaviors>
+        </Image>
         <HorizontalStackLayout
             Grid.Column="1"
             HorizontalOptions="End"
