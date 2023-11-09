@@ -6,6 +6,11 @@
     xmlns:bh="clr-namespace:GaezBakeryHouse.App.Behaviors"
     xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
     xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material">
+
+    <ContentView.Behaviors>
+        <bh:CustomMenuBarBehavior />
+    </ContentView.Behaviors>
+
     <Grid Padding="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -14,11 +19,7 @@
         <Image
             Grid.Column="0"
             HorizontalOptions="Start"
-            Source="{material:Icon Icon=Menu}">
-            <Image.Behaviors>
-                <bh:MenuIconBehavior />
-            </Image.Behaviors>
-        </Image>
+            Source="{material:Icon Icon=Menu}" />
         <HorizontalStackLayout
             Grid.Column="1"
             HorizontalOptions="End"
