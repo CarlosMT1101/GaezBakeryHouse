@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="GaezBakeryHouse.App.Controls.SearchView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:GaezBakeryHouse.App.Controls"
+    xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
+    xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
+    Grid.Row="0"
+    Grid.RowSpan="2"
+    IsVisible="False"
+    Opacity="0">
+    <Grid BackgroundColor="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout
+            Padding="15"
+            Orientation="Horizontal"
+            Spacing="15">
+            <Image
+                HeightRequest="50"
+                HorizontalOptions="Start"
+                Source="{material:Icon Icon=KeyboardArrowLeft}"
+                VerticalOptions="Center" />
+            <controls:CustomEntry
+                HeightRequest="50"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="Buscar en Gaez Bakery House"
+                VerticalOptions="Center" />
+        </StackLayout>
+        <CollectionView Grid.Row="1" />
+    </Grid>
+</ContentView>

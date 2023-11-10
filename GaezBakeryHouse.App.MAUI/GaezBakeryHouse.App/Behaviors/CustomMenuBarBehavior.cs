@@ -9,13 +9,16 @@ namespace GaezBakeryHouse.App.Behaviors
         private Image _menuIcon;
         private Image _searchIcon;
         private Image _shoppingCarIcon;
+        private Image _searchBackIcon;
         private OpacityView _opacityView;
         private FlyoutMenu _flyoutMenu;
+        private SearchView _searchView;
         private TapGestureRecognizer _tapMenuIcon;
         private TapGestureRecognizer _tapSearchIcon;
         private TapGestureRecognizer _tapShoppingCarIcon;
         private TapGestureRecognizer _tapOpacityView;
         private TapGestureRecognizer _tapFlyoutMenu;
+        private TapGestureRecognizer _tapSearchBackIcon;
         #endregion
 
         #region Constructor
@@ -26,12 +29,15 @@ namespace GaezBakeryHouse.App.Behaviors
             _tapShoppingCarIcon = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
             _tapOpacityView = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
             _tapFlyoutMenu = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
+            _tapSearchBackIcon = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
 
             _menuIcon = new Image();
             _searchIcon = new Image();
             _opacityView = new OpacityView();
             _flyoutMenu = new FlyoutMenu();
             _shoppingCarIcon = new Image();
+            _searchView = new SearchView();
+            _searchBackIcon = new Image();
 
             _contentGrid = new Grid();
         }
@@ -49,6 +55,7 @@ namespace GaezBakeryHouse.App.Behaviors
             _tapShoppingCarIcon.Tapped += OnShoppingCarIconTapped;
             _tapOpacityView.Tapped += OnOpacityViewTapped;
             _tapFlyoutMenu.Tapped += OnFlyoutTapped;
+            _tapSearchBackIcon.Tapped += OnSearchBackIconTapped;
         }
 
         protected override void OnDetachingFrom(ContentView bindable)
@@ -62,6 +69,7 @@ namespace GaezBakeryHouse.App.Behaviors
             _tapShoppingCarIcon.Tapped -= OnShoppingCarIconTapped;
             _tapOpacityView.Tapped -= OnOpacityViewTapped;
             _tapFlyoutMenu.Tapped -= OnFlyoutTapped;
+            _tapSearchIcon.Tapped -= OnSearchBackIconTapped;
         }
 
         private void OnCustomMenuBarLoaded(object sender, EventArgs e)
@@ -70,6 +78,7 @@ namespace GaezBakeryHouse.App.Behaviors
             _contentGrid = (Grid)(sender as CustomMenuBar).Parent;
             _contentGrid.Children.Add(_opacityView);
             _contentGrid.Children.Add(_flyoutMenu);
+            _contentGrid.Children.Add(_searchView);
 
             // Menu icon
             _menuIcon = (Image)((Grid)(sender as CustomMenuBar).Content).Children[0];
@@ -88,6 +97,10 @@ namespace GaezBakeryHouse.App.Behaviors
 
             // FlyoutMenu tap gesture
             _flyoutMenu.GestureRecognizers.Add(_tapFlyoutMenu);
+
+            // Search back icon
+            _searchBackIcon = (Image)((StackLayout) (_searchView.Content as Grid).Children[0]).Children[0];
+            _searchBackIcon.GestureRecognizers.Add(_tapSearchBackIcon);
         }
         #endregion
 
@@ -104,14 +117,15 @@ namespace GaezBakeryHouse.App.Behaviors
 
             await Task.WhenAll
             (
-                _opacityView.FadeTo(0.5, 200, Easing.Linear),
-                _flyoutMenu.TranslateTo(0, 0, 200, Easing.Linear)
+                _opacityView.FadeTo(0.5, 100, Easing.Linear),
+                _flyoutMenu.TranslateTo(0, 0, 100, Easing.Linear)
             );
         }
 
-        private void OnSearchIconTapped(object sender, TappedEventArgs e)
+        private async void OnSearchIconTapped(object sender, TappedEventArgs e)
         {
-            // throw new NotImplementedException();
+            _searchView.IsVisible = true;
+            await _searchView.FadeTo(1, 100, Easing.Linear);
         }
 
         private void OnShoppingCarIconTapped(object sender, TappedEventArgs e)
@@ -125,8 +139,8 @@ namespace GaezBakeryHouse.App.Behaviors
 
             await Task.WhenAll
             (
-                _opacityView.FadeTo(0, 200, Easing.Linear),
-                _flyoutMenu.TranslateTo(xPosition, 0, 200, Easing.Linear)
+                _opacityView.FadeTo(0, 100, Easing.Linear),
+                _flyoutMenu.TranslateTo(xPosition, 0, 100, Easing.Linear)
             );
 
             _flyoutMenu.IsVisible = false;
@@ -136,6 +150,12 @@ namespace GaezBakeryHouse.App.Behaviors
         private void OnFlyoutTapped(object sender, TappedEventArgs e)
         {
             // throw new NotImplementedException();
+        }
+
+        private async void OnSearchBackIconTapped(object sender, TappedEventArgs e)
+        {
+            await _searchView.FadeTo(0, 100, Easing.Linear);
+            _searchView.IsVisible = false;
         }
         #endregion
     }

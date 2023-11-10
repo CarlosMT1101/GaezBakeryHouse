@@ -49,6 +49,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="CustomEntryHandler.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\typicons.ttf" />
 	</ItemGroup>
 
@@ -70,6 +74,9 @@
 	  <MauiXaml Update="Controls\OpacityView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Controls\SearchView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\BagPageFolder\BagPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -82,6 +89,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Handlers\" />
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Views\AccountPageFolder\" />
 	  <Folder Include="Views\WhishListPageFolder\" />

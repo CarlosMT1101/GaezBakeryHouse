@@ -26,7 +26,7 @@
             Spacing="10"
             VerticalOptions="CenterAndExpand">
             <Image Source="{material:Icon Icon=Search}" />
-            <Image HorizontalOptions="End" Source="{fluent:Icon Icon=Cart16}" />
+            <Image HorizontalOptions="End" Source="{fluent:Icon Icon=ShoppingBag24}" />
         </HorizontalStackLayout>
     </Grid>
 </ContentView>

@@ -2,6 +2,7 @@
 using MauiIcons.Fluent;
 using MauiIcons.Material;
 using CommunityToolkit.Maui;
+using GaezBakeryHouse.App.Controls;
 
 namespace GaezBakeryHouse.App
 {
