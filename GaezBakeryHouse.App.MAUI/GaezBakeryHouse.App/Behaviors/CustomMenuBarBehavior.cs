@@ -15,6 +15,7 @@ namespace GaezBakeryHouse.App.Behaviors
         private TapGestureRecognizer _tapSearchIcon;
         private TapGestureRecognizer _tapShoppingCarIcon;
         private TapGestureRecognizer _tapOpacityView;
+        private TapGestureRecognizer _tapFlyoutMenu;
         #endregion
 
         #region Constructor
@@ -24,6 +25,7 @@ namespace GaezBakeryHouse.App.Behaviors
             _tapSearchIcon = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
             _tapShoppingCarIcon = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
             _tapOpacityView = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
+            _tapFlyoutMenu = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
 
             _menuIcon = new Image();
             _searchIcon = new Image();
@@ -33,7 +35,6 @@ namespace GaezBakeryHouse.App.Behaviors
 
             _contentGrid = new Grid();
         }
-
         #endregion
 
         #region Functions
@@ -47,6 +48,7 @@ namespace GaezBakeryHouse.App.Behaviors
             _tapSearchIcon.Tapped += OnSearchIconTapped;
             _tapShoppingCarIcon.Tapped += OnShoppingCarIconTapped;
             _tapOpacityView.Tapped += OnOpacityViewTapped;
+            _tapFlyoutMenu.Tapped += OnFlyoutTapped;
         }
 
         protected override void OnDetachingFrom(ContentView bindable)
@@ -59,6 +61,7 @@ namespace GaezBakeryHouse.App.Behaviors
             _tapSearchIcon.Tapped -= OnSearchIconTapped;
             _tapShoppingCarIcon.Tapped -= OnShoppingCarIconTapped;
             _tapOpacityView.Tapped -= OnOpacityViewTapped;
+            _tapFlyoutMenu.Tapped -= OnFlyoutTapped;
         }
 
         private void OnCustomMenuBarLoaded(object sender, EventArgs e)
@@ -82,6 +85,9 @@ namespace GaezBakeryHouse.App.Behaviors
 
             //OpacityView tap gesture
             _opacityView.GestureRecognizers.Add(_tapOpacityView);
+
+            // FlyoutMenu tap gesture
+            _flyoutMenu.GestureRecognizers.Add(_tapFlyoutMenu);
         }
         #endregion
 
@@ -125,6 +131,11 @@ namespace GaezBakeryHouse.App.Behaviors
 
             _flyoutMenu.IsVisible = false;
             _opacityView.IsVisible = false;
+        }
+
+        private void OnFlyoutTapped(object sender, TappedEventArgs e)
+        {
+            // throw new NotImplementedException();
         }
         #endregion
     }
