@@ -2,10 +2,47 @@
 <Application
     x:Class="GaezBakeryHouse.App.App"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:fonts="clr-namespace:GaezBakeryHouse.App.Fonts">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Application.Resources>
         <Color x:Key="PrimaryColor">#FF6A0E</Color>
         <Color x:Key="GrayColor">#F1F1F1</Color>
+        <Style TargetType="ScrollView">
+            <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+        </Style>
+        <Style x:Key="BaseLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="Black" />
+        </Style>
+        <Style
+            x:Key="LabelSmallStyle"
+            BasedOn="{StaticResource BaseLabelStyle}"
+            TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="Small" />
+        </Style>
+        <Style
+            x:Key="LabelMicroStyle"
+            BasedOn="{StaticResource BaseLabelStyle}"
+            TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="Micro" />
+        </Style>
+        <Style TargetType="Grid">
+            <Setter Property="RowSpacing" Value="0" />
+            <Setter Property="ColumnSpacing" Value="0" />
+        </Style>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="BorderColor" Value="{StaticResource GrayColor}" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="HeightRequest" Value="55" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="TextTransform" Value="None" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+        </Style>
     </Application.Resources>
 </Application>

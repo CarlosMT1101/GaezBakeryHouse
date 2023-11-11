@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="GaezBakeryHouse.App.Views.LoginPageFolder.LoginBoxView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Frame
+        Margin="30,0"
+        Padding="30"
+        TranslationY="-30">
+        <Grid RowSpacing="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="55" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                HorizontalOptions="Center"
+                Style="{StaticResource LabelSmallStyle}"
+                Text="INICIAR SESIÓN" />
+            <Grid Grid.Row="1" RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Entry Grid.Row="0" Placeholder="Usuario" />
+                <Entry Grid.Row="1" Placeholder="Contraseña" />
+            </Grid>
+            <Button Grid.Row="2" Text="Ingresar" />
+        </Grid>
+    </Frame>
+</ContentView>
