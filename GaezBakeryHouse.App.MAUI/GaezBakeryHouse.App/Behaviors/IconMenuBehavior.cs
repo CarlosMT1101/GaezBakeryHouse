@@ -4,20 +4,11 @@ namespace GaezBakeryHouse.App.Behaviors
 {
     public class IconMenuBehavior : Behavior<Image>
     {
-        #region Atributes
-        private Image _iconMenu;
         private TapGestureRecognizer _tapIconMenu;
-        #endregion
 
-        #region Constructor
-        public IconMenuBehavior()
-        {
-            _iconMenu = new Image();
+        public IconMenuBehavior() =>
             _tapIconMenu = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
-        }
-        #endregion
 
-        #region Functions
         protected override void OnAttachedTo(Image bindable)
         {
             base.OnAttachedTo(bindable);
@@ -34,18 +25,16 @@ namespace GaezBakeryHouse.App.Behaviors
             bindable.Loaded -= OnIconMenuLoaded;
         }
 
-        private void OnIconMenuLoaded(object sender, EventArgs e)
-        {
-            _iconMenu = sender as Image;
-            _iconMenu.GestureRecognizers.Add(_tapIconMenu);
-        }
+        private void OnIconMenuLoaded(object sender, EventArgs e) =>
+            (sender as Image).GestureRecognizers.Add(_tapIconMenu);
 
         private async void OnIconMenuTapped(object sender, TappedEventArgs e)
         {
-            var contentGrid = (Grid) ((ContentView) ((Grid) _iconMenu.Parent).Parent).Parent;
-            var opacityview = (OpacityView) contentGrid.Children[2];
-            var flyoutMenu = (FlyoutMenuView) contentGrid.Children[3];
-           
+            var iconMenu = sender as Image;
+            var contentGrid = (Grid)((ContentView)((Grid) iconMenu.Parent).Parent).Parent;
+            var opacityview = (OpacityView)contentGrid.Children[2];
+            var flyoutMenu = (FlyoutMenuView)contentGrid.Children[3];
+
             var widthPercentage = contentGrid.Width * 0.65;
 
             flyoutMenu.WidthRequest = widthPercentage;
@@ -60,6 +49,5 @@ namespace GaezBakeryHouse.App.Behaviors
                 flyoutMenu.TranslateTo(0, 0, 100, Easing.Linear)
             );
         }
-        #endregion
     }
 }

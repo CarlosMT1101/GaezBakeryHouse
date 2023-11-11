@@ -8,4 +8,9 @@
     Grid.RowSpan="2"
     BackgroundColor="Gray"
     IsVisible="False"
-    Opacity="0" />
+    Opacity="0">
+
+    <ContentView.Behaviors>
+        <bh:OpacityViewBehavior />
+    </ContentView.Behaviors>
+</ContentView>
