@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="GaezBakeryHouse.App.Controls.CustomMenuBar"
+    x:Class="GaezBakeryHouse.App.Controls.CustomMenuBarView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:bh="clr-namespace:GaezBakeryHouse.App.Behaviors"
+    xmlns:controls="clr-namespace:GaezBakeryHouse.App.Controls"
     xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
     xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material">
 
-    <ContentView.Behaviors>
-        <bh:CustomMenuBarBehavior />
-    </ContentView.Behaviors>
 
     <Grid Padding="15">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -22,14 +21,27 @@
             Source="{material:Icon Icon=Menu,
                                    IconAutoScaling=True,
                                    Variant=Outlined,
-                                   IconColor=Black}" />
-        <HorizontalStackLayout
+                                   IconColor=Black}"
+            VerticalOptions="Center">
+            <Image.Behaviors>
+                <bh:IconMenuBehavior />
+            </Image.Behaviors>
+        </Image>
+        <Image
             Grid.Column="1"
             HorizontalOptions="End"
-            Spacing="10"
-            VerticalOptions="CenterAndExpand">
-            <Image Source="{material:Icon Icon=Search, Variant=Outlined, IconAutoScaling=True, IconColor=Black}" />
-            <Image HorizontalOptions="End" Source="{material:Icon Icon=ShoppingCart, IconColor=Black, IconAutoScaling=True, Variant=Outlined}" />
-        </HorizontalStackLayout>
+            Source="{material:Icon Icon=Search,
+                                   Variant=Outlined,
+                                   IconAutoScaling=True,
+                                   IconColor=Black}"
+            VerticalOptions="Center" />
+        <Image
+            Grid.Column="2"
+            HorizontalOptions="End"
+            Source="{material:Icon Icon=ShoppingCart,
+                                   IconColor=Black,
+                                   IconAutoScaling=True,
+                                   Variant=Outlined}"
+            VerticalOptions="Center" />
     </Grid>
 </ContentView>

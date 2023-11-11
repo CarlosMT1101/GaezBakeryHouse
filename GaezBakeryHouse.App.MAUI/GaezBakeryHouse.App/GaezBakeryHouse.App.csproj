@@ -72,7 +72,7 @@
 	  <MauiXaml Update="Controls\CustomMenuBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Controls\CustomFlyoutMenu.xaml">
+	  <MauiXaml Update="Controls\FlyoutMenuView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Controls\OpacityView.xaml">
@@ -121,8 +121,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Controls\CustomFlyoutMenu.xaml.cs">
-	    <DependentUpon>CustomFlyoutMenu.xaml</DependentUpon>
+	  <Compile Update="Controls\FlyoutMenuView.xaml.cs">
+	    <DependentUpon>FlyoutMenuView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 

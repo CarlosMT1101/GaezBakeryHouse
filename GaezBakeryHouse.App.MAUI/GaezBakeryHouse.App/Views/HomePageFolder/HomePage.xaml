@@ -6,14 +6,19 @@
     xmlns:bh="clr-namespace:GaezBakeryHouse.App.Behaviors"
     xmlns:controls="clr-namespace:GaezBakeryHouse.App.Controls"
     xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
-    xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material">
+    xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Behaviors>
+        <bh:ContentPageBehavior />
+    </ContentPage.Behaviors>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:CustomMenuBar Grid.Row="0" />
+        <controls:CustomMenuBarView Grid.Row="0" />
         <ScrollView Grid.Row="1" Grid.RowSpan="2" />
     </Grid>
 </ContentPage>

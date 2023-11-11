@@ -11,7 +11,7 @@ namespace GaezBakeryHouse.App.Behaviors
         private Image _shoppingCarIcon;
         private Image _searchBackIcon;
         private OpacityView _opacityView;
-        private CustomFlyoutMenu _flyoutMenu;
+        private FlyoutMenuView _flyoutMenu;
         private SearchView _searchView;
         private TapGestureRecognizer _tapMenuIcon;
         private TapGestureRecognizer _tapSearchIcon;
@@ -34,7 +34,7 @@ namespace GaezBakeryHouse.App.Behaviors
             _menuIcon = new Image();
             _searchIcon = new Image();
             _opacityView = new OpacityView();
-            _flyoutMenu = new CustomFlyoutMenu();
+            _flyoutMenu = new FlyoutMenuView();
             _shoppingCarIcon = new Image();
             _searchView = new SearchView();
             _searchBackIcon = new Image();
@@ -75,21 +75,21 @@ namespace GaezBakeryHouse.App.Behaviors
         private void OnCustomMenuBarLoaded(object sender, EventArgs e)
         {
             // Parent layout
-            _contentGrid = (Grid)(sender as CustomMenuBar).Parent;
+            _contentGrid = (Grid)(sender as CustomMenuBarView).Parent;
             _contentGrid.Children.Add(_opacityView);
             _contentGrid.Children.Add(_flyoutMenu);
             _contentGrid.Children.Add(_searchView);
 
             // Menu icon
-            _menuIcon = (Image)((Grid)(sender as CustomMenuBar).Content).Children[0];
+            _menuIcon = (Image)((Grid)(sender as CustomMenuBarView).Content).Children[0];
             _menuIcon.GestureRecognizers.Add(_tapMenuIcon);
 
             // Search icon
-            _searchIcon = (Image)((HorizontalStackLayout)((Grid)(sender as CustomMenuBar).Content).Children[1]).Children[0];
+            _searchIcon = (Image)((HorizontalStackLayout)((Grid)(sender as CustomMenuBarView).Content).Children[1]).Children[0];
             _searchIcon.GestureRecognizers.Add(_tapSearchIcon);
 
             // ShoppingCar icon
-            _shoppingCarIcon = (Image)((HorizontalStackLayout)((Grid)(sender as CustomMenuBar).Content).Children[1]).Children[1];
+            _shoppingCarIcon = (Image)((HorizontalStackLayout)((Grid)(sender as CustomMenuBarView).Content).Children[1]).Children[1];
             _shoppingCarIcon.GestureRecognizers.Add(_tapShoppingCarIcon);
 
             //OpacityView tap gesture

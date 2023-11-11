@@ -2,9 +2,9 @@ using System.Windows.Input;
 
 namespace GaezBakeryHouse.App.Controls;
 
-public partial class CustomMenuBar : ContentView
+public partial class CustomMenuBarView : ContentView
 {
-	public CustomMenuBar()
+	public CustomMenuBarView()
 	{
 		InitializeComponent();
 	}
