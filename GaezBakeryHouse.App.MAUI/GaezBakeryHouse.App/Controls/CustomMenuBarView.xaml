@@ -34,7 +34,11 @@
                                    Variant=Outlined,
                                    IconAutoScaling=True,
                                    IconColor=Black}"
-            VerticalOptions="Center" />
+            VerticalOptions="Center">
+            <Image.Behaviors>
+                <bh:IconSearchBehavior />
+            </Image.Behaviors>
+        </Image>
         <Image
             Grid.Column="2"
             HorizontalOptions="End"

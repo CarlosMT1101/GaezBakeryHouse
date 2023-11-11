@@ -3,33 +3,39 @@
     x:Class="GaezBakeryHouse.App.Controls.SearchView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bh="clr-namespace:GaezBakeryHouse.App.Behaviors"
     xmlns:controls="clr-namespace:GaezBakeryHouse.App.Controls"
     xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
     xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
     Grid.Row="0"
     Grid.RowSpan="2"
+    BackgroundColor="White"
     IsVisible="False"
     Opacity="0">
-    <Grid BackgroundColor="White">
+    <Grid Padding="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackLayout
-            Padding="15"
-            Orientation="Horizontal"
-            Spacing="15">
-            <Image
-                HeightRequest="50"
-                HorizontalOptions="Start"
-                Source="{material:Icon Icon=KeyboardArrowLeft}"
-                VerticalOptions="Center" />
-            <controls:CustomEntryView
-                HeightRequest="50"
-                HorizontalOptions="FillAndExpand"
-                PlaceHolder="Buscar en Gaez Bakery House"
-                VerticalOptions="Center" />
-        </StackLayout>
-        <CollectionView Grid.Row="1" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="6*" />
+        </Grid.ColumnDefinitions>
+        <Image
+            HorizontalOptions="Start"
+            Source="{material:Icon Icon=ArrowBack,
+                                   IconAutoScaling=True,
+                                   IconColor=Black,
+                                   Variant=Outlined}"
+            VerticalOptions="Center">
+            <Image.Behaviors>
+                <bh:IconBackSearchViewBehavior />
+            </Image.Behaviors>
+        </Image>
+        <controls:CustomEntryView
+            Grid.Column="1"
+            PlaceHolder="Buscar en Gaez Bakery House"
+            VerticalOptions="Center" />
+        <CollectionView Grid.Row="1" Grid.ColumnSpan="2" />
     </Grid>
 </ContentView>
