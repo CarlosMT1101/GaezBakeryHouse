@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="GaezBakeryHouse.App.Views.RegisterPageFolder.RegisterImageView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
+    xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material">
+    <Grid BackgroundColor="{StaticResource PrimaryColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Frame
+            Margin="10,10,0,0"
+            Padding="5"
+            CornerRadius="5"
+            HorizontalOptions="Start">
+            <Image
+                HorizontalOptions="Center"
+                Source="{material:Icon Icon=KeyboardArrowLeft,
+                                       IconAutoScaling=True,
+                                       IconColor=Black,
+                                       Variant=Outlined}"
+                VerticalOptions="Center" />
+        </Frame>
+        <Image
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            HorizontalOptions="Center"
+            Source="{material:Icon Icon=PeopleAlt,
+                                   IconAutoScaling=True,
+                                   IconColor=White,
+                                   IconSize=180,
+                                   Variant=Rounded}"
+            VerticalOptions="Center" />
+    </Grid>
+</ContentView>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="GaezBakeryHouse.App.Views.LoginPageFolder.LoginFooterView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <StackLayout
+        HorizontalOptions="Center"
+        Orientation="Horizontal"
+        Spacing="10"
+        TranslationY="-10"
+        VerticalOptions="EndAndExpand">
+        <Label
+            FontAttributes="None"
+            Style="{StaticResource LabelMicroStyle}"
+            Text="¿No tienes cuenta?" />
+        <Label
+            FontAttributes="None"
+            Style="{StaticResource LabelMicroStyle}"
+            Text="Regístrate aquí"
+            TextColor="{StaticResource PrimaryColor}"
+            TextDecorations="Underline" />
+    </StackLayout>
+</ContentView>

@@ -24,10 +24,10 @@
                 HorizontalOptions="Start"
                 Source="{material:Icon Icon=KeyboardArrowLeft}"
                 VerticalOptions="Center" />
-            <controls:CustomEntry
+            <controls:CustomEntryView
                 HeightRequest="50"
                 HorizontalOptions="FillAndExpand"
-                Placeholder="Buscar en Gaez Bakery House"
+                PlaceHolder="Buscar en Gaez Bakery House"
                 VerticalOptions="Center" />
         </StackLayout>
         <CollectionView Grid.Row="1" />
