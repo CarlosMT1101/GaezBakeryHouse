@@ -2,7 +2,8 @@
 <ContentView
     x:Class="GaezBakeryHouse.App.Views.LoginPageFolder.LoginBoxView"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:GaezBakeryHouse.App.Controls">
     <Frame
         Margin="30,0"
         Padding="30"
@@ -23,8 +24,11 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Entry Grid.Row="0" Placeholder="Usuario" />
-                <Entry Grid.Row="1" Placeholder="Contraseña" />
+                <controls:CustomEntry Grid.Row="0" Placeholder="Usuario" />
+                <controls:CustomEntry
+                    Grid.Row="1"
+                    IsPassword="True"
+                    Placeholder="Contraseña" />
             </Grid>
             <Button Grid.Row="2" Text="Ingresar" />
         </Grid>
