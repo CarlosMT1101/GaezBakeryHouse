@@ -19,14 +19,17 @@
         <Image
             Grid.Column="0"
             HorizontalOptions="Start"
-            Source="{material:Icon Icon=Menu}" />
+            Source="{material:Icon Icon=Menu,
+                                   IconAutoScaling=True,
+                                   Variant=Outlined,
+                                   IconColor=Black}" />
         <HorizontalStackLayout
             Grid.Column="1"
             HorizontalOptions="End"
             Spacing="10"
             VerticalOptions="CenterAndExpand">
-            <Image Source="{material:Icon Icon=Search}" />
-            <Image HorizontalOptions="End" Source="{fluent:Icon Icon=ShoppingBag24}" />
+            <Image Source="{material:Icon Icon=Search, Variant=Outlined, IconAutoScaling=True, IconColor=Black}" />
+            <Image HorizontalOptions="End" Source="{material:Icon Icon=ShoppingCart, IconColor=Black, IconAutoScaling=True, Variant=Outlined}" />
         </HorizontalStackLayout>
     </Grid>
 </ContentView>

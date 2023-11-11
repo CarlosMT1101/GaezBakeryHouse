@@ -61,6 +61,7 @@
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Fluent" Version="1.2.1" />
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="1.2.1" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
@@ -68,7 +69,7 @@
 	  <MauiXaml Update="Controls\CustomMenuBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Controls\FlyoutMenu.xaml">
+	  <MauiXaml Update="Controls\CustomFlyoutMenu.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Controls\OpacityView.xaml">
@@ -83,6 +84,9 @@
 	  <MauiXaml Update="Views\HomePageFolder\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\LoginPageFolder\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SearchPageFolder\SearchPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -90,9 +94,15 @@
 
 	<ItemGroup>
 	  <Folder Include="Handlers\" />
-	  <Folder Include="ViewModels\" />
+	  <Folder Include="Services\" />
 	  <Folder Include="Views\AccountPageFolder\" />
 	  <Folder Include="Views\WhishListPageFolder\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Controls\CustomFlyoutMenu.xaml.cs">
+	    <DependentUpon>CustomFlyoutMenu.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

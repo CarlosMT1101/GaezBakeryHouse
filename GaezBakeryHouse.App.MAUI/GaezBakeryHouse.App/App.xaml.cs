@@ -1,5 +1,4 @@
-﻿using GaezBakeryHouse.App.Controls;
-using GaezBakeryHouse.App.Views;
+﻿using GaezBakeryHouse.App.Views;
 
 namespace GaezBakeryHouse.App
 {
@@ -9,7 +8,7 @@ namespace GaezBakeryHouse.App
         {
             InitializeComponent();
 
-            MainPage = new HomePage();
+            MainPage = new NavigationPage(new LoginPage());
         }
     }
 }

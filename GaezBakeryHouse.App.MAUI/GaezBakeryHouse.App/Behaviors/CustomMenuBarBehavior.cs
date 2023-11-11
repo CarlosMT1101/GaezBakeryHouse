@@ -11,7 +11,7 @@ namespace GaezBakeryHouse.App.Behaviors
         private Image _shoppingCarIcon;
         private Image _searchBackIcon;
         private OpacityView _opacityView;
-        private FlyoutMenu _flyoutMenu;
+        private CustomFlyoutMenu _flyoutMenu;
         private SearchView _searchView;
         private TapGestureRecognizer _tapMenuIcon;
         private TapGestureRecognizer _tapSearchIcon;
@@ -34,7 +34,7 @@ namespace GaezBakeryHouse.App.Behaviors
             _menuIcon = new Image();
             _searchIcon = new Image();
             _opacityView = new OpacityView();
-            _flyoutMenu = new FlyoutMenu();
+            _flyoutMenu = new CustomFlyoutMenu();
             _shoppingCarIcon = new Image();
             _searchView = new SearchView();
             _searchBackIcon = new Image();

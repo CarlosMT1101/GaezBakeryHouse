@@ -2,7 +2,8 @@
 using MauiIcons.Fluent;
 using MauiIcons.Material;
 using CommunityToolkit.Maui;
-using GaezBakeryHouse.App.Controls;
+using GaezBakeryHouse.App.ViewModels;
+using GaezBakeryHouse.App.Views;
 
 namespace GaezBakeryHouse.App
 {
@@ -25,6 +26,8 @@ namespace GaezBakeryHouse.App
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<LoginViewModel>();
 
             return builder.Build();
         }
