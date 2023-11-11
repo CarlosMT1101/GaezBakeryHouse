@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="GaezBakeryHouse.App.Views.RegisterPageFolder.RegisterBoxView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:GaezBakeryHouse.App.Controls">
+
+    <Frame
+        Margin="30,0"
+        Padding="30"
+        TranslationY="-30">
+        <Grid RowSpacing="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="55" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                HorizontalOptions="Center"
+                Style="{StaticResource LabelSmallStyle}"
+                Text="REGISTRO" />
+            <Grid Grid.Row="1" RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <controls:CustomEntry Grid.Row="0" Placeholder="Correo electrónico" />
+                <controls:CustomEntry Grid.Row="1" Placeholder="Usuario" />
+                <controls:CustomEntry Grid.Row="2" Placeholder="Nombre" />
+                <controls:CustomEntry Grid.Row="3" Placeholder="Apellidos" />
+                <controls:CustomEntry
+                    Grid.Row="4"
+                    Keyboard="Numeric"
+                    Placeholder="Teléfono" />
+                <controls:CustomEntry
+                    Grid.Row="5"
+                    IsPassword="True"
+                    Placeholder="Contraseña" />
+                <controls:CustomEntry
+                    Grid.Row="6"
+                    IsPassword="True"
+                    Placeholder="Confirmar contraseña" />
+            </Grid>
+            <Button Grid.Row="2" Text="Regístrarme" />
+        </Grid>
+    </Frame>
+</ContentView>

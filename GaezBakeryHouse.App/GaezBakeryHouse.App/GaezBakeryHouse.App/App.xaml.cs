@@ -9,7 +9,7 @@ namespace GaezBakeryHouse.App
         public App()
         {
             InitializeComponent();
-            MainPage = new LoginPage();
+            MainPage = new RegisterPage();
         }
 
         //protected async override void OnStart()

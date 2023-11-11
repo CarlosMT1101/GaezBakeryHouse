@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GaezBakeryHouse.App.Views.RegisterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:GaezBakeryHouse.App.Views.RegisterPageFolder">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="280" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <views:RegisterImageView Grid.Row="0" />
+            <views:RegisterBoxView Grid.Row="1" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

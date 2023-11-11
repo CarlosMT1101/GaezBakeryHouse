@@ -7,8 +7,13 @@
     <Application.Resources>
         <Color x:Key="PrimaryColor">#FF6A0E</Color>
         <Color x:Key="GrayColor">#F1F1F1</Color>
+        <Style x:Key="LabelIconStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="typicons" />
+            <Setter Property="TextColor" Value="Black" />
+        </Style>
         <Style TargetType="controls:CustomEntry">
             <Setter Property="BackgroundColor" Value="{StaticResource GrayColor}" />
+            <Setter Property="HeightRequest" Value="50" />
         </Style>
         <Style TargetType="ScrollView">
             <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
