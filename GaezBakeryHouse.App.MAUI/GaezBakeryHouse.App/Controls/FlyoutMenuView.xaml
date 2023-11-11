@@ -3,8 +3,14 @@
     x:Class="GaezBakeryHouse.App.Controls.FlyoutMenuView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bh="clr-namespace:GaezBakeryHouse.App.Behaviors"
     Grid.Row="0"
     Grid.RowSpan="2"
     BackgroundColor="White"
     HorizontalOptions="Start"
-    IsVisible="False" />
+    IsVisible="False">
+
+    <ContentView.Behaviors>
+        <bh:FlyoutMenuBehavior />
+    </ContentView.Behaviors>
+</ContentView>
