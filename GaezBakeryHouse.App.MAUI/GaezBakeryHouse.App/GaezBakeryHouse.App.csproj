@@ -63,6 +63,7 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Refit" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -115,7 +116,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Handlers\" />
-	  <Folder Include="Services\" />
 	  <Folder Include="Views\AccountPageFolder\" />
 	  <Folder Include="Views\WhishListPageFolder\" />
 	</ItemGroup>

@@ -8,8 +8,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="55" />
         </Grid.RowDefinitions>
-        <Frame Padding="8,0" BackgroundColor="{StaticResource GrayColor}">
-            <Entry x:Name="entryView" VerticalOptions="Center" />
+        <Frame
+            x:Name="frameView"
+            Padding="8,0"
+            BackgroundColor="{StaticResource GrayColor}">
+            <Entry
+                x:Name="entryView"
+                TextChanged="OnTextChanged"
+                VerticalOptions="Center" />
         </Frame>
     </Grid>
 </ContentView>

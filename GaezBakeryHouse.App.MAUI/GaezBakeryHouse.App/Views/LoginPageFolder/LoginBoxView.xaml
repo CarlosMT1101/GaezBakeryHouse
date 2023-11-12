@@ -24,13 +24,20 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <controls:CustomEntryView Grid.Row="0" PlaceHolder="Usuario" />
+                <controls:CustomEntryView
+                    Grid.Row="0"
+                    PlaceHolder="Correo electrónico"
+                    Text="{Binding Email}" />
                 <controls:CustomEntryView
                     Grid.Row="1"
-                    IsPassword="True"
-                    PlaceHolder="Contraseña" />
+                    IsPassword="False"
+                    PlaceHolder="Contraseña"
+                    Text="{Binding Password}" />
             </Grid>
-            <Button Grid.Row="2" Text="Ingresar" />
+            <Button
+                Grid.Row="2"
+                Command="{Binding OnLoginClickedCommand}"
+                Text="Ingresar" />
         </Grid>
     </Frame>
 </ContentView>

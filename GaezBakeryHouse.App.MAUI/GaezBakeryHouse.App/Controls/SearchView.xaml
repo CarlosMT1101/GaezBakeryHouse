@@ -12,30 +12,36 @@
     BackgroundColor="White"
     IsVisible="False"
     Opacity="0">
-    <Grid Padding="15">
+    <Grid>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="70" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="6*" />
-        </Grid.ColumnDefinitions>
-        <Image
-            HorizontalOptions="Start"
-            Source="{material:Icon Icon=ArrowBack,
-                                   IconAutoScaling=True,
-                                   IconColor=Black,
-                                   Variant=Outlined}"
-            VerticalOptions="Center">
-            <Image.Behaviors>
-                <bh:IconBackSearchViewBehavior />
-            </Image.Behaviors>
-        </Image>
-        <controls:CustomEntryView
-            Grid.Column="1"
-            PlaceHolder="Buscar en Gaez Bakery House"
-            VerticalOptions="Center" />
-        <CollectionView Grid.Row="1" Grid.ColumnSpan="2" />
+        <Grid
+            Grid.Row="0"
+            Padding="15"
+            ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+            <Image
+                HorizontalOptions="Start"
+                Source="{material:Icon Icon=ArrowBack,
+                                       IconAutoScaling=True,
+                                       IconColor=Black,
+                                       Variant=Outlined}"
+                VerticalOptions="Center">
+                <Image.Behaviors>
+                    <bh:IconBackSearchViewBehavior />
+                </Image.Behaviors>
+            </Image>
+            <controls:CustomEntryView
+                Grid.Column="1"
+                HeightRequest="41"
+                PlaceHolder="Buscar en Gaez Bakery House"
+                VerticalOptions="Center" />
+        </Grid>
     </Grid>
 </ContentView>

@@ -26,8 +26,6 @@ namespace GaezBakeryHouse.App
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-            builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<LoginViewModel>();
 
             return builder.Build();
         }

@@ -18,6 +18,10 @@
             Style="{StaticResource LabelMicroStyle}"
             Text="Regístrate aquí"
             TextColor="{StaticResource PrimaryColor}"
-            TextDecorations="Underline" />
+            TextDecorations="Underline">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OnRegisterClickedCommand}" NumberOfTapsRequired="1" />
+            </Label.GestureRecognizers>
+        </Label>
     </StackLayout>
 </ContentView>

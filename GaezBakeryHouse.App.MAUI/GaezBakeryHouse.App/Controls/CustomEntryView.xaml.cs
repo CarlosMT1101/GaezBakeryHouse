@@ -1,21 +1,38 @@
+using System.Runtime.CompilerServices;
+
 namespace GaezBakeryHouse.App.Controls;
 
 public partial class CustomEntryView : ContentView
 {
+    #region BindablePropertys
     public static readonly BindableProperty PlaceHolderProperty =
-        BindableProperty.Create(nameof(PlaceHolder), typeof(string), typeof(CustomEntryView), default(string), BindingMode.OneWay, propertyChanged: OnPlaceHolderChanged);
+       BindableProperty.Create(nameof(PlaceHolder), typeof(string), typeof(CustomEntryView), default(string), BindingMode.OneWay);
 
     public static readonly BindableProperty IsPasswordProperty =
-        BindableProperty.Create(nameof(IsPassword), typeof(bool), typeof(CustomEntryView), default(bool), BindingMode.OneWay, propertyChanged: OnIsPasswordPropertyChanged);
+        BindableProperty.Create(nameof(IsPassword), typeof(bool), typeof(CustomEntryView), default(bool), BindingMode.OneWay);
 
     public static readonly BindableProperty KeyboarProperty =
-        BindableProperty.Create(nameof(KeyBoard), typeof(Keyboard), typeof(CustomEntryView), default(Keyboard), BindingMode.OneWay, propertyChanged: OnKeyBoardPropertyChanged);
+        BindableProperty.Create(nameof(KeyBoard), typeof(Keyboard), typeof(CustomEntryView), default(Keyboard), BindingMode.OneWay);
 
-    private static void OnKeyBoardPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    public static readonly BindableProperty TextProperty =
+        BindableProperty.Create(nameof(Text), typeof(string), typeof(CustomEntryView), default(string), BindingMode.OneWayToSource);
+
+    public static new readonly BindableProperty HeightRequestProperty =
+        BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(CustomEntryView), default(double), BindingMode.OneWay);
+
+    #endregion
+
+    #region Fields
+    public string Text
     {
-        var customEntryView = (CustomEntryView)bindable;
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
+    }
 
-        customEntryView.entryView.Keyboard = customEntryView.KeyBoard;
+    public new double HeightRequest
+    {
+        get => (double)GetValue(HeightRequestProperty);
+        set => SetValue(HeightRequestProperty, value);
     }
 
     public Keyboard KeyBoard
@@ -35,21 +52,30 @@ public partial class CustomEntryView : ContentView
         get => (bool)GetValue(IsPasswordProperty);
         set => SetValue(IsPasswordProperty, value);
     }
+    #endregion
 
-    private static void OnPlaceHolderChanged(BindableObject bindable, object oldValue, object newValue)
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-        var customEntryView = (CustomEntryView)bindable;
+        base.OnPropertyChanged(propertyName);
 
-        customEntryView.entryView.Placeholder = customEntryView.PlaceHolder;
+        if(propertyName == TextProperty.PropertyName)
+            entryView.Text = Text;
+
+        if (propertyName == KeyboarProperty.PropertyName)
+            entryView.Keyboard = KeyBoard;
+
+        if(propertyName == IsPasswordProperty.PropertyName)
+            entryView.IsPassword = IsPassword;
+
+        if(propertyName == PlaceHolderProperty.PropertyName)
+            entryView.Placeholder = PlaceHolder;
+
+        if(propertyName == HeightRequestProperty.PropertyName)
+        {
+            frameView.HeightRequest = HeightRequest;
+            entryView.HeightRequest = HeightRequest;
+        }
     }
-
-    private static void OnIsPasswordPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        var customEntryView = (CustomEntryView)bindable;
-
-        customEntryView.entryView.IsPassword = customEntryView.IsPassword;
-    }
-
 
     public CustomEntryView()
 	{
@@ -64,4 +90,7 @@ public partial class CustomEntryView : ContentView
 #endif
         });
     }
+
+    private void OnTextChanged(object sender, TextChangedEventArgs e) =>
+        Text = e.NewTextValue;
 }
