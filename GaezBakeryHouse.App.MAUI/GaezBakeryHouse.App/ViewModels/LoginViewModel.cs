@@ -1,4 +1,5 @@
-﻿using GaezBakeryHouse.App.Models;
+﻿using Controls.UserDialogs.Maui;
+using GaezBakeryHouse.App.Models;
 using GaezBakeryHouse.App.Services;
 using GaezBakeryHouse.App.Views;
 using Refit;
@@ -12,6 +13,7 @@ namespace GaezBakeryHouse.App.ViewModels
         private string _email;
         private string _password;
         private IAuthService _authService;
+        private IUserDialogs _userDialogs;
         #endregion
 
         #region Properties
@@ -46,8 +48,9 @@ namespace GaezBakeryHouse.App.ViewModels
         #region Constructor
         public LoginViewModel()
         {
+            _userDialogs = new UserDialogsImplementation();
             _authService = RestService.For<IAuthService>(Constants.Url);
-
+            
             OnLoginClickedCommand = new Command(
                 execute: async () => await Login(),
                 canExecute: () => !(string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password)));
@@ -61,27 +64,38 @@ namespace GaezBakeryHouse.App.ViewModels
         #region Functions
         private async Task Login()
         {
-            //try
-            //{
-            //    var authRequestModel = CreateAuthRequestModel();
-            //    var response = await _authService.Login(authRequestModel);
+            _userDialogs.ShowLoading(Constants.LoadingMessage);
 
-            //    if (response != null)
-            //    {
-            //        App.SaveUserInformation(response);
-            //        await App.Current.MainPage.Navigation.PushAsync(new HomePage());
-            //    }
-            //    else
-            //    {
-            //        //
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    // 
-            //}
+            try
+            {
+                var authRequestModel = CreateAuthRequestModel();
+                var response = await _authService.Login(authRequestModel);
 
-            await App.Current.MainPage.Navigation.PushAsync(new HomePage());
+                if (response != null)
+                {
+                    App.SaveUserInformation(response);
+                    App.IsUserLoggedIn = true;
+
+                    App.Current.MainPage = new NavigationPage(new HomePage());
+                }
+                else
+                {
+                    await _userDialogs.AlertAsync(
+                        Constants.ErrorMessage, 
+                        Constants.ErrorTitle, 
+                        Constants.Ok);
+                }
+            }
+            catch (Exception ex)
+            {
+                await Console.Out.WriteLineAsync(ex.Message);
+                await _userDialogs.AlertAsync(
+                    Constants.ErrorMessage, 
+                    Constants.ErrorTitle, 
+                    Constants.Ok);
+            }
+
+            _userDialogs.HideHud();
         }
 
         private AuthRequestModel CreateAuthRequestModel() =>

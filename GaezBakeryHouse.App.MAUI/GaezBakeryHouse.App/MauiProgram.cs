@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MauiIcons.Fluent;
 using MauiIcons.Material;
-using CommunityToolkit.Maui;
-using GaezBakeryHouse.App.ViewModels;
-using GaezBakeryHouse.App.Views;
+using Controls.UserDialogs.Maui;
 
 namespace GaezBakeryHouse.App
 {
@@ -14,7 +12,7 @@ namespace GaezBakeryHouse.App
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
+                .UseUserDialogs()
                 .UseFluentMauiIcons()
                 .UseMaterialMauiIcons()
                 .ConfigureFonts(fonts =>
@@ -26,6 +24,7 @@ namespace GaezBakeryHouse.App
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+
 
             return builder.Build();
         }
