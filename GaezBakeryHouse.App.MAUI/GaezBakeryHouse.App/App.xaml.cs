@@ -5,44 +5,33 @@ namespace GaezBakeryHouse.App
 {
     public partial class App : Application
     {
-        public static bool IsUserLoggedIn { get; set; }
-
         public App()
         {
             InitializeComponent();
-            if (!IsUserLoggedIn)
-            {
-                MainPage = new NavigationPage(new LoginPage());
-            }
-            else
-            {
-                MainPage = new NavigationPage(new HomePage());
-            }
+            MainPage = new NavigationPage(new LoginPage());
         }
 
-        protected override void OnStart()
+        protected async override void OnStart()
         {
-            //var accessToken = await SecureStorage.GetAsync(Constants.AccessToken);
-            //var expirationToken = await SecureStorage.GetAsync(Constants.ExpirationToken);
+            var accessToken = SecureStorage.GetAsync(Constants.AccessToken).Result;
+            var expirationToken = SecureStorage.GetAsync(Constants.ExpirationToken).Result;
 
-            //if (accessToken != null)
-            //{
-            //    var expirationDate = DateTime.Parse(expirationToken);
+            if (accessToken != null)
+            {
+                var expirationDate = DateTime.Parse(expirationToken);
 
-            //    if (DateTime.UtcNow < expirationDate)
-            //    {
-            //        MainPage = new NavigationPage(new HomePage());
-            //    }
-            //    else
-            //    {
-            //        App.RemoveUserInformation();
-            //        MainPage = new NavigationPage(new LoginPage());
-            //    }
-            //}
-            //else
-            //{
-            //    MainPage = new NavigationPage(new LoginPage());
-            //}
+                if (DateTime.UtcNow < expirationDate)
+                {
+                    var currentPage = MainPage.Navigation.NavigationStack[0];
+                    MainPage.Navigation.InsertPageBefore(new HomePage(), currentPage);
+
+                    await MainPage.Navigation.PopAsync();
+                }
+                else
+                {
+                    App.RemoveUserInformation();
+                }
+            }
         }
 
         public static async void SaveUserInformation(UserResponseModel authResponseModel)
@@ -77,6 +66,7 @@ namespace GaezBakeryHouse.App
 
         protected override void OnResume()
         {
+            
         }
     }
 }

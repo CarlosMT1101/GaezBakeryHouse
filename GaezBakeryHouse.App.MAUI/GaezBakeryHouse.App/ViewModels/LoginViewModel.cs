@@ -69,7 +69,7 @@ namespace GaezBakeryHouse.App.ViewModels
             var userModel = new UserModel { Email = Email, Password = Password };
             var isValid = await _authService.Login(userModel);
 
-            if (!isValid)
+            if (isValid)
             {
                 Navigation.InsertPageBefore(new HomePage(), Navigation.NavigationStack[0]);
                 await Navigation.PopAsync();

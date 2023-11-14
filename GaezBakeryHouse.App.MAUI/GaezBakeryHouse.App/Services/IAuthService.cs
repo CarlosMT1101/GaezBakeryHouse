@@ -27,7 +27,6 @@ namespace GaezBakeryHouse.App.Services
 
                 if(response != null)
                 {
-                    App.IsUserLoggedIn = true;
                     App.SaveUserInformation(response);
                     return true;
                 }

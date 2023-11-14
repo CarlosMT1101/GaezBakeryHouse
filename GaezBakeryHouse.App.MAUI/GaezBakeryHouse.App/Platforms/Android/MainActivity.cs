@@ -11,7 +11,6 @@ namespace GaezBakeryHouse.App
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
             RequestedOrientation = ScreenOrientation.Portrait;
         }
     }
