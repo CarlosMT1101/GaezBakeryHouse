@@ -12,7 +12,7 @@ namespace GaezBakeryHouse.App.ViewModels
         #region Attributes
         private string _email;
         private string _password;
-        private IAuthService _authService;
+        private AuthService _authService;
         private IUserDialogs _userDialogs;
         #endregion
 
@@ -46,10 +46,10 @@ namespace GaezBakeryHouse.App.ViewModels
         #endregion
 
         #region Constructor
-        public LoginViewModel()
+        public LoginViewModel(INavigation navigation) : base(navigation)
         {
             _userDialogs = new UserDialogsImplementation();
-            _authService = RestService.For<IAuthService>(Constants.Url);
+            _authService = new AuthService();
             
             OnLoginClickedCommand = new Command(
                 execute: async () => await Login(),
@@ -66,44 +66,24 @@ namespace GaezBakeryHouse.App.ViewModels
         {
             _userDialogs.ShowLoading(Constants.LoadingMessage);
 
-            try
+            var userModel = new UserModel { Email = Email, Password = Password };
+            var isValid = await _authService.Login(userModel);
+
+            if (!isValid)
             {
-                var authRequestModel = CreateAuthRequestModel();
-                var response = await _authService.Login(authRequestModel);
-
-                if (response != null)
-                {
-                    App.SaveUserInformation(response);
-                    App.IsUserLoggedIn = true;
-
-                    App.Current.MainPage = new NavigationPage(new HomePage());
-                }
-                else
-                {
-                    await _userDialogs.AlertAsync(
-                        Constants.ErrorMessage, 
-                        Constants.ErrorTitle, 
-                        Constants.Ok);
-                }
+                Navigation.InsertPageBefore(new HomePage(), Navigation.NavigationStack[0]);
+                await Navigation.PopAsync();
             }
-            catch (Exception ex)
+            else
             {
-                await Console.Out.WriteLineAsync(ex.Message);
                 await _userDialogs.AlertAsync(
-                    Constants.ErrorMessage, 
-                    Constants.ErrorTitle, 
+                    Constants.ErrorMessage,
+                    Constants.ErrorTitle,
                     Constants.Ok);
             }
 
             _userDialogs.HideHud();
         }
-
-        private AuthRequestModel CreateAuthRequestModel() =>
-            new AuthRequestModel
-            {
-                Email = Email,
-                Password = Password
-            };
         #endregion
     }
 }

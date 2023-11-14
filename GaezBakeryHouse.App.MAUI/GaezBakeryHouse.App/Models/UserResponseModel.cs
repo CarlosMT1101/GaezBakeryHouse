@@ -1,6 +1,6 @@
 ﻿namespace GaezBakeryHouse.App.Models
 {
-    public class AuthResponseModel
+    public class UserResponseModel
     {
         public string FullName { get; set; }
 

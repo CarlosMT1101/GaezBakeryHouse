@@ -12,6 +12,15 @@
     BackgroundColor="White"
     IsVisible="False"
     Opacity="0">
+
+    <ContentView.Resources>
+        <Style TargetType="material:MauiIcon">
+            <Setter Property="IconAutoScaling" Value="True" />
+            <Setter Property="Variant" Value="Outlined" />
+            <Setter Property="IconColor" Value="Black" />
+        </Style>
+    </ContentView.Resources>
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -26,17 +35,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="8*" />
             </Grid.ColumnDefinitions>
-            <Image
+            <material:MauiIcon
                 HorizontalOptions="Start"
-                Source="{material:Icon Icon=ArrowBack,
-                                       IconAutoScaling=True,
-                                       IconColor=Black,
-                                       Variant=Outlined}"
+                Icon="ArrowBack"
                 VerticalOptions="Center">
-                <Image.Behaviors>
+                <material:MauiIcon.Behaviors>
                     <bh:IconBackSearchViewBehavior />
-                </Image.Behaviors>
-            </Image>
+                </material:MauiIcon.Behaviors>
+            </material:MauiIcon>
             <controls:CustomEntryView
                 Grid.Column="1"
                 HeightRequest="41"

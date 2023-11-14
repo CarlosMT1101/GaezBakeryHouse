@@ -45,7 +45,7 @@ namespace GaezBakeryHouse.App
             //}
         }
 
-        public static async void SaveUserInformation(AuthResponseModel authResponseModel)
+        public static async void SaveUserInformation(UserResponseModel authResponseModel)
         {
             await Task.WhenAll
             (

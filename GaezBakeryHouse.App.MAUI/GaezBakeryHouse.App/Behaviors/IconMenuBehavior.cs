@@ -1,36 +1,34 @@
 ﻿using GaezBakeryHouse.App.Controls;
+using MauiIcons.Material;
 
 namespace GaezBakeryHouse.App.Behaviors
 {
-    public class IconMenuBehavior : Behavior<Image>
+    public class IconMenuBehavior : Behavior<MauiIcon>
     {
         private TapGestureRecognizer _tapIconMenu;
 
         public IconMenuBehavior() =>
             _tapIconMenu = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
 
-        protected override void OnAttachedTo(Image bindable)
+        protected override void OnAttachedTo(MauiIcon bindable)
         {
             base.OnAttachedTo(bindable);
 
             _tapIconMenu.Tapped += OnIconMenuTapped;
-            bindable.Loaded += OnIconMenuLoaded;
+            bindable.GestureRecognizers.Add(_tapIconMenu);
         }
 
-        protected override void OnDetachingFrom(Image bindable)
+        protected override void OnDetachingFrom(MauiIcon bindable)
         {
             base.OnDetachingFrom(bindable);
 
             _tapIconMenu.Tapped -= OnIconMenuTapped;
-            bindable.Loaded -= OnIconMenuLoaded;
+            bindable.GestureRecognizers.Clear();
         }
-
-        private void OnIconMenuLoaded(object sender, EventArgs e) =>
-            (sender as Image).GestureRecognizers.Add(_tapIconMenu);
 
         private async void OnIconMenuTapped(object sender, TappedEventArgs e)
         {
-            var iconMenu = sender as Image;
+            var iconMenu = sender as MauiIcon;
             var contentGrid = (Grid)((ContentView)((Grid) iconMenu.Parent).Parent).Parent;
             var opacityview = (OpacityView)contentGrid.Children[2];
             var flyoutMenu = (FlyoutMenuView)contentGrid.Children[3];

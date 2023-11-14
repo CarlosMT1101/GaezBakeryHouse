@@ -9,16 +9,15 @@
     xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
     NavigationPage.HasNavigationBar="False">
 
-    <ContentPage.Behaviors>
-        <bh:ContentPageBehavior />
-    </ContentPage.Behaviors>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <controls:CustomMenuBarView Grid.Row="0" />
-        <ScrollView Grid.Row="1" Grid.RowSpan="2" />
+        <ScrollView Grid.Row="1" />
+        <controls:OpacityView />
+        <controls:FlyoutMenuView />
+        <controls:SearchView />
     </Grid>
 </ContentPage>

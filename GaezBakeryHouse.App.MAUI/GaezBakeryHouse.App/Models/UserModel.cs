@@ -1,6 +1,6 @@
 ﻿namespace GaezBakeryHouse.App.Models
 {
-    public class AuthRequestModel
+    public class UserModel
     {
         public string Email { get; set; }
 

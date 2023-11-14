@@ -85,6 +85,9 @@
 	  <MauiXaml Update="Controls\SearchView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="TestPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\BagPageFolder\BagPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -1,25 +1,26 @@
 ﻿using GaezBakeryHouse.App.Controls;
+using MauiIcons.Material;
 
 namespace GaezBakeryHouse.App.Behaviors
 {
-    public class IconBackSearchViewBehavior : Behavior<Image>
+    public class IconBackSearchViewBehavior : Behavior<MauiIcon>
     {
         private TapGestureRecognizer _tapIconBackSearch;
 
         public IconBackSearchViewBehavior() =>
             _tapIconBackSearch = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
 
-        protected override void OnAttachedTo(Image bindable)
+        protected override void OnAttachedTo(MauiIcon bindable)
         {
             base.OnAttachedTo(bindable);
 
-            bindable.Loaded += OnIconSearchBackLoaded;
             _tapIconBackSearch.Tapped += OnIconSearchBackTapped;
+            bindable.GestureRecognizers.Add(_tapIconBackSearch);
         }
 
         private async void OnIconSearchBackTapped(object sender, TappedEventArgs e)
         {
-            var iconSearch = sender as Image;
+            var iconSearch = sender as MauiIcon;
             var contentGrid = (Grid) ((ContentView) ((Grid)((Grid)iconSearch.Parent).Parent).Parent).Parent;
             var searchView = (SearchView)contentGrid.Children[4];
 
@@ -27,15 +28,12 @@ namespace GaezBakeryHouse.App.Behaviors
             searchView.IsVisible = false;
         }
 
-        protected override void OnDetachingFrom(Image bindable)
+        protected override void OnDetachingFrom(MauiIcon bindable)
         {
             base.OnDetachingFrom(bindable);
 
-            bindable.Loaded -= OnIconSearchBackLoaded;
             _tapIconBackSearch.Tapped -= OnIconSearchBackTapped;
+            bindable.GestureRecognizers.Clear();
         }
-
-        private void OnIconSearchBackLoaded(object sender, EventArgs e) =>
-            (sender as Image).GestureRecognizers.Add(_tapIconBackSearch);
     }
 }

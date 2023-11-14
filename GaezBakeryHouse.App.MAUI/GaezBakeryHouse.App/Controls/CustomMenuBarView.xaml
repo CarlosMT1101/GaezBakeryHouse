@@ -8,6 +8,13 @@
     xmlns:fluent="clr-namespace:MauiIcons.Fluent;assembly=MauiIcons.Fluent"
     xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material">
 
+    <ContentView.Resources>
+        <Style TargetType="material:MauiIcon">
+            <Setter Property="IconAutoScaling" Value="True" />
+            <Setter Property="Variant" Value="Outlined" />
+            <Setter Property="IconColor" Value="black" />
+        </Style>
+    </ContentView.Resources>
 
     <Grid Padding="15">
         <Grid.ColumnDefinitions>
@@ -15,37 +22,29 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image
+        <material:MauiIcon
             Grid.Column="0"
             HorizontalOptions="Start"
-            Source="{material:Icon Icon=Menu,
-                                   IconAutoScaling=True,
-                                   Variant=Outlined,
-                                   IconColor=Black}"
+            Icon="Menu"
             VerticalOptions="Center">
-            <Image.Behaviors>
+            <material:MauiIcon.Behaviors>
                 <bh:IconMenuBehavior />
-            </Image.Behaviors>
-        </Image>
-        <Image
+            </material:MauiIcon.Behaviors>
+        </material:MauiIcon>
+        <material:MauiIcon
             Grid.Column="1"
             HorizontalOptions="End"
-            Source="{material:Icon Icon=Search,
-                                   Variant=Outlined,
-                                   IconAutoScaling=True,
-                                   IconColor=Black}"
+            Icon="Search"
             VerticalOptions="Center">
-            <Image.Behaviors>
+            <material:MauiIcon.Behaviors>
                 <bh:IconSearchBehavior />
-            </Image.Behaviors>
-        </Image>
-        <Image
+            </material:MauiIcon.Behaviors>
+        </material:MauiIcon>
+        <material:MauiIcon
             Grid.Column="2"
             HorizontalOptions="End"
-            Source="{material:Icon Icon=ShoppingCart,
-                                   IconColor=Black,
-                                   IconAutoScaling=True,
-                                   Variant=Outlined}"
+            Icon="ShoppingCart"
+            Variant="Outlined"
             VerticalOptions="Center" />
     </Grid>
 </ContentView>

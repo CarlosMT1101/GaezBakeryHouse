@@ -13,19 +13,16 @@ namespace GaezBakeryHouse.App.Behaviors
         {
             base.OnAttachedTo(bindable);
 
-            bindable.Loaded += OnFlyoutMenuLoaded;
             _tapFlyoutMenu.Tapped += OnFlyoutMenuTapped;
+            bindable.GestureRecognizers.Add(_tapFlyoutMenu);
         }
-
-        private void OnFlyoutMenuLoaded(object sender, EventArgs e) =>
-            (sender as FlyoutMenuView).GestureRecognizers.Add(_tapFlyoutMenu);
 
         protected override void OnDetachingFrom(FlyoutMenuView bindable)
         {
             base.OnDetachingFrom(bindable);
 
             _tapFlyoutMenu.Tapped -= OnFlyoutMenuTapped;
-            bindable.Loaded -= OnFlyoutMenuLoaded;
+            bindable.GestureRecognizers.Clear();
         }
 
         private void OnFlyoutMenuTapped(object sender, TappedEventArgs e)

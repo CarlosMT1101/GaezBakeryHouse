@@ -9,23 +9,21 @@ namespace GaezBakeryHouse.App.Behaviors
         public OpacityViewBehavior() =>
             _tapOpacityView = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
 
-        private void OnOpacityViewLoaded(object sender, EventArgs e) =>
-           (sender as OpacityView).GestureRecognizers.Add(_tapOpacityView);
 
         protected override void OnAttachedTo(OpacityView bindable)
         {
             base.OnAttachedTo(bindable);
 
-            bindable.Loaded += OnOpacityViewLoaded;
             _tapOpacityView.Tapped += OnOpacityViewTapped;
+            bindable.GestureRecognizers.Add(_tapOpacityView);
         }
 
         protected override void OnDetachingFrom(OpacityView bindable)
         {
             base.OnDetachingFrom(bindable);
 
-            bindable.Loaded -= OnOpacityViewLoaded;
             _tapOpacityView.Tapped -= OnOpacityViewTapped;
+            bindable.GestureRecognizers.Clear();
         }
 
         private async void OnOpacityViewTapped(object sender, TappedEventArgs e)
